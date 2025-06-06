@@ -6,10 +6,10 @@
 
 ## Project Structure
 
-[ディレクトリ構成](/documents/directory.md)　
-[コンポーネント構成](/documents/component.md)
-[Design Tokens](/documents/design-tokens.md)
-[CSS設計](/documents/css-architecture.md)
+- [ディレクトリ構成](/documents/directory.md)　
+- [コンポーネント構成](/documents/component.md)
+- [Design Tokens](/documents/design-tokens.md)
+- [CSS設計](/documents/css-architecture.md)
 
 ## Commands
 
