@@ -1,0 +1,5 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.sample-heading {
+  @include heading-level-1;
+}

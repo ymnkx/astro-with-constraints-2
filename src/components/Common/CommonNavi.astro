@@ -1,0 +1,51 @@
+---
+import { projectDirectory } from '@/data/project';
+import Navigation from '../Navigation/Navigation.astro';
+const { pathname } = Astro.url;
+
+const pageList = [
+  {
+    label: 'page1',
+    path: `${projectDirectory}`,
+  },
+  {
+    label: 'page2',
+    path: `${projectDirectory}page2/`,
+  },
+  {
+    label: 'page3',
+    path: `${projectDirectory}page3/`,
+  },
+];
+---
+
+<div class="common-navi">
+  <div class="common-navi_sm">
+    <Navigation>
+      <ul class="common-navi_list -sm">
+        {
+          pageList.map((link) => (
+            <li class:list={['common-navi_item', { '-selected': link.path === pathname }]}>
+              <a href={link.path} class="common-navi_link">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </Navigation>
+  </div>
+  <div class="common-navi_md">
+    <ul class="common-navi_list">
+      {
+        pageList.map((link) => (
+          <li class:list={['common-navi_item', { '-selected': link.path === pathname }]}>
+            <a href={link.path} class="common-navi_link">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

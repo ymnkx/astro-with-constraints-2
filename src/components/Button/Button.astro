@@ -1,0 +1,40 @@
+---
+type Props = {
+  size?: 'small' | 'medium' | 'large';
+  isFull?: boolean;
+  as?: 'span' | undefined;
+  class?: 'string';
+};
+const { size = 'medium', isFull = false, as, class: className, ...rest }: Props = Astro.props;
+---
+
+{
+  as === 'span' ? (
+    <span
+      class:list={[
+        className,
+        'sample-button',
+        { '-small': size === 'small', '-large': size === 'large', '-full': isFull },
+      ]}
+      {...rest}
+    >
+      <span class="sample-button_inner">
+        <slot />
+      </span>
+    </span>
+  ) : (
+    <button
+      type="button"
+      class:list={[
+        className,
+        'sample-button',
+        { '-small': size === 'small', '-large': size === 'large', '-full': isFull },
+      ]}
+      {...rest}
+    >
+      <span class="sample-button_inner">
+        <slot />
+      </span>
+    </button>
+  )
+}

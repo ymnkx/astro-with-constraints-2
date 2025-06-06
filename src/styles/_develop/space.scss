@@ -1,0 +1,11 @@
+@mixin space-inline {
+  padding-inline: #{rem(24)};
+
+  @include min-screen(md) {
+    padding-inline: #{rem(48)};
+  }
+
+  @include min-screen(lg) {
+    padding-inline: #{rem(80)};
+  }
+}

@@ -1,0 +1,57 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.sample-accordion {
+  --this-size-icon: var(--accordion-icon-size, #{rem(10)});
+
+  border: 1px solid var(--color-border);
+}
+
+.sample-accordion_summary {
+  position: relative;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+
+  // For Safari
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.sample-accordion_label {
+  display: block;
+}
+
+.sample-accordion_icon {
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  transform: translateY(-75%) rotate(135deg);
+  transition: transform 0.2s;
+
+  &::after {
+    display: block;
+    width: 1em;
+    height: 1em;
+    font-size: var(--this-size-icon);
+    content: "";
+    border-color: currentcolor;
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+  }
+
+  .sample-accordion[open] & {
+    transform: translateY(-25%) rotate(-45deg);
+  }
+
+  .sample-accordion[data-status="closing"] & {
+    transform: translateY(-75%) rotate(135deg);
+  }
+}
+
+.sample-accordion_contents {
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+}

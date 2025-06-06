@@ -1,0 +1,87 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.sample-modal {
+  --this-easing: cubic-bezier(0, 0, 0.2, 1);
+  --this-duration: 0.3s;
+
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 75%);
+  }
+}
+
+.sample-modal[open] {
+  animation: move var(--this-duration) var(--this-easing);
+  animation-fill-mode: forwards;
+}
+
+@keyframes move {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sample-modal[open].-back {
+  animation: move-back var(--this-duration) var(--this-easing);
+  animation-fill-mode: forwards;
+}
+
+@keyframes move-back {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+.sample-modal[open]::backdrop {
+  animation: fade calc(0.5 * var(--this-duration)) var(--this-easing);
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.sample-modal[open].-back::backdrop {
+  animation: fade-back calc(0.5 * var(--this-duration)) var(--this-easing);
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-back {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.sample-modal_inner {
+  padding: 2rem;
+  background-color: var(--color-background-white);
+}
+
+.sample-modal_control {
+  margin-block-start: 1rem;
+}

@@ -1,0 +1,23 @@
+@use "sass:math";
+
+@function vw($size: 16, $viewport: 640, $isMax: false) {
+  $rate: math.div(100, $viewport);
+
+  @if $isMax {
+    @return min($rate * $size * 1vw, math.div($size, 16) * 1rem);
+  } @else {
+    @return $rate * $size * 1vw;
+  }
+}
+
+@function rem($size, $base: 16) {
+  @return math.div($size, $base) * 1rem;
+}
+
+@mixin hover() {
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}

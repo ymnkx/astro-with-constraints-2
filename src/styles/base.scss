@@ -1,0 +1,26 @@
+@layer base {
+  body {
+    margin: 0;
+    font-family: var(--typography-font-family-base), "Hiragino Sans", meiryo, sans-serif;
+    line-height: var(--typography-line-height-300);
+    color: var(--color-text);
+    background-color: var(--color-background-base);
+  }
+
+  ul {
+    margin-block: 0;
+  }
+
+  p {
+    margin-block-start: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block-start: 0;
+  }
+}

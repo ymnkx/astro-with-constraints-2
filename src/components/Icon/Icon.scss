@@ -1,0 +1,13 @@
+.sample-icon {
+  --this-icon-size: var(--icon-size, 1.5rem);
+
+  display: inline-block;
+  width: var(--this-icon-size);
+  height: var(--this-icon-size);
+}
+
+.sample-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

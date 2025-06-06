@@ -1,0 +1,16 @@
+---
+import CommonFooter from './CommonFooter.astro';
+import CommonHeader from './CommonHeader.astro';
+---
+
+<div class="common-layout">
+  <div class="common-layout_header">
+    <CommonHeader />
+  </div>
+  <main class="common-layout_main">
+    <slot />
+  </main>
+  <div class="common-layout_footer">
+    <CommonFooter />
+  </div>
+</div>

@@ -1,0 +1,11 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.common-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.common-layout_main {
+  flex: 1;
+}

@@ -1,0 +1,39 @@
+@use "@/styles/_develop/+.scss" as *;
+
+// .common-navi {}
+
+.common-navi_sm {
+  display: block;
+
+  @include min-screen(md) {
+    display: none;
+  }
+}
+
+.common-navi_md {
+  display: none;
+
+  @include min-screen(md) {
+    display: block;
+  }
+}
+
+.common-navi_list {
+  display: flex;
+  gap: 0.5em;
+  padding: 0;
+  list-style: none;
+
+  &.-sm {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.common-navi_link {
+  .common-navi_item.-selected > & {
+    color: crimson;
+    text-decoration: none;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,17 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.common-header {
+  display: flex;
+  gap: rem(8);
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.common-header_label {
+  font-size: var(--typography-font-size-500);
+  line-height: 1;
+}
+
+.common-header_navi {
+  margin-left: auto;
+}

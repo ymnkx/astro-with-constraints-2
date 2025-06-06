@@ -1,0 +1,43 @@
+---
+import Accordion from '@/components/Accordion/Accordion.astro';
+import Button from '@/components/Button/Button.astro';
+import CarouselType01 from '@/components/Carousel/CarouselType01.astro';
+import Heading from '@/components/Heading/Heading.astro';
+import Icon from '@/components/Icon/Icon.astro';
+import Modal from '@/components/Modal/Modal.astro';
+import LayoutBase from '@/layouts/Base.astro';
+const title = '';
+const description = '';
+---
+
+<LayoutBase title={title} description={description}>
+  <Heading>Button</Heading>
+  <Button>BUTTON</Button>
+  <Heading>Icon</Heading>
+  <Icon name="code-bracket" />
+  <Icon name="check" />
+  <Icon name="chevron-right" />
+  <Icon name="x-mark" />
+  <Heading>Accordion</Heading>
+  <Accordion name="top">
+    <Fragment slot="label">
+      <span>Accorion Label</span>
+    </Fragment>
+    <Fragment slot="contents">
+      <p>Accordion Contents</p>
+    </Fragment>
+  </Accordion>
+  <Heading>Modal</Heading>
+  <Button class="js-modal-button" data-modal-id="sample-modal">OPEN MODAL</Button>
+  <Modal id="sample-modal">
+    <p>This is Modal Contents.</p>
+  </Modal>
+  <Heading>Carousel</Heading>
+  <CarouselType01>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+  </CarouselType01>
+</LayoutBase>

@@ -1,0 +1,30 @@
+---
+import { parse } from 'node-html-parser';
+const html = await Astro.slots.render('default');
+const items = parse(html).childNodes.filter((item) => item.rawTagName !== '');
+---
+
+<div class="sample-carousel js-carousel">
+  <swiper-container
+    Pagination={true}
+    navigation={true}
+    slides-per-view="1"
+    space-between="10"
+    data-role="swiper"
+    init="false"
+  >
+    {
+      items.map((item: any) => (
+        <swiper-slide>
+          <div class="sample-carousel_item">
+            <Fragment set:html={item} />
+          </div>
+        </swiper-slide>
+      ))
+    }
+  </swiper-container>
+  <div class="sample-carousel_control" data-role="control">
+    <button type="button" data-role="prev" aria-label="Prev">Prev</button>
+    <button type="button" data-role="next" aria-label="Next">Next</button>
+  </div>
+</div>

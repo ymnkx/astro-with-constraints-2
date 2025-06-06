@@ -1,0 +1,12 @@
+htdocs
+├── assets
+│   ├── css
+│   │   └── common.css
+│   ├── image
+│   │   └── 200x200.png
+│   ├── js
+│   │   └── script.js
+│   └── svg
+│       └── icons.svg
+├── favicon.svg
+└── index.html

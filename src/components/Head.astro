@@ -1,0 +1,41 @@
+---
+import '@/styles/common.scss';
+import { projectName, projectDescription, projectUrl, projectDirectory } from '@/data/project.ts';
+const { title, description } = Astro.props;
+const _title = title && title !== '' ? `${title} | ${projectName}` : `${projectName}`;
+const _description = description || projectDescription;
+const _url = projectUrl + Astro.url.pathname; // シェアするURLは各ページのもの。
+const _baseUrl = projectUrl + projectDirectory;
+const _ogImageUrl = _baseUrl + 'og.png'; // 共通OGP画像。各ページで出し分ける場合は変更する。
+const _googleFont = 'https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap';
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>{_title}</title>
+  <meta name="description" content={_description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={_title} />
+  <meta property="og:description" content={_description} />
+  <meta property="og:url" content={_url} />
+  <meta property="og:image" content={_ogImageUrl} />
+  <meta property="og:site_name" content={_title} />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={_title} />
+  <meta name="twitter:description" content={_description} />
+  <meta name="twitter:url" content={_url} />
+  <meta name="twitter:image" content={_ogImageUrl} />
+  <script src="@/scripts/common.ts"></script>
+  {
+    _googleFont && (
+      <>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href={_googleFont} rel="stylesheet" />
+      </>
+    )
+  }
+</head>

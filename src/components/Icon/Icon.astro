@@ -1,0 +1,8 @@
+---
+const { name } = Astro.props;
+const svgPath = `/assets/svg/icons.svg#${name}`;
+---
+
+<span class="sample-icon">
+  <svg viewBox="0 0 24 24"><use href={svgPath}></use></svg>
+</span>

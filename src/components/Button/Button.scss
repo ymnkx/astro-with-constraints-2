@@ -1,0 +1,60 @@
+@use "@/styles/_develop/+" as *;
+
+.sample-button {
+  --this-color-text: var(--color-text);
+  --this-color-bg: var(--color-primary);
+  --this-color-bg-hover: var(--color-gray-700);
+  --this-radius: var(--rounded-sm);
+
+  display: inline-block;
+  max-width: 100%;
+  min-height: rem(44);
+  text-decoration: none;
+
+  &.-large {
+    min-width: 10em;
+  }
+
+  &.-full {
+    width: 100%;
+    min-width: 10em;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      --this-color-bg: var(--this-color-bg-hover);
+    }
+  }
+}
+
+button.sample-button {
+  padding: 0;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  border: none;
+}
+
+.sample-button_inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: rem(44);
+  padding: 0.25rlh 1rem;
+  color: var(--this-color-text);
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--this-color-bg);
+  border: 1px solid currentcolor;
+  border-radius: var(--this-radius);
+
+  .sample-button.-small & {
+    min-height: auto;
+  }
+
+  .sample-button.-full &,
+  .sample-button.-large & {
+    padding: 1.25lh 1.5rem;
+  }
+}

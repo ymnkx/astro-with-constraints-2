@@ -1,0 +1,24 @@
+{
+  "path-autocomplete.pathMappings": {
+    "@": "${folder}/src"
+  },
+  "scss.validate": false,
+  "[scss]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    }
+  },
+  "[astro]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    }
+  },
+  "stylelint.configFile": "./.stylelintrc.json",
+  "stylelint.validate": ["css", "scss", "astro"],
+  "[astro][scss]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    }
+  },
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true
+}
