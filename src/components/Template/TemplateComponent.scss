@@ -1,0 +1,38 @@
+@use "@/styles/_develop/+" as *;
+
+.template-component {
+  --this-gap: #{rem(8)};
+  --this-color-text: var(--color-text-secondary);
+
+  &.-dark {
+    --this-color-text: var(--color-text-primary);
+  }
+
+  padding: rem(40);
+  background-color: var(--color-bg-primary);
+}
+
+.template-component_inner {
+  max-width: rem(500);
+  margin: 0 auto;
+
+  @include min-screen(md) {
+    max-width: rem(800);
+  }
+
+  @include min-screen(lg) {
+    max-width: rem(1200);
+  }
+}
+
+.template-component_item {
+  display: flex;
+  gap: var(--this-gap);
+  align-items: center;
+  justify-content: center;
+  color: var(--this-color-text);
+
+  .template-component.-vertical & {
+    flex-direction: column;
+  }
+}

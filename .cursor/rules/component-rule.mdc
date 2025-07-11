@@ -1,0 +1,39 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# コンポーネント開発ルール
+
+## 参考データ
+
+[TemplateComponent.astro](mdc:src/components/Template/TemplateComponent.astro)
+[TemplateComponent.scss](mdc:src/components/Template/TemplateComponent.scss)
+
+## ファイル構成
+
+- まず、構造となるAstroファイルを作成します
+  - `ComponentName.astro` - テンプレート
+- 次に、スタイルを設定するscssファイルを作成します
+  - `ComponentName.scss` - スタイル
+- クライアントサイドでの処理（クリックなど）が必要な場合、tsファイルを追加します
+  - `ComponentName.ts` - TypeScript
+  - tsファイルは、本当に必要な場合のみ作成します。
+  - tsファイルは、作成する前に内容を説明し、必ず、承認されてから制作すること
+- 同一ディレクトリ内に全ファイルを配置
+- ディレクトリ名とファイル名を一致させる
+- ファイル名はPascalCaseを使用する
+
+## Astroファイルの制約
+
+- Astroファイルの先頭には必ず frontmatter `---` を含める。
+- `<style>` と `<script>` タグは絶対に含めない
+- スタイルとスクリプトは外部ファイルとして分離する
+- importはnode.jsで自動で行われる
+- Astroで必要な型定義はAstroファイル内に作成し、tsファイルは使用しない。
+- コメントで簡単な説明を追加すること
+- 他コンポーネントのimportは `@` からはじまる alias path を使用する。
+
+## CSS設計
+
+- [css-rule.mdc](mdc:.cursor/rules/css-rule.mdc) を参照すること。

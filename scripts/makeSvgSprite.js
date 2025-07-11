@@ -37,4 +37,5 @@ spriter.compile((error, result) => {
       fs.writeFileSync(result[mode][resource].path, result[mode][resource].contents);
     }
   }
+  console.log('SVGスプライトが作成されました。');
 });

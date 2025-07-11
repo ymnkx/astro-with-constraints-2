@@ -1,0 +1,21 @@
+---
+// AI学習用のテンプレート用のコンポーネントです。
+import Icon from '@/components/Icon/Icon.astro';
+
+interface Props {
+  text?: string;
+  iconName?: string;
+  isVertical?: boolean;
+}
+
+const { text = 'TEMPLATE', iconName = 'code-bracket', isVertical = false }: Props = Astro.props;
+---
+
+<div class:list={['template-component', isVertical && '-vertical']}>
+  <div class="template-component_inner">
+    <div class="template-component_item">
+      <Icon name={iconName} />
+      <span>{text}</span>
+    </div>
+  </div>
+</div>

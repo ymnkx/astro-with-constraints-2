@@ -1,0 +1,78 @@
+@use "@/styles/_develop/+" as *;
+
+.text-link {
+  --this-color-text: var(--color-text-primary);
+  --this-color-text-hover: var(--color-text-secondary);
+  --this-gap: #{rem(4)};
+  --this-icon-size: #{rem(16)};
+  --this-transition: var(--easing-standard) 0.2s;
+
+  display: inline-flex;
+  gap: var(--this-gap);
+  align-items: center;
+  color: var(--this-color-text);
+  text-decoration: none;
+  transition: color var(--this-transition);
+
+  // アイコン位置のModifier
+  &.-icon-left {
+    flex-direction: row-reverse;
+  }
+
+  &.-icon-right {
+    flex-direction: row;
+  }
+
+  // 外部リンク用のスタイル
+  &.-external {
+    // 外部リンクであることを示すためのスタイルは必要に応じて追加
+  }
+
+  // ホバー・フォーカス状態
+  @media (any-hover: hover) {
+    &:hover {
+      color: var(--this-color-text-hover);
+
+      .text-link_icon {
+        transform: translateX(#{rem(2)});
+      }
+    }
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-focus, #0066cc);
+    outline-offset: 2px;
+  }
+}
+
+.text-link_text {
+  // テキスト部分のスタイル
+}
+
+.text-link_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--this-icon-size);
+  height: var(--this-icon-size);
+  transition: transform var(--this-transition);
+
+  // アイコン位置に応じた方向調整
+  .text-link.-icon-left & {
+    transform: translateX(0);
+  }
+
+  .text-link.-icon-right & {
+    transform: translateX(0);
+  }
+
+  @media (any-hover: hover) {
+    .text-link.-icon-left:hover & {
+      transform: translateX(#{rem(2)});
+    }
+
+    .text-link.-icon-right:hover & {
+      transform: translateX(#{rem(-2)});
+    }
+  }
+}
