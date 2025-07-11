@@ -14,7 +14,6 @@
     "delivery:format": "prettier --write 'build/htdocs/**/*.html'",
     "delivery:format2": "node 'scripts/deleteBlankLine.js'",
     "delivery:list": "node 'scripts/makeFileList.js'",
-    "make-svg-sprite": "node 'scripts/makeSvgSprite.js'",
     "convert-webp": "node 'scripts/convertWebp.js'",
     "check-ng-words": "node 'scripts/checkNgWords.js'",
     "style-dictionary": "npm run style-dictionary:base && npm run style-dictionary:composite",
