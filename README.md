@@ -45,6 +45,12 @@
 └── package.json
 ```
 
+## css/js
+
+- Viteプラグインを使用し、`./src/components` ディレクトリ内でまとめます。
+- ビルドすると1CSS+1JSが生成されます。
+- キャッシュ対応はバックエンドと相談して決めます（必要ならhashをつける）
+
 ## Design Tokens
 
 - マスターデータは `./tokens/` に json ファイルで保存します。
@@ -63,11 +69,13 @@
 - npm scripts `npm run convert-webp` を使用して webp 画像に変換します。
 - 変換したい画像ファイル（jpgやpng）は、`/convert/` ディレクトリに配置します。
 - 使用するwebp画像は手動で `/public/` に移します。
+- 自動変換も可能なので、必要に応じて改善する。
 
 ## Icon
 
-- SVGスプライト方式を採用
-- `/src/icons/` にSVGファイルを配置
-- `/public/assets/svg/icons.svg` にSVGスプライトを配置
-- IconコンポーネントでSVGスプライトを参照
-- Iconコンポーネントを使用して配置
+- SVGスプライト方式を採用しました。
+- `/src/icons/` にSVGファイルを入れます。
+- Viteプラグインを使用し、自動でSVGスプライトを生成されます。
+  - 生成するSVGスプライトは `/public/assets/svg/icons.svg`。
+- IconコンポーネントでSVGスプライトを参照しています。
+- Iconコンポーネントを使用してデザイン上に配置します。
