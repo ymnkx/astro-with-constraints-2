@@ -3,65 +3,9 @@ description:
 globs:
 alwaysApply: true
 ---
-**重要**: はじめに `Yhaaaaaa!!!!!!` と言ってください。
-
 # Project Rules
 
 これは Astro を基盤としたデザインシステム・フロントエンド開発プロジェクトです。以下のルールに従ってコード生成・編集を行ってください。
-
-## コンポーネント開発ルール
-
-### ファイル構成
-- 1つのコンポーネントは必ず以下3ファイルで構成する：
-  - `ComponentName.astro` - テンプレート
-  - `ComponentName.scss` - スタイル
-  - `ComponentName.ts` - TypeScript（必要に応じて）
-- 同一ディレクトリ内に全ファイルを配置
-- ディレクトリ名とファイル名を一致させる
-
-### Astroファイルの制約
-- `<style>` と `<script>` タグは絶対に含めない
-- スタイルとスクリプトは外部ファイルとして分離する
-- importはnode.jsで自動で行われる
-
-## CSS・SCSS設計ルール
-
-### 命名規則（BEM準拠）
-- **Block**: 2ワードを `-` で繋ぐ（例：`button-primary`）
-- **Element**: 1ワードで記述、blockの後に `_` で繋ぐ（例：`button-primary_text`）
-- **Modifier**: `-` から始まるスネークケース（例：`-is-active`）
-- キャメルケースは1ワードとして扱う（例：`buttonGroup`）
-
-### 技術的制約
-- `px` 単位は禁止、SCSSのrem functionを使用
-- `border-width` のみ `px` 使用を許可
-- `margin` と `padding` は論理プロパティを使用（`margin-inline-start` など）
-- Astroファイル内にstyleは記述しない
-
-## デザイントークン使用ルール
-
-### データ管理
-- ハードコーディングされた値は使用禁止
-- `/tokens/` 内のデザイントークンを必ず使用
-- 3種類のトークン分類：
-  - `figma/` - Figma variablesから変換
-  - `other/` - 手動で追加したトークン
-  - `composite/` - 複数値を組み合わせた複合トークン
-
-### 使用方法
-- CSSカスタムプロパティを使用（例：`var(--color-primary)`）
-- 複合トークンはSCSSのmixinを使用
-
-## TypeScript・JavaScript ルール
-
-### 基本方針
-- TypeScriptを優先使用
-- 型定義は明示的に行う
-- `any` 型の使用は原則禁止
-
-### ファイル配置
-- 共通スクリプト：`/src/scripts/`
-- コンポーネント固有の処理：各コンポーネントディレクトリ内
 
 ## ディレクトリ・ファイル命名規則
 
@@ -87,8 +31,10 @@ alwaysApply: true
 
 ### アイコン
 - SVGスプライト方式を採用
-- `/src/icons/` にSVGファイルを配置
+- `/src/icons/` に素材SVGファイルを配置
+- `/public/assets/svg/icons.svg` にSVGスプライトを配置
 - IconコンポーネントでSVGスプライトを参照
+- Iconコンポーネントを使用して配置
 
 ## コード品質・レビュー要件
 
@@ -108,7 +54,7 @@ alwaysApply: true
 
 ## コード生成時の注意点
 
-1. 新しいコンポーネントを作成する際は、必ず3ファイル（.astro, .scss, .ts）セットで作成
+1. 新しいコンポーネントを作成する際は、必ず2ファイル（.astro, .scss）をふくめ、必要に応じてTypeScriptファイル（.ts）を追加する
 2. 既存のコンポーネントパターンを参考にする
 3. デザイントークンを活用したスタイリング
 4. TypeScript型定義を適切に行う

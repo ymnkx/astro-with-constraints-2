@@ -1,0 +1,23 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# コミット・バージョン管理ルール
+
+## ブランチ戦略
+
+- `main` - 本番環境
+- `develop` - 開発環境
+- `feature/*` - 機能開発
+- `hotfix/*` - 緊急修正
+
+## コミットメッセージ
+
+- プリフィックスを使用
+  - `feat:` - 新機能
+  - `fix:` - バグ修正
+  - `docs:` - ドキュメント更新
+  - `style:` - スタイル修正
+  - `refactor:` - リファクタリング

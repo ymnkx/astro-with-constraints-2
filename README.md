@@ -1,15 +1,10 @@
 # Astro With Constraints
 
-- ビルドファイルに制約が多いプロジェクト向けの開発環境です。
+## 概要
+
+- このプロジェクトは Astro を基盤としたデザインシステム・フロントエンド開発プロジェクトです。
 - フロントエンドがビルドした後、バックエンドが編集する（組み込む）ことを考慮しています。
 - 具体的には、人間が読みやすく、更新が管理しやすいHTMLをビルドします。
-
-## Project Structure
-
-- [ディレクトリ構成](/documents/directory.md)　
-- [コンポーネント構成](/documents/component.md)
-- [Design Tokens](/documents/design-tokens.md)
-- [CSS設計](/documents/css-architecture.md)
 
 ## Commands
 
@@ -24,9 +19,55 @@
 | `npm run convert-webp`     | jpg や png を webp に変換する                     |
 | `npm run style-dictionary` | Design Token の JSON を scss ファイルに変換する   |
 
+## Directory
+
+```text
+/
+├── build/   ... 納品用ビルドデータ
+├── convert/ ... webP変換用
+├── dist/    ... テスト用ビルドデータ
+├── documents/    ... ドキュメントデータ
+├── public/
+│   ├── assets/
+│   │   ├── image/
+│   │   └── svg/
+│   └── favicon.svg
+├── scripts/  ... node.js用script
+├── src/
+│   ├── components/
+│   ├── data/
+│   ├── icons/
+│   ├── layouts/
+│   ├── pages/
+│   ├── scripts/
+│   └── styles/
+├── tokens/    ... Design Tokens データ
+└── package.json
+```
+
+## Design Tokens
+
+- マスターデータは `./tokens/` に json ファイルで保存します。
+  - json ファイルは３種類あります。
+    - Figma variables を変換したJSON `./tokens/figma/`
+    - 実装で追加したトークンのJSON `./tokens/other/`
+    - 複数の値を組み合わせogあ複合トークンのJSON `./tokens/composite/`
+- style dictionary を使用して scss ファイルに変換します。
+  - 変換は npm scripts `npm run style-dictionary` で実行します。
+  - デザイントークンはcssカスタムプロパティに変換されます。
+  - 複合トークンはscssのmixinに変換されます。
+
 ## Images
 
 - Astro 画像コンポーネントは使用しません。
 - npm scripts `npm run convert-webp` を使用して webp 画像に変換します。
 - 変換したい画像ファイル（jpgやpng）は、`/convert/` ディレクトリに配置します。
 - 使用するwebp画像は手動で `/public/` に移します。
+
+## Icon
+
+- SVGスプライト方式を採用
+- `/src/icons/` にSVGファイルを配置
+- `/public/assets/svg/icons.svg` にSVGスプライトを配置
+- IconコンポーネントでSVGスプライトを参照
+- Iconコンポーネントを使用して配置
