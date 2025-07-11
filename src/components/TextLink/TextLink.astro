@@ -1,0 +1,41 @@
+---
+// アイコン付きテキストリンクコンポーネント
+import Icon from '@/components/Icon/Icon.astro';
+
+interface Props {
+  href: string;
+  text: string;
+  iconName?: string;
+  iconPosition?: 'left' | 'right';
+  target?: '_blank' | '_self';
+  isExternal?: boolean;
+}
+
+const { href, text, iconName, iconPosition = 'right', target = '_self', isExternal = false }: Props = Astro.props;
+
+// 外部リンクの判定
+const isExternalLink = isExternal || href.startsWith('http');
+const linkTarget = isExternalLink ? '_blank' : target;
+const relAttribute = isExternalLink ? 'noopener noreferrer' : undefined;
+---
+
+<a
+  href={href}
+  target={linkTarget}
+  rel={relAttribute}
+  class:list={[
+    'text-link',
+    iconName && iconPosition === 'left' && '-icon-left',
+    iconName && iconPosition === 'right' && '-icon-right',
+    isExternalLink && '-external',
+  ]}
+>
+  <span class="text-link_text">{text}</span>
+  {
+    iconName && (
+      <span class="text-link_icon">
+        <Icon name={iconName} />
+      </span>
+    )
+  }
+</a>

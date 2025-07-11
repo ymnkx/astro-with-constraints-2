@@ -5,6 +5,7 @@ import CarouselType01 from '@/components/Carousel/CarouselType01.astro';
 import Heading from '@/components/Heading/Heading.astro';
 import Icon from '@/components/Icon/Icon.astro';
 import Modal from '@/components/Modal/Modal.astro';
+import TextLink from '@/components/TextLink/TextLink.astro';
 import LayoutBase from '@/layouts/Base.astro';
 const title = '';
 const description = '';
@@ -18,6 +19,21 @@ const description = '';
   <Icon name="check" />
   <Icon name="chevron-right" />
   <Icon name="x-mark" />
+  <Icon name="blank" />
+  <Icon name="cube" />
+  <Heading>TextLink</Heading>
+  <!-- 基本的な使用 -->
+  <p>
+    <TextLink href="/about" text="詳細はこちら" />
+  </p>
+  <p>
+    <!-- 左側にアイコン -->
+    <TextLink href="/docs" text="ドキュメント" iconName="check" iconPosition="left" />
+  </p>
+  <p>
+    <!-- 外部リンク -->
+    <TextLink href="https://example.com" text="外部サイト" iconName="blank" iconPosition="right" />
+  </p>
   <Heading>Accordion</Heading>
   <Accordion name="top">
     <Fragment slot="label">

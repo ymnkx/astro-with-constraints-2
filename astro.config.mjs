@@ -1,7 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { projectDirectory } from './src/data/project.ts';
-import assetsGlobbing from './scripts/assetsGlobbing.js';
+// @ts-ignore
+import assetsGlobbingPlugin from './scripts/assetsGlobbing.js';
+import { svgSprite } from './plugins/svg-sprite.ts';
 
 const assetsDir = 'assets';
 
@@ -15,7 +17,11 @@ export default defineConfig({
     assets: `${assetsDir}/js/chunk`,
   },
   vite: {
-    plugins: [assetsGlobbing({ logEnabled: true })],
+    plugins: [
+      svgSprite({ srcDir: 'src/icons', destDir: 'public/assets/svg' }),
+      // @ts-ignore
+      assetsGlobbingPlugin({ logEnabled: true }),
+    ],
     css: {
       preprocessorOptions: {
         scss: {
