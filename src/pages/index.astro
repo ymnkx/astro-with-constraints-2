@@ -13,7 +13,9 @@ const description = '';
 
 <LayoutBase title={title} description={description}>
   <Heading>Button</Heading>
-  <Button>BUTTON</Button>
+  <Button as="button" type="button">BUTTON</Button>
+  <Button as="a" href="/">A</Button>
+  <Button as="span">SPAN</Button>
   <Heading>Icon</Heading>
   <Icon name="code-bracket" />
   <Icon name="check" />
