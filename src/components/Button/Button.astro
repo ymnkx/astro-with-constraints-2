@@ -1,40 +1,24 @@
 ---
-type Props = {
-  size?: 'small' | 'medium' | 'large';
-  isFull?: boolean;
-  as?: 'span' | undefined;
-  class?: 'string';
-};
-const { size = 'medium', isFull = false, as, class: className, ...rest }: Props = Astro.props;
+import type { HTMLTag, Polymorphic } from 'astro/types';
+
+type Props<Tag extends Extract<HTMLTag, 'a' | 'button' | 'span'> = 'span'> = Polymorphic<{
+  as: Tag;
+}> &
+  (Tag extends 'a' ? { href: string | URL } : object) &
+  (Tag extends 'button' ? { type: string | URL } : object) & {
+    size?: 'small' | 'medium' | 'large';
+    isFull?: boolean;
+    as?: 'span' | 'button' | 'a' | undefined;
+    class?: 'string';
+  };
+const { size = 'medium', isFull = false, as: Tag = 'span', class: className, ...rest }: Props = Astro.props;
 ---
 
-{
-  as === 'span' ? (
-    <span
-      class:list={[
-        className,
-        'sample-button',
-        { '-small': size === 'small', '-large': size === 'large', '-full': isFull },
-      ]}
-      {...rest}
-    >
-      <span class="sample-button_inner">
-        <slot />
-      </span>
-    </span>
-  ) : (
-    <button
-      type="button"
-      class:list={[
-        className,
-        'sample-button',
-        { '-small': size === 'small', '-large': size === 'large', '-full': isFull },
-      ]}
-      {...rest}
-    >
-      <span class="sample-button_inner">
-        <slot />
-      </span>
-    </button>
-  )
-}
+<Tag
+  class:list={[className, 'sample-button', { '-small': size === 'small', '-large': size === 'large', '-full': isFull }]}
+  {...rest}
+>
+  <span class="sample-button_inner">
+    <slot />
+  </span>
+</Tag>
