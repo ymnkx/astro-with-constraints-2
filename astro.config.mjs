@@ -43,6 +43,12 @@ export default defineConfig({
               : info.names[0].endsWith('.js')
                 ? `${assetsDir}/js/[name][extname]`
                 : `${assetsDir}/image/[name][extname]`,
+          // 特定のモジュールを別ファイルに分離する場合に使う
+          // manualChunks(id) {
+          //   if (id.includes('embla-carousel')) {
+          //     return 'embla-carousel';
+          //   }
+          // },
         },
       },
     },
