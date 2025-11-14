@@ -1,0 +1,28 @@
+@use "@/styles/_develop/+" as *;
+
+.embla__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.embla__dot {
+  --dot-size: #{rem(12)};
+
+  width: var(--dot-size);
+  height: var(--dot-size);
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  appearance: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-color: gray;
+  border: 0;
+  border-radius: 50%;
+
+  &.-selected {
+    background-color: red;
+  }
+}

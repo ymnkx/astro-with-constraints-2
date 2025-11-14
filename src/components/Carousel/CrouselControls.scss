@@ -1,0 +1,42 @@
+@use "@/styles/_develop/+" as *;
+
+// .embla__controls {}
+
+.embla__buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla__button {
+  --button-size: #{rem(24)};
+
+  z-index: 1;
+  display: inline-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-size);
+  height: var(--button-size);
+  padding: 0;
+  margin: 0;
+  color: var(--color-text);
+  text-decoration: none;
+  appearance: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px currentcolor;
+}
+
+.embla__button:disabled {
+  opacity: 0.5;
+}
+
+.embla__button__svg {
+  width: 50%;
+  height: 50%;
+}

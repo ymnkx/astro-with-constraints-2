@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "astro": "^5.15.5",
-    "swiper": "^11.2.4"
+    "embla-carousel": "^8.6.0"
   },
   "devDependencies": {
     "@inquirer/prompts": "^7.3.1",
