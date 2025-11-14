@@ -9,7 +9,7 @@ type Props<Tag extends Extract<HTMLTag, 'a' | 'button' | 'span'> = 'span'> = Pol
     size?: 'small' | 'medium' | 'large';
     isFull?: boolean;
     as?: 'span' | 'button' | 'a' | undefined;
-    class?: 'string';
+    class?: string;
   };
 const { size = 'medium', isFull = false, as: Tag = 'span', class: className, ...rest }: Props = Astro.props;
 ---

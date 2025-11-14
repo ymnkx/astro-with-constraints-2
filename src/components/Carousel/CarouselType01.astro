@@ -1,30 +1,23 @@
 ---
 import { parse } from 'node-html-parser';
+import CarouselPagination from './CarouselPagination.astro';
+import CrouselControls from './CrouselControls.astro';
 const html = await Astro.slots.render('default');
 const items = parse(html).childNodes.filter((item) => item.rawTagName !== '');
 ---
 
-<div class="sample-carousel js-carousel">
-  <swiper-container
-    Pagination={true}
-    navigation={true}
-    slides-per-view="1"
-    space-between="10"
-    data-role="swiper"
-    init="false"
-  >
-    {
-      items.map((item: any) => (
-        <swiper-slide>
-          <div class="sample-carousel_item">
+<div class="carousel-wrapper">
+  <div class="embla">
+    <div class="embla__container">
+      {
+        items.map((item: any) => (
+          <div class="embla__slide">
             <Fragment set:html={item} />
           </div>
-        </swiper-slide>
-      ))
-    }
-  </swiper-container>
-  <div class="sample-carousel_control" data-role="control">
-    <button type="button" data-role="prev" aria-label="Prev">Prev</button>
-    <button type="button" data-role="next" aria-label="Next">Next</button>
+        ))
+      }
+    </div>
+    <CrouselControls />
+    <CarouselPagination />
   </div>
 </div>

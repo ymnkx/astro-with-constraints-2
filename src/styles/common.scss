@@ -1,4 +1,5 @@
-@forward "./tokens/design-tokens";
+@forward "/tokens/design-tokens";
+@forward "/tokens/design-composite";
 @forward "@/styles/reset";
 @forward "@/styles/base";
 @forward "@/components/+";

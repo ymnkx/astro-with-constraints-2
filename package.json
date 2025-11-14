@@ -18,11 +18,12 @@
     "check-ng-words": "node 'scripts/checkNgWords.js'",
     "style-dictionary": "npm run style-dictionary:base && npm run style-dictionary:composite",
     "style-dictionary:base": "style-dictionary build --config ./sd.config.js",
-    "style-dictionary:composite": "style-dictionary build --config ./sd.config.c.js --verbose"
+    "style-dictionary:composite": "style-dictionary build --config ./sd.config.c.js --verbose",
+    "extract-diff-files": "node 'scripts/extractDiffFiles.mjs'"
   },
   "dependencies": {
-    "astro": "^5.3.0",
-    "swiper": "^11.2.4"
+    "astro": "^5.15.5",
+    "embla-carousel": "^8.6.0"
   },
   "devDependencies": {
     "@inquirer/prompts": "^7.3.1",
