@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "@inquirer/prompts": "^7.3.1",
-    "@markuplint/astro-parser": "^4.6.16",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "eslint": "^9.20.1",
@@ -37,7 +36,6 @@
     "fs-extra": "^11.3.0",
     "glob": "^11.0.1",
     "lodash": "^4.17.21",
-    "markuplint": "^4.11.6",
     "node-html-parser": "^7.0.1",
     "prettier": "^3.5.0",
     "prettier-plugin-astro": "^0.14.1",
