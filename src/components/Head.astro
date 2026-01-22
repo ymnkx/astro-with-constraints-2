@@ -1,5 +1,4 @@
 ---
-import '@/styles/common.scss';
 import { projectName, projectDescription, projectUrl, projectDirectory } from '@/data/project.ts';
 const { title, description } = Astro.props;
 const _title = title && title !== '' ? `${title} | ${projectName}` : `${projectName}`;
@@ -28,7 +27,7 @@ const _googleFont = 'https://fonts.googleapis.com/css2?family=Roboto:wght@700&di
   <meta name="twitter:description" content={_description} />
   <meta name="twitter:url" content={_url} />
   <meta name="twitter:image" content={_ogImageUrl} />
-  <script src="@/scripts/common.ts"></script>
+  <slot />
   {
     _googleFont && (
       <>

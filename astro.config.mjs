@@ -33,13 +33,22 @@ export default defineConfig({
       assetsInlineLimit: 0,
       rollupOptions: {
         output: {
-          entryFileNames: () => {
+          entryFileNames: (info) => {
             let fileName = 'script';
+            if (info.moduleIds) {
+              const scriptsModule = info.moduleIds.find((id) => id.includes('/src/scripts/') && id.endsWith('.ts'));
+              if (scriptsModule) {
+                const match = scriptsModule.match(/\/src\/scripts\/([^/]+)\.ts$/);
+                if (match) {
+                  fileName = match[1];
+                }
+              }
+            }
             return `${assetsDir}/js/${fileName}.js`;
           },
           assetFileNames: (info) =>
             info.names[0].endsWith('.css')
-              ? `${assetsDir}/css/common[extname]`
+              ? `${assetsDir}/css/common[extname]` // [name]にするとindex.cssとなる
               : info.names[0].endsWith('.js')
                 ? `${assetsDir}/js/[name][extname]`
                 : `${assetsDir}/image/[name][extname]`,
