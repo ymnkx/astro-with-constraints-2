@@ -1,3 +1,3 @@
-console.log('common.ts');
+import '@/components/All/+.ts';
 
-import '@/components/+.ts';
+console.log('common.ts');

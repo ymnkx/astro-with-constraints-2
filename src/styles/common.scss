@@ -1,7 +1,11 @@
 @forward "/tokens/design-tokens";
 @forward "/tokens/design-composite";
-@forward "@/styles/reset";
-@forward "@/styles/base";
-@forward "@/components/+";
+@forward "@/styles/_base/reset";
+@forward "@/styles/_base/base";
+@forward "@/components/All/+";
 @layer reset;
 @layer base;
+
+:root {
+  --output-file-name: all;
+}
