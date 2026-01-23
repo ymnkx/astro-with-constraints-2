@@ -1,4 +1,4 @@
-import { slideDown, slideUp } from '@/scripts/develop/slideController';
+import { slideDown, slideUp } from '@/tools/slideController';
 
 type Props = {
   selector: string;
