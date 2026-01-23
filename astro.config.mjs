@@ -54,11 +54,11 @@ export default defineConfig({
                 : `${assetsDir}/image/[name][extname]`,
           // 特定のモジュールを別ファイルに分離する場合に使う
           // Astro は Vite の SplitVendorChunkPlugin が使えない
-          // manualChunks(id) {
-          //   if (id.includes('embla-carousel')) {
-          //     return 'embla-carousel';
-          //   }
-          // },
+          manualChunks(id) {
+            if (id.includes('embla-carousel')) {
+              return 'embla-carousel';
+            }
+          },
         },
       },
     },

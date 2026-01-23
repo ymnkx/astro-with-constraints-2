@@ -50,6 +50,12 @@
 - Viteプラグインを使用し、`./src/components` ディレクトリ内でまとめます。
 - 基本、ビルドすると1CSS+1JSが生成されます。
   - ページ固有のjsファイルを作成することも可能です。
+  - 各ページのBaseレイアウトの `head` slot にscriptタグを追加します。
+  ```
+    <Fragment slot="head">
+      <script src="@/scripts/second.ts"></script>
+    </Fragment>
+  ```
 - キャッシュ対応はバックエンドと相談して決めます（必要ならhashをつける）
 
 ## Design Tokens
