@@ -1,6 +1,7 @@
-import './Accordion/Accordion.ts';
-import './Carousel/Carousel.ts';
-import './Carousel/CarouselPagination.ts';
-import './Carousel/CrouselControls.ts';
-import './Modal/Modal.ts';
-import './Navigation/Navigation.ts';
+import './All/Accordion/Accordion.ts';
+import './All/Carousel/Carousel.ts';
+import './All/Carousel/CarouselPagination.ts';
+import './All/Carousel/CrouselControls.ts';
+import './All/Modal/Modal.ts';
+import './All/Navigation/Navigation.ts';
+import './Second/SecondBlock/SecondBlock.ts';

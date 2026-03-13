@@ -46,12 +46,15 @@ export default defineConfig({
             }
             return `${assetsDir}/js/${fileName}.js`;
           },
-          assetFileNames: (info) =>
-            info.names[0].endsWith('.css')
-              ? `${assetsDir}/css/common[extname]` // [name]にするとindex.cssとなる
+          assetFileNames: (info) => {
+            const fileName = [...String(info.source).matchAll(/--output-file-name:\s*([^}]+)/g)][0]?.[1] || 'style';
+
+            return info.names[0].endsWith('.css')
+              ? `${assetsDir}/css/${fileName}.css`
               : info.names[0].endsWith('.js')
-                ? `${assetsDir}/js/[name][extname]`
-                : `${assetsDir}/image/[name][extname]`,
+                ? `${assetsDir}/js/[name].js`
+                : `${assetsDir}/image/[name][extname]`;
+          },
           // 特定のモジュールを別ファイルに分離する場合に使う
           // Astro は Vite の SplitVendorChunkPlugin が使えない
           manualChunks(id) {

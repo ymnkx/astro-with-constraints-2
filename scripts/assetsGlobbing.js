@@ -37,97 +37,177 @@ const log = (options, message, ...args) => {
 };
 
 /**
+ * ディレクトリがサブフォルダを持つかチェック
+ * @param {string} dir ディレクトリパス
+ * @returns {boolean}
+ */
+const hasSubFolders = (dir) => {
+  if (!fs.existsSync(dir)) return false;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  return entries.some((entry) => entry.isDirectory() && !entry.name.startsWith('.'));
+};
+
+/**
+ * ディレクトリ内のファイルとサブフォルダを収集
+ * @param {string} dir ディレクトリパス
+ * @param {import('./assetsGlobbing.d.ts').UserConfig} options
+ * @returns {{ scssFiles: string[], tsFiles: string[], subFolders: string[] }}
+ */
+const collectFilesInDirectory = (dir, options) => {
+  if (!fs.existsSync(dir)) return { scssFiles: [], tsFiles: [], subFolders: [] };
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const scssFiles = [];
+  const tsFiles = [];
+  const subFolders = [];
+
+  entries.forEach((entry) => {
+    const fullPath = normalizePath(join(dir, entry.name));
+    
+    if (entry.isDirectory() && !entry.name.startsWith('.')) {
+      subFolders.push(fullPath);
+    } else if (entry.isFile()) {
+      if (options.extnamePattern.styles.test(entry.name) && !entry.name.includes('+.scss')) {
+        scssFiles.push(fullPath);
+      } else if (options.extnamePattern.scripts.test(entry.name) && !entry.name.includes('+.ts')) {
+        tsFiles.push(fullPath);
+      }
+    }
+  });
+
+  return { scssFiles, tsFiles, subFolders };
+};
+
+/**
+ * 特定のディレクトリ用のまとめファイルを生成
+ * @param {string} dir ディレクトリパス
+ * @param {string[]} scssFiles SCSSファイルのリスト
+ * @param {string[]} tsFiles TSファイルのリスト
+ * @param {string[]} subFolders サブフォルダのリスト
+ * @param {import('./assetsGlobbing.d.ts').UserConfig} options
+ */
+const generateAggregateFiles = (dir, scssFiles, tsFiles, subFolders, options) => {
+  log(options, `[Assets Globbing] ディレクトリ処理: ${dir}`);
+  log(options, `  - SCSSファイル: ${scssFiles.length}件`);
+  log(options, `  - TSファイル: ${tsFiles.length}件`);
+  log(options, `  - サブフォルダ: ${subFolders.length}件`);
+  
+  // SCSSファイルをまとめる
+  let scssImports = '';
+  
+  scssFiles.forEach((file) => {
+    const relativePath = normalizePath(relative(dir, file));
+    scssImports += `@forward "./${relativePath}";\n`;
+  });
+  
+  subFolders.forEach((folder) => {
+    const subScssPath = join(folder, '+.scss');
+    if (fs.existsSync(subScssPath)) {
+      const relativePath = normalizePath(relative(dir, subScssPath));
+      scssImports += `@forward "./${relativePath}";\n`;
+    }
+  });
+
+  const scssOutputPath = join(dir, '+.scss');
+  if (scssImports !== '') {
+    if (!fs.existsSync(scssOutputPath) || fs.readFileSync(scssOutputPath, 'utf8') !== scssImports) {
+      fs.writeFileSync(scssOutputPath, scssImports);
+      log(options, `[Assets Globbing] 更新しました: ${scssOutputPath}`);
+    }
+  } else if (fs.existsSync(scssOutputPath)) {
+    fs.unlinkSync(scssOutputPath);
+    log(options, `[Assets Globbing] 削除しました（空のため）: ${scssOutputPath}`);
+  }
+
+  // TSファイルをまとめる
+  let tsImports = '';
+  
+  tsFiles.forEach((file) => {
+    const relativePath = normalizePath(relative(dir, file));
+    try {
+      const fileContent = fs.readFileSync(file, 'utf8');
+      if (fileContent.includes('export default')) {
+        const basename = relativePath.replace(extname(relativePath), '');
+        tsImports += `export { default as ${basename.replace(/\//g, '_')} } from './${relativePath}';\n`;
+      } else {
+        tsImports += `import './${relativePath}';\n`;
+      }
+    } catch (error) {
+      console.error(`[Assets Globbing] ファイル読み込みエラー: ${file}`, error);
+      tsImports += `import './${relativePath}';\n`;
+    }
+  });
+  
+  subFolders.forEach((folder) => {
+    const subTsPath = join(folder, '+.ts');
+    if (fs.existsSync(subTsPath)) {
+      const relativePath = normalizePath(relative(dir, subTsPath));
+      tsImports += `export * from './${relativePath}';\n`;
+    }
+  });
+
+  const tsOutputPath = join(dir, '+.ts');
+  if (tsImports !== '') {
+    if (!fs.existsSync(tsOutputPath) || fs.readFileSync(tsOutputPath, 'utf8') !== tsImports) {
+      fs.writeFileSync(tsOutputPath, tsImports);
+      log(options, `[Assets Globbing] 更新しました: ${tsOutputPath}`);
+    }
+  } else if (fs.existsSync(tsOutputPath)) {
+    fs.unlinkSync(tsOutputPath);
+    log(options, `[Assets Globbing] 削除しました（空のため）: ${tsOutputPath}`);
+  }
+};
+
+/**
+ * ディレクトリとそのサブディレクトリから再帰的にファイルを収集
+ * @param {string} dir ディレクトリパス
+ * @param {import('./assetsGlobbing.d.ts').UserConfig} options
+ * @returns {{ scssFiles: string[], tsFiles: string[] }}
+ */
+const collectFilesRecursively = (dir, options) => {
+  const { scssFiles, tsFiles, subFolders } = collectFilesInDirectory(dir, options);
+  
+  const allScssFiles = [...scssFiles];
+  const allTsFiles = [...tsFiles];
+  
+  subFolders.forEach((subFolder) => {
+    const subResult = collectFilesRecursively(subFolder, options);
+    allScssFiles.push(...subResult.scssFiles);
+    allTsFiles.push(...subResult.tsFiles);
+  });
+  
+  return { scssFiles: allScssFiles, tsFiles: allTsFiles };
+};
+
+/**
+ * ディレクトリを再帰的に処理
+ * @param {string} dir ディレクトリパス
+ * @param {import('./assetsGlobbing.d.ts').UserConfig} options
+ */
+const processDirectory = (dir, options) => {
+  const { scssFiles, tsFiles, subFolders } = collectFilesInDirectory(dir, options);
+  
+  subFolders.forEach((subFolder) => {
+    processDirectory(subFolder, options);
+  });
+  
+  if (subFolders.length > 0) {
+    const allFiles = collectFilesRecursively(dir, options);
+    generateAggregateFiles(dir, allFiles.scssFiles, allFiles.tsFiles, [], options);
+  }
+};
+
+/**
  * @param {import('./assetsGlobbing.d.ts').UserConfig} options
  * @param {import('vite').ResolvedConfig} config
  */
 const assetsGlobbing = (options, config) => {
-  const filenamePattern = options.filenamePattern;
-  const ignoredPaths = Object.keys(filenamePattern).map((filename) => `!**/${filename}`);
-
-  // 出力ディレクトリを設定
   const componentsRoot = normalizePath(resolve(config.root, options.outputDir));
-
-  // パターンにマッチするパスを取得
-  const paths = FastGlob.sync(
-    options.paths.map((path) => normalizePath(path)),
-    { onlyFiles: true, ignore: ignoredPaths },
-  ).map((entry) => normalizePath(resolve(config.root, entry)));
-
-  // log(options, `[Assets Globbing] 検出されたファイル数: ${paths.length}`);
-
-  // 拡張子ごとにファイルを収集
-  const scssFiles = [];
-  const tsFiles = [];
-
-  // すべてのファイルをスキャン
-  paths.forEach((path) => {
-    if (options.extnamePattern.styles.test(path) && !path.includes('+.scss')) {
-      scssFiles.push(path);
-    } else if (options.extnamePattern.scripts.test(path) && !path.includes('+.ts')) {
-      tsFiles.push(path);
-    }
-  });
-
-  log(options, `[Assets Globbing] SCSSファイル: ${scssFiles.length}件, TSファイル: ${tsFiles.length}件`);
-
-  // SCSSファイルをまとめる
-  if (scssFiles.length > 0) {
-    let scssImports = '';
-    scssFiles.forEach((file) => {
-      const relativePath = normalizePath(relative(componentsRoot, file));
-      scssImports += `@forward "./${relativePath}";\n`;
-    });
-
-    const scssOutputPath = join(componentsRoot, '+.scss');
-    if (
-      scssImports !== '' &&
-      (!fs.existsSync(scssOutputPath) || fs.readFileSync(scssOutputPath, 'utf8') !== scssImports)
-    ) {
-      fs.writeFileSync(scssOutputPath, scssImports);
-      log(options, `[Assets Globbing] 更新しました: ${scssOutputPath}`);
-    }
-  } else {
-    // SCSSファイルがない場合は空のファイルを作成
-    const scssOutputPath = join(componentsRoot, '+.scss');
-    if (fs.existsSync(scssOutputPath)) {
-      fs.writeFileSync(scssOutputPath, '');
-      log(options, `[Assets Globbing] 空に更新しました: ${scssOutputPath}`);
-    }
-  }
-
-  // TSファイルをまとめる
-  if (tsFiles.length > 0) {
-    let tsImports = '';
-    tsFiles.forEach((file) => {
-      const relativePath = normalizePath(relative(componentsRoot, file));
-      try {
-        const fileContent = fs.readFileSync(file, 'utf8');
-        if (fileContent.includes('export default')) {
-          const basename = relativePath.replace(extname(relativePath), '');
-          tsImports += `export { default as ${basename.replace(/\//g, '_')} } from './${relativePath}';\n`;
-        } else {
-          tsImports += `import './${relativePath}';\n`;
-        }
-      } catch (error) {
-        console.error(`[Assets Globbing] ファイル読み込みエラー: ${file}`, error);
-        tsImports += `import './${relativePath}';\n`;
-      }
-    });
-
-    const tsOutputPath = join(componentsRoot, '+.ts');
-    if (tsImports !== '' && (!fs.existsSync(tsOutputPath) || fs.readFileSync(tsOutputPath, 'utf8') !== tsImports)) {
-      fs.writeFileSync(tsOutputPath, tsImports);
-      log(options, `[Assets Globbing] 更新しました: ${tsOutputPath}`);
-    }
-  } else {
-    // TSファイルがない場合は空のファイルを作成
-    const tsOutputPath = join(componentsRoot, '+.ts');
-    if (fs.existsSync(tsOutputPath)) {
-      fs.writeFileSync(tsOutputPath, '');
-      log(options, `[Assets Globbing] 空に更新しました: ${tsOutputPath}`);
-    }
-  }
-
+  
+  log(options, `[Assets Globbing] 処理開始: ${componentsRoot}`);
+  
+  processDirectory(componentsRoot, options);
+  
   // +.astro.ts が存在する場合は削除
   const astroTsPath = join(componentsRoot, '+.astro.ts');
   if (fs.existsSync(astroTsPath)) {

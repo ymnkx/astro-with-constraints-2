@@ -1,0 +1,9 @@
+@forward "@/components/Second/+";
+
+body {
+  background-color: wheat;
+}
+
+:root {
+  --output-file-name: second;
+}
