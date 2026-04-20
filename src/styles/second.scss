@@ -1,0 +1,9 @@
+@use "@/components/Second/+.scss" as *;
+
+body {
+  background-color: wheat;
+}
+
+:root {
+  --output-file-name: second;
+}

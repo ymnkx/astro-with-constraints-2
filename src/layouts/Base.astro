@@ -1,12 +1,16 @@
 ---
-import CommonLayout from '@/components/Common/CommonLayout.astro';
+import '@/styles/common.scss';
+import CommonLayout from '@/components/All/Common/CommonLayout.astro';
 import Head from '@/components/Head.astro';
 const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="ja">
-  <Head title={title} description={description} />
+  <Head title={title} description={description}>
+    <script src="@/scripts/common.ts"></script>
+    <slot name="head" />
+  </Head>
   <body>
     <CommonLayout>
       <slot />

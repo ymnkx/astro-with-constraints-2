@@ -1,4 +1,4 @@
-@use "@/styles/_develop/+" as *;
+@use "@/styles/_develop/+.scss" as *;
 
 .text-link {
   --this-color-text: var(--color-text-primary);

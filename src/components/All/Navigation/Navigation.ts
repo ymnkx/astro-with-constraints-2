@@ -1,6 +1,6 @@
-import { getEasingFunction } from '@/scripts/develop/getEasingFunction';
-import { matchMediaController } from '@/scripts/develop/matchMediaController';
-import { scrollController } from '@/scripts/develop/scrollController';
+import { getEasingFunction } from '@/tools/getEasingFunction';
+import { matchMediaController } from '@/tools/matchMediaController';
+import { scrollController } from '@/tools/scrollController';
 const _scrollController = scrollController();
 
 type Props = {

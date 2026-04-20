@@ -47,9 +47,55 @@
 
 ## css/js
 
-- Viteプラグインを使用し、`./src/components` ディレクトリ内でまとめます。
-- ビルドすると1CSS+1JSが生成されます。
-- キャッシュ対応はバックエンドと相談して決めます（必要ならhashをつける）
+- Viteプラグインを使用し、`./src/components/` ディレクトリ内でまとめます。
+- 基本、ビルドすると1CSS+1JSが生成されます。
+  - ページ固有のjsファイルを作成することも可能ですが、複雑になります（詳細は下記参照）
+- cssファイルやjsファイルのキャッシュ対応は入っていません。
+  - 必要に応じて `[hash]` をつけるか、`?v=20260101` といったパラメーターをつけます。
+
+### ページ固有JS
+
+- 分割したいjsの内容に合わせて `/components/` 内にフォルダを作成します。
+  - 例えば、`sample.js` に含めたいパーツを `/components/Sample/` 内にまとめる。
+- `/src/scripts/` に置いたtsファイルの名前がそのまま書き出されるjsの名前になります。
+- 各ページの `astro` ファイル内で、そのページ固有のtsファイルを指定します。
+  - Baseレイアウトの `head` slot にscriptタグを追加します。
+  - tsファイル内で `/components/` をimportします。
+
+```astro
+<!-- /src/pages/sample.astro -->
+<Fragment slot="head">
+  <script src="@/scripts/sample.ts"></script>
+</Fragment>
+```
+
+```ts
+// /src/scripts/sample.ts
+import '@/components/sample/+.ts';
+```
+
+### ページ固有CSS
+
+- （jsと同じく）分割したいcssの内容に合わせて `/components/` 内にフォルダを作成します。
+  - 例えば、`sample.css` に含めたいパーツを `/components/Sample/` 内にまとめる。
+- `/src/styles/` に置いたscssファイルの名前はそのままcssファイル名にはできません。
+  - scssの中にカスタムプロパティを設定して、css名に使います。
+
+```scss
+// /src/styles/sample.scss
+:root {
+  --output-file-name: sample;
+}
+```
+
+- 各ページの `astro` ファイル内で、そのページ固有のscssファイルを指定します。
+
+```astro
+---
+// /src/pages/sample.astro
+import '@/styles/sample.scss';
+---
+```
 
 ## Design Tokens
 
