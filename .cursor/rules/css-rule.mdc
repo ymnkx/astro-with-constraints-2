@@ -3,35 +3,43 @@ description:
 globs:
 alwaysApply: true
 ---
+
 # CSS/SCSS 設計ルール
 
 ## 必須設定
 
 ### import ルール
+
 - **全てのscssファイルの1行目**に必ず以下を記述:
+
 ```scss
-@use "@/styles/_develop/+" as *;
+@use '@/styles/_develop/+.scss' as *;
 ```
 
 ## BEM命名規則（厳格版）
 
 ### Block（ブロック）
+
 - 2ワードを `-` で繋ぐ（例：`button-primary`, `text-link`）
 - 3ワードの場合、キャメルケースで2ワードにまとめる（例：`sample-longName`, `longName-component`）
 - **4ワード以上は禁止**
 
 ### Element（要素）
+
 - 1ワードで記述、blockの後に `_` で繋ぐ（例：`button-primary_text`, `text-link_icon`）
 - 2ワードの場合、キャメルケースで1ワードにまとめる（例：`button-group_sampleItem`）
 - **3ワード以上は禁止**
 
 ### Modifier（修飾子）
+
 - `-` から始まるケバブケース（例：`-is-active`, `-icon-left`, `-large`）
 - Blockに直接付与: `.text-link.-icon-left`
 - 状態を表現: `-is-loading`, `-is-disabled`
 
 ### 階層化の禁止
+
 - Block と Element は階層化せず、個別の塊として記述
+
 ```scss
 // ❌ 悪い例
 .block_element_subelement
@@ -44,7 +52,9 @@ alwaysApply: true
 ## CSS変数（カスタムプロパティ）
 
 ### コンポーネント固有の変数
+
 - `--this-` プレフィックスを使用
+
 ```scss
 .component-name {
   --this-color-text: var(--color-text-primary);
@@ -54,10 +64,12 @@ alwaysApply: true
 ```
 
 ### デザイントークンの使用
+
 - ハードコーディング値は禁止
 - 必ずデザイントークンを使用
 - デザイントークンは [design-tokens.scss](mdc:tokens/design-tokens.scss) を参照
 - 文字サイズは [design-composite.scss](mdc:tokens/design-composite.scss) を参照
+
 ```scss
 // ✅ 良い例
 color: var(--color-text-primary);
@@ -73,8 +85,10 @@ border-radius: 8px;
 ## 単位とサイズ指定
 
 ### rem関数の使用
+
 - **px単位は禁止**（border-width以外）
 - 必ずSCSSのrem関数を使用
+
 ```scss
 // ✅ 良い例
 width: #{rem(24)};
@@ -88,13 +102,17 @@ margin: 12px;
 ```
 
 ### border-width例外
+
 - `border-width`のみpx使用を許可
+
 ```scss
 border: 1px solid var(--color-border);
 ```
 
 ### 論理プロパティの使用
+
 - 物理プロパティではなく論理プロパティを使用
+
 ```scss
 // ✅ 良い例
 margin-inline-start: #{rem(8)};
@@ -111,7 +129,9 @@ padding-right: #{rem(12)};
 ## インタラクティブ要素
 
 ### hover/focus の実装
+
 - `any-hover` メディア特性を使用
+
 ```scss
 @media (any-hover: hover) {
   .button:hover {
@@ -128,6 +148,7 @@ padding-right: #{rem(12)};
 ```
 
 ### focusの実装
+
 ```scss
 .component:focus {
   outline: 2px solid var(--color-focus);
@@ -138,7 +159,9 @@ padding-right: #{rem(12)};
 ## セレクタとネスト
 
 ### 親セレクタ参照
+
 - `&` を使用してModifierを実装
+
 ```scss
 .text-link {
   &.-icon-left {
@@ -152,11 +175,12 @@ padding-right: #{rem(12)};
 ```
 
 ### 属性セレクタ
+
 ```scss
 .text-link {
-  &[target="_blank"] {
+  &[target='_blank'] {
     &::after {
-      content: "";
+      content: '';
       // 外部リンクアイコン
     }
   }
@@ -164,6 +188,7 @@ padding-right: #{rem(12)};
 ```
 
 ### 子要素との組み合わせ
+
 ```scss
 .component_item {
   .component.-variant & {
@@ -175,13 +200,16 @@ padding-right: #{rem(12)};
 ## アニメーション・トランジション
 
 ### デザイントークンの使用
+
 ```scss
 transition: color var(--easing-standard) var(--animation-duration);
 transition: transform var(--this-transition);
 ```
 
 ### パフォーマンス重視
+
 - `transform` と `opacity` を優先
+
 ```scss
 .component_icon {
   transition: transform var(--this-transition);
@@ -195,6 +223,7 @@ transition: transform var(--this-transition);
 ## レスポンシブデザイン
 
 ### ブレークポイントの使用
+
 ```scss
 @include min-screen(md) {
   .component {
@@ -206,9 +235,10 @@ transition: transform var(--this-transition);
 ## コメント
 
 ### 日本語コメント推奨
+
 ```scss
 // 外部リンク用のスタイル
-&[target="_blank"] {
+&[target='_blank'] {
   // アイコン表示処理
 }
 ```
@@ -216,6 +246,7 @@ transition: transform var(--this-transition);
 ## 禁止事項
 
 ### 絶対禁止
+
 - Astroファイル内での `<style>` タグ使用
 - px単位（border-width以外）
 - ハードコーディングされた値
@@ -225,13 +256,15 @@ transition: transform var(--this-transition);
 - idセレクタの使用
 
 ### 推奨しない
+
 - 過度なネストレベル（3階層以上）
 
 ## ベストプラクティス
 
 ### ファイル構成
+
 ```scss
-@use "@/styles/_develop/+" as *;
+@use '@/styles/_develop/+.scss' as *;
 
 // コンポーネント変数定義
 .component-name {
@@ -270,4 +303,3 @@ transition: transform var(--this-transition);
   // エレメントスタイル
 }
 ```
-

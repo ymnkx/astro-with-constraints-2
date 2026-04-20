@@ -1,4 +1,4 @@
-@forward "@/components/Second/+";
+@use "@/components/Second/+.scss" as *;
 
 body {
   background-color: wheat;

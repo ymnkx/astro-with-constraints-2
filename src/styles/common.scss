@@ -1,8 +1,8 @@
 @forward "/tokens/design-tokens";
 @forward "/tokens/design-composite";
-@forward "@/styles/_base/reset";
-@forward "@/styles/_base/base";
-@forward "@/components/All/+";
+@forward "./_base/reset";
+@forward "./_base/base";
+@use "@/components/All/+.scss" as *;
 @layer reset;
 @layer base;
 
