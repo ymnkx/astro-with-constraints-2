@@ -1,0 +1,17 @@
+---
+// サイト共通のJSON-LD設定
+import { projectName, projectUrl } from '@/data/project.ts';
+const { title, description, url = projectUrl + Astro.url.pathname, ogImage = `${projectUrl}/og.png` } = Astro.props;
+const jsonLd = `
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "name": "${title} | ${projectName}",
+    "image": "${ogImage}",
+    "description": "${description}",
+    "url": "${url}"
+  }
+`;
+---
+
+<script type="application/ld+json" set:html={jsonLd} />
