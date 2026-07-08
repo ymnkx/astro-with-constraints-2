@@ -22,7 +22,7 @@
     "extract-diff-files": "node 'scripts/extractDiffFiles.mjs'"
   },
   "dependencies": {
-    "astro": "^6.1.8",
+    "astro": "^7.0.6",
     "embla-carousel": "^8.6.0"
   },
   "devDependencies": {
