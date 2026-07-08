@@ -1,6 +1,6 @@
 ---
 name: deploy-check
-description: Astroプロジェクトをビルドし、ビルド前のsrcとビルド後の生成物(dist)の両方を役割別のsubagentで並列検査してデプロイ可否レポートと修正提案を出す。検査項目はHTML構文(html-validate)、パフォーマンス/SEO(Lighthouse)、アクセシビリティ(axe-core)、内部リンク/アセット整合性、案件固有チェックリスト、srcの静的検査(ESLint/stylelint/prettier)。ユーザーが「デプロイ前チェックをして」「デプロイとチェックをして」「デプロイして」「納品して」「納品前確認」「公開前チェック」「ビルドして検証して」「deploy check」「品質チェック」などと言ったとき、またはデプロイ・納品・ビルド成果物の検証という文脈のときは必ずこのスキルを使うこと。デプロイや納品だけを頼まれた場合もチェックを先に実行する（納品処理の自動実行はしない）。
+description: Astroプロジェクトをビルドし、ビルド前のsrcとビルド後の生成物(dist)の両方を複数観点で検査してデプロイ可否レポートと修正提案を出す。検査項目はHTML構文(html-validate)、パフォーマンス/SEO(Lighthouse)、アクセシビリティ(axe-core)、内部リンク/アセット整合性、dist衛生(不要ファイル/console.log/OGP)、案件固有チェックリスト、srcの静的検査(ESLint/stylelint/prettier)。決定的チェックはメインループでスクリプト実行しトークンを節約、ブラウザ検査のみsubagent。全体を見るfullモードとmain差分だけ見るquickモードがある。ユーザーが「デプロイ前チェックをして」「デプロイとチェックをして」「デプロイして」「納品して」「納品前確認」「公開前チェック」「ビルドして検証して」「変更したところをチェック」「deploy check」「品質チェック」などと言ったとき、またはデプロイ・納品・ビルド成果物の検証という文脈のときは必ずこのスキルを使うこと。デプロイや納品だけを頼まれた場合もチェックを先に実行する（納品処理の自動実行はしない）。
 ---
 
 # Deploy Check
@@ -12,13 +12,23 @@ Astroプロジェクトをビルドし、生成されたHTMLを複数の観点�
 - 作業ディレクトリは**プロジェクトルート**（`package.json` と `.node-version` がある、この `.claude/` の親ディレクトリ）。以降のコマンド・パスはすべてプロジェクトルート基準。
 - Node.js は `.node-version` に書かれたバージョンを使う。nodenv がプロジェクトルート配下で自動適用するので、**コマンドは必ずプロジェクトルート（またはその配下）で実行する**こと。最初に `node --version` が `.node-version` の内容と一致するか確認し、不一致ならプロジェクト外で実行していないかを疑う。subagentにもこの確認を指示する。
 
+## モード（トークン節約）
+
+チェック範囲を2モードから選ぶ。デフォルトはユーザーの言い回しで判断する。
+
+- **quick（差分モード）**: `main` ブランチとの差分ファイルだけに検査を絞る。「変更したところをチェック」「軽く確認」「作業中の確認」や、明らかに小さな変更のあとの確認はこちら。トークン・時間が大幅に減る。
+- **full（全体モード）**: 全ファイル・全ページを検査。「納品前チェック」「公開前チェック」「全体をチェック」「デプロイして／納品して」など、リリースがかかる場面はこちら。**判断に迷ったら full**（見落としのリスクを避ける）。
+
+quickモードでも、共通部品（components/layouts/styles/scripts/data）が変更されていれば HTML系検査は自動的に全ページへ広がる（`static-checks.mjs` が判定する）。差分の基準を変えたい場合はユーザーに確認する。
+
 ## 全体フロー
 
 1. **ビルド** — 失敗したらここで打ち切り、エラー内容を報告
 2. **準備** — ページ一覧の収集とプレビューサーバー起動
-3. **検査** — 役割別subagentを**1メッセージで並列起動**（ビルド前のsrcとビルド後のdistの両方を検査する）
-4. **レポート** — 結果を集約してMarkdownレポートを出力
-5. **修正提案** — 検出された問題をsrcファイルにマッピングして具体的な修正案を提示
+3. **静的検査（メインループで直接実行）** — `static-checks.mjs` 1本で決定的チェック5種をまとめて実行（subagentを使わない＝トークン節約）
+4. **ブラウザ検査（subagent 2本だけ並列）** — Lighthouse と アクセシビリティ。ページに影響する変更が無ければ省略
+5. **レポート** — 結果を集約してMarkdownレポートを出力
+6. **修正提案** — 検出された問題をsrcファイルにマッピングして具体的な修正案を提示
 
 納品処理（`npm run delivery`）はこのスキルでは**自動実行しない**。判定が ✅ のときにレポートの「次のアクション」で `npm run delivery` を案内する。ユーザーがデプロイ・納品まで明示的に求めていて判定が ✅ の場合のみ、実行してよいか確認してから実行する（⚠️/❌ では実行せず修正提案を提示して止まる）。
 
@@ -36,66 +46,64 @@ npm run build
 
 1. `src/data/project.ts` を読んで `projectDirectory` を確認する。
 2. 検査対象ページを列挙する: `find dist -name "*.html"`
-3. プレビューサーバーをバックグラウンドで起動する（Lighthouse系の検査に必要）:
+3. **quickモードなら先に静的検査（Phase 3）を回して `targetPages`（影響ページ）を確定させる**。影響ページが 0（HTMLに影響しない変更のみ）なら Phase 4 のブラウザ検査は丸ごと省略できる。
+4. ブラウザ検査が必要なら、プレビューサーバーをバックグラウンドで起動する:
    ```bash
    npm run preview
    ```
    デフォルトURLは `http://localhost:4321`。起動ログから実際のポートを確認すること。
-4. URLマッピング: `dist/<projectDirectory>/page2/index.html` → `http://localhost:4321<projectDirectory>page2/`
-5. ページ数が多い場合（>5）は代表ページを選ぶ: トップ + テンプレート種別ごとに1ページ。省略したページは必ずレポートに明記する（黙って間引かない）。
+5. URLマッピング: `dist/<projectDirectory>/page2/index.html` → `http://localhost:4321<projectDirectory>page2/`
+6. fullモードでページ数が多い場合（>5）は代表ページを選ぶ: トップ + テンプレート種別ごとに1ページ。省略したページは必ずレポートに明記する（黙って間引かない）。
 
-## Phase 3: 役割別subagentによる並列検査
+## Phase 3: 静的検査（メインループで直接実行、subagent不要）
 
-以下のsubagentを **同一メッセージ内で並列に** 起動する（Agentツール、general-purpose）。各subagentには「検査対象のHTMLファイル一覧 or URL一覧」を必ず伝える。
-
-**結果の受け渡しはファイル経由にする**（subagentの完了通知は親に届かないことがあるため、通知に依存しない）:
-
-- 各subagentに「結果を `<スクラッチパッド>/deploy-check-results/<検査名>.md` に必ず保存すること。冒頭に `status: done` と error/warning 件数を書くこと」と指示する
-- 親は起動後、このディレクトリをポーリング（Bashで存在確認、60秒間隔目安）して6ファイル揃うのを待って集約する。10分待っても揃わない場合は、揃った分で集約し未完了の検査をレポートに明記する
-
-各subagentへの共通指示: 「所感ではなく、検出した問題を `severity`(error/warning/info), `page`, `location`, `message`, `suggestion` の形で全件列挙すること。問題ゼロならその旨を明記すること。srcは変更しないこと。作業ディレクトリはプロジェクトルート（nodeバージョンが `.node-version` と一致することを確認）。」
-
-### 1. html-validator（HTML構文チェック）
-
-`references/html-validate.md` を読んでから実行するよう指示する。html-validate（純Node製、npxで実行）でdist内の全HTMLを検査する。
-
-### 2. lighthouse（パフォーマンス + SEO）
-
-`references/lighthouse.md` を読んでから実行するよう指示する。プレビューサーバーのURL一覧を渡す。performance / seo / best-practices の3カテゴリのスコアと、上位の改善項目（opportunities）を収集する。
-
-### 3. accessibility（アクセシビリティ）
-
-`references/accessibility.md` を読んでから実行するよう指示する。Lighthouseのaccessibilityカテゴリ（内部でaxe-coreが動く）+ 機械検査では拾えない項目の静的チェック（見出し階層、altの内容の妥当性、lang属性など）。
-
-### 4. link-integrity（リンク/アセット整合性 + dist衛生）
-
-バンドル済みスクリプトを実行させる:
+決定的チェック5種（HTML構文 / ESLint / stylelint / prettier / リンク整合性+dist衛生）は、LLMのsubagentを使わず**1本のスクリプトをメインループで直接実行**する。これがトークン節約の主眼。
 
 ```bash
-node .claude/skills/deploy-check/scripts/check-links.mjs dist
+# full モード（全ファイル）
+node .claude/skills/deploy-check/scripts/static-checks.mjs
+
+# quick モード（main との差分だけ。基準refは引数で変更可）
+node .claude/skills/deploy-check/scripts/static-checks.mjs --base main
 ```
 
-検出対象: 内部リンク切れ / 参照CSS・JS・画像の欠落 / アンカー切れ / 納品物への不要ファイル混入（`.DS_Store` 等）/ 本番JSの `console.log`・`debugger` 残存 / OGPのプレースホルダーURL・og:image欠落。静的納品で最も事故が起きやすい項目群なので必ず実行する。スクリプトの結果に加えて、subagentは各issueに対応するsrc側の修正提案を付けて報告する。
+スクリプトは結果JSONを stdout に出す。**サマリー（`summary`）だけをまず読む**（各検査の error/warning 件数）。詳細（`checks.*.issues`）は、レポートで具体的に触れる問題や修正提案を書くときに必要な分だけ参照する（全文をコンテキストに載せない）。
 
-### 5. project-specific（案件固有チェック）
+出力JSONの要点:
+- `mode` / `base` / `changedSrc` / `allPagesAffected` / `targetPages` — モードと差分の情報。`targetPages` は次のPhase 4でLighthouse/a11yに渡す対象ページ。
+- `summary.<検査>` — `{ error, warning, skipped }` の件数。
+- `checks.<検査>.issues[]` — `severity` / `page` or `file` / `location` / `rule` / `message`。
+- `checks.stylelint.fixableCount` — `--fix` で自動修正できる件数。
 
-`checks/project-specific.md` のチェックリストを読み、各項目をdistのHTML実物に対して検証させる。チェックリストは案件ごとに編集して拡張する運用（詳細はそのファイル冒頭に記載）。ファイルが空またはテンプレのままなら「案件固有チェックは未設定」とレポートに記載する。
+severityの考え方（スクリプトが付与済み）: ビルドは通っている前提なので lint 系は基本 **warning**。html-validate の `no-dup-id`・不正ネスト、リンク切れ・アセット欠落・`.DS_Store` 混入・`debugger` 残存は **error**。stylelint の大量指摘は 1 件ずつ列挙せず件数 + `fixableCount` で報告する。
 
-### 6. src-check（ビルド前データの静的検査）
+もし `checks.<検査>.error`（toolError）が入っていたらそのツールが正しく動いていない（多くはNodeバージョン違い）。`node --version` を確認して対処する。
 
-distだけでなくビルド前のsrcも検査する。ブラウザ不要なので軽い。実行するもの:
+## Phase 4: ブラウザ検査（subagent 2本だけ並列）
 
-```bash
-npm run lint                                      # ESLint (.astro/.ts)
-npx stylelint "src/**/*.scss" "src/**/*.astro"    # SCSS/スタイル
-npx prettier --check "src/**/*.{astro,ts,scss}"   # フォーマット
-```
+ブラウザが要る2検査だけを **同一メッセージ内で並列に** subagentで起動する（Agentツール、general-purpose）。**影響ページ（Phase 3 の `targetPages`）が空なら丸ごと省略**してよい。quickモードでは `targetPages` のURLだけを渡す（全ページに広がっている場合を除く）。
 
-severityの割り当て: ビルドは通っている前提なので基本は **warning**（コード品質）。ただし実行時バグを示唆するもの（未定義変数の参照、存在しないimport、ESLintのerrorレベル指摘など）は **error** に格上げする。stylelintの大量指摘は `--fix` で自動修正可能かどうかを添えて件数ベースで報告する（1件ずつ列挙しない）。
+**結果はファイル経由で受け渡す**（subagentの完了通知は親に届かないことがあるため）:
+- 各subagentに「結果を `<スクラッチパッド>/deploy-check-results/<検査名>.md` に保存。冒頭に `status: done` と error/warning 件数」と指示する
+- 親はこのディレクトリをポーリング（Bashで存在確認、60秒間隔目安）して2ファイル揃うのを待つ。10分揃わなければ揃った分で集約し未完了を明記する
 
-## Phase 4: レポート出力
+各subagentへの共通指示: 「所感ではなく、検出した問題を `severity`(error/warning/info), `page`, `location`, `message`, `suggestion` の形で全件列挙。問題ゼロならその旨を明記。srcは変更しない。作業ディレクトリはプロジェクトルート（nodeバージョンが `.node-version` と一致することを確認）。」
 
-プレビューサーバーを停止してから、全subagentの結果を `.report/` 配下のレポートファイルに集約する。チャットにはサマリーだけを書き、詳細はレポートファイルに書く。
+### A. lighthouse（パフォーマンス + SEO）
+
+`references/lighthouse.md` を読んでから実行するよう指示。渡された対象ページURLに対し performance / seo / best-practices のスコアと上位の改善項目を収集する。
+
+### B. accessibility（アクセシビリティ）
+
+`references/accessibility.md` を読んでから実行するよう指示。Lighthouseのaccessibilityカテゴリ（内部でaxe-coreが動く）+ 機械検査で拾えない静的チェック（見出し階層・altの質・lang属性など）。
+
+## Phase 4.5: 案件固有チェック
+
+`checks/project-specific.md` のチェックリストを読み、各項目をdistのHTML実物に対して検証する。項目が grep で機械的に確認できるものばかりなら**メインループで直接**確認してよい（subagent不要）。判断が要る項目が多い場合のみ軽いsubagentに回す。ファイルが空またはテンプレのままなら「案件固有チェックは未設定」とレポートに記載する。
+
+## Phase 5: レポート出力
+
+プレビューサーバーを停止してから、静的検査（Phase 3）+ ブラウザ検査（Phase 4）+ 案件固有（Phase 4.5）の結果を `.report/` 配下のレポートファイルに集約する。チャットにはサマリーだけを書き、詳細はレポートファイルに書く。
 
 レポートの保存先とファイル名:
 
@@ -117,7 +125,7 @@ severityの割り当て: ビルドは通っている前提なので基本は **w
 ## サマリー
 | 検査 | 結果 | error | warning |
 |---|---|---|---|
-（6つのsubagent分の行: html-validator / lighthouse / accessibility / link-integrity / project-specific / src-check）
+（6検査分の行。静的検査=html-validate / eslint / stylelint / prettier / link-integrity はstatic-checks.mjsの結果、ブラウザ検査=lighthouse / accessibility はsubagentの結果、加えてproject-specific。モードと省略ページもここに明記する）
 
 ## 検出された問題（severity降順）
 各問題: 対象ページ / 場所 / 内容 / 修正案（対応するsrcファイル付き）
@@ -139,7 +147,7 @@ severityの割り当て: ビルドは通っている前提なので基本は **w
 - ユーザーが「納品して」「デプロイして」のように納品まで明示的に求めていた場合: 判定 ✅ ならユーザーに実行確認を取ってから delivery を実行、⚠️/❌ なら実行せず修正提案を提示して止まる
 - このプロジェクトに外部サーバーへのアップロード工程はない（`delivery` = 納品物生成まで）。それ以上のデプロイ手段を求められたらユーザーに確認すること
 
-## Phase 5: 修正提案
+## Phase 6: 修正提案
 
 レポート内の各問題について、**distではなくsrc側の修正**を提案する。distを直接直しても次のビルドで消えるため。
 
