@@ -1,0 +1,370 @@
+{
+  "metadata": {
+    "skill_name": "deploy-check",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "claude-fable-5",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-07-06T23:14:53Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 412.4,
+        "tokens": 140416,
+        "tool_calls": 20,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "npm run build (astro build) が実行されている",
+          "passed": true,
+          "evidence": "レポート冒頭「ビルド: ✅ 成功（npm run build = astro build + check-ng-words、NGワード検出なし）」"
+        },
+        {
+          "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+          "passed": true,
+          "evidence": "「## 判定: ❌ 要修正」+ 検査×error/warningのサマリー表あり（deploy-check-report.md line 13-27）"
+        },
+        {
+          "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェックの5観点すべての結果が報告されている",
+          "passed": true,
+          "evidence": "サマリー表に html-validator / lighthouse / accessibility / link-integrity / project-specific の5行"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "E3. [error ×2] 内部リンク切れ: /about (line 168), /docs (line 175)"
+        },
+        {
+          "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+          "passed": true,
+          "evidence": "E1〜E4すべてに src パス（Navigation.astro, Modal.astro, index.astro line 37/41 等）と diff 付き修正案"
+        },
+        {
+          "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+          "passed": true,
+          "evidence": "Lighthouseスコア一覧表: 3ページ × performance/seo/best-practices/accessibility"
+        }
+      ],
+      "notes": [
+        "Node 20のためhtml-validate@8系で検査",
+        "検査subagentの完了通知が親に届かず、メインセッションが結果を中継した"
+      ],
+      "eval_name": "basic-deploy-check"
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 481,
+        "tokens": 72772,
+        "tool_calls": 46,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "チェック(ビルド+検査)が実行されている",
+          "passed": true,
+          "evidence": "ビルド成功 + 5検査（html-validator/lighthouse/accessibility/link-integrity/project-specific）を全ページ実施"
+        },
+        {
+          "text": "レポートに判定とサマリーが含まれている",
+          "passed": true,
+          "evidence": "「判定: ❌ 要修正（error 24件 / warning 3件）」+ 検査×error/warningサマリー表"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "検出問題8「内部リンク切れ /about /docs → デプロイ後404（index.astro L37/L41）」"
+        },
+        {
+          "text": "error検出時に納品処理(npm run delivery)を実行せずに止まっている",
+          "passed": true,
+          "evidence": "deploy-decision.md「結論: npm run delivery は実行していない。判定基準: errorが1件でもあれば❌ → deliveryは実行せず修正提案を提示して止まる」"
+        },
+        {
+          "text": "修正提案が提示されている",
+          "passed": true,
+          "evidence": "実質8グループすべてに src 側の diff 付き修正案（Navigation.astro の inert 化で15件解消、など）"
+        }
+      ],
+      "notes": [
+        "ポート4321使用中のため4331でプレビュー"
+      ],
+      "eval_name": "deploy-and-check"
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 484.2,
+        "tokens": 171434,
+        "tool_calls": 40,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "ID重複 (dup-check-target) が検出されている",
+          "passed": true,
+          "evidence": "html-validator [no-dup-id] page2/index.html:114 Duplicate ID \"dup-check-target\"（a11y静的チェックとlink-integrityも補足検出）"
+        },
+        {
+          "text": "alt属性のない img が検出されている",
+          "passed": true,
+          "evidence": "html-validator [wcag/h37] + a11y [axe: image-alt] + Lighthouse SEO 91点の原因として3重検出（page2/index.html:112 の favicon.svg img）"
+        },
+        {
+          "text": "リンク切れ (/recruit/) が検出されている",
+          "passed": true,
+          "evidence": "link-integrity: page2/index.html 115行目 <a href=\"/recruit/\">採用情報</a> → dist内に存在しない"
+        },
+        {
+          "text": "開発用文言 (TODO) の残存が検出されている",
+          "passed": true,
+          "evidence": "project-specific チェック項目1 ❌: page2 line 111「TODO: 本番前にダミー画像を差し替える」（TODO+ダミーの2キーワード）"
+        },
+        {
+          "text": "判定が ❌ (要修正) になっている",
+          "passed": true,
+          "evidence": "「総合判定: ❌ 要修正（error 14件・重複統合後12件）」、delivery未実行"
+        },
+        {
+          "text": "検出された問題に page2.astro への修正提案が付いている",
+          "passed": true,
+          "evidence": "「page2に開発用文言残存+alt無しダミー画像+id重複（data/src/pages/page2.astro）」としてsrc特定・diff付き修正案あり"
+        }
+      ],
+      "notes": [
+        "検査結果はスクラッチパッドのファイル経由で集約（通知が親に届かない問題の回避策）"
+      ],
+      "eval_name": "seeded-bugs"
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.667,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 323,
+        "tokens": 40067,
+        "tool_calls": 28,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "npm run build (astro build) が実行されている",
+          "passed": true,
+          "evidence": "検査一覧「本番ビルド（astro build、3ページ生成） PASS」"
+        },
+        {
+          "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+          "passed": true,
+          "evidence": "「このままのデプロイ非推奨」判定 + 検査×判定のサマリー表あり"
+        },
+        {
+          "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェックの5観点すべての結果が報告されている",
+          "passed": false,
+          "evidence": "実施したのは ESLint/stylelint/tsc/Prettier/npm audit/スモークテスト等。HTML構文バリデーション・Lighthouse(パフォーマンス/SEO)・アクセシビリティ検査は未実施（outputs内に該当記述ゼロ、grep一致0件）"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "「preview スモークテスト FAIL: リンク切れ 2（/about, /docs → 404）」"
+        },
+        {
+          "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+          "passed": true,
+          "evidence": "summary.md に src/pages/index.astro:37,41 への修正提案"
+        },
+        {
+          "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+          "passed": false,
+          "evidence": "Lighthouseは実行されておらず、スコア報告なし"
+        }
+      ],
+      "notes": [
+        "OGP用 projectUrl が example.com のまま"
+      ],
+      "eval_name": "basic-deploy-check"
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 1215.8,
+        "tokens": 35794,
+        "tool_calls": 22,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "チェック(ビルド+検査)が実行されている",
+          "passed": true,
+          "evidence": "ESLint/ビルド/NGワード/Stylelint/プレビュー表示確認/内部リンク検査/Prettier を実施"
+        },
+        {
+          "text": "レポートに判定とサマリーが含まれている",
+          "passed": true,
+          "evidence": "check-report.md に検査×判定の表 + 問題数合計40件の記載"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "「内部リンク検査 FAIL: 404×2（index.astro:37 の /about、:41 の /docs）」HTTPで実確認済み"
+        },
+        {
+          "text": "error検出時に納品処理(npm run delivery)を実行せずに止まっている",
+          "passed": true,
+          "evidence": "deploy-decision.md「判断: 実行しない（見送り）。主因: 納品物に含まれるリンク切れを検出」"
+        },
+        {
+          "text": "修正提案が提示されている",
+          "passed": true,
+          "evidence": "summary.md にリンク切れ・Stylelint 37件（--fix可）・Prettier CRLF の修正提案"
+        }
+      ],
+      "notes": [
+        "@astrojs/check 未導入のため型チェックはスキップ"
+      ],
+      "eval_name": "deploy-and-check"
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 347.3,
+        "tokens": 54758,
+        "tool_calls": 29,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "ID重複 (dup-check-target) が検出されている",
+          "passed": true,
+          "evidence": "ブロッカー③「id=\"dup-check-target\" 重複（page2.astro:15,19）」"
+        },
+        {
+          "text": "alt属性のない img が検出されている",
+          "passed": true,
+          "evidence": "ブロッカー②「img の alt 欠落（page2.astro:17）」"
+        },
+        {
+          "text": "リンク切れ (/recruit/) が検出されている",
+          "passed": true,
+          "evidence": "ブロッカー④「リンク切れ3URL（/about /docs /recruit/、404実測）」"
+        },
+        {
+          "text": "開発用文言 (TODO) の残存が検出されている",
+          "passed": true,
+          "evidence": "ブロッカー①「page2に『TODO: 本番前にダミー画像を差し替える』残存（page2.astro:16）」"
+        },
+        {
+          "text": "判定が ❌ (要修正) になっている",
+          "passed": true,
+          "evidence": "「結論: このままの納品はNG（ブロッカー7件＋要確認6件）」"
+        },
+        {
+          "text": "検出された問題に page2.astro への修正提案が付いている",
+          "passed": true,
+          "evidence": "ブロッカー①②③すべて data/src/pages/page2.astro の行番号付きで提案"
+        }
+      ],
+      "notes": [
+        "delivery実行により build/ が生成された（副作用）"
+      ],
+      "eval_name": "seeded-bugs"
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1,
+        "stddev": 0,
+        "min": 1,
+        "max": 1
+      },
+      "time_seconds": {
+        "mean": 459.2,
+        "stddev": 40.5616,
+        "min": 412.4,
+        "max": 484.2
+      },
+      "tokens": {
+        "mean": 128207.3333,
+        "stddev": 50451.3252,
+        "min": 72772,
+        "max": 171434
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.889,
+        "stddev": 0.1923,
+        "min": 0.667,
+        "max": 1
+      },
+      "time_seconds": {
+        "mean": 628.7,
+        "stddev": 508.5887,
+        "min": 323,
+        "max": 1215.8
+      },
+      "tokens": {
+        "mean": 43539.6667,
+        "stddev": 9947.5064,
+        "min": 35794,
+        "max": 54758
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.11",
+      "time_seconds": "-169.5",
+      "tokens": "+84668"
+    }
+  },
+  "notes": [
+    "スキルの差は検出力より一貫性: with_skillは3回とも同じ5観点(HTML構文/Lighthouse/a11y/リンク/案件固有)を実行。without_skillは毎回検査項目が変わる(eval-0はHTML品質検査ゼロ、eval-2は網羅的+console.log検出) — ベースラインは当たり外れが大きい",
+    "eval-1のアサーションは判別力なし(両構成100%): deliveryを止める判断は素のClaudeでもできた。差が出たのは検査の網羅性だがアサーションが問うていない。iteration-2で「5観点の網羅」「Lighthouse/axeスコアの定量報告」を追加すべき",
+    "eval-2はベースラインも仕込みバグ4/4検出で100%。ただしベースラインはブロッカー検出前にnpm run deliveryを実行する副作用あり(build/生成)。「errorがあるときdeliveryを実行しないこと」をアサーション化すべき",
+    "without_skillの良い着眼をスキルに取り込む価値あり: .DS_Store等の不要ファイル混入、OGP URLプレースホルダー、ビルドJSのconsole.log残存、og:image実在確認",
+    "html-validatorの検出がrun間で揺れた: eval-0ではhidden-focusable×15を検出、eval-2では未報告(バージョン/設定の揺れ)。referencesでバージョンと設定ファイルを固定すべき",
+    "トークンコスト: with_skillは検査subagent分を含むとeval-0で約3.5倍(140k vs 40k)。時間は同等〜1.5倍。網羅性・再現性との引き換え",
+    "eval-1 without_skillの時間(1215秒)は600秒のAPIストール込みのため実働は約600秒"
+  ]
+}

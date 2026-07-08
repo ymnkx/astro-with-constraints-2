@@ -1,0 +1,15 @@
+{
+  "expectations": [
+    { "text": "チェック(ビルド+検査)が実行されている", "passed": true, "evidence": "ビルド成功 + 5検査を全ページ実施" },
+    { "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている", "passed": false, "evidence": "旧版は5観点のみ。src静的検査が存在しない" },
+    { "text": "src静的検査(ESLint/stylelint等)の結果が件数ベースで報告されている", "passed": false, "evidence": "src静的検査は旧版のスコープ外" },
+    { "text": "既存のリンク切れ (/about と /docs) が検出されている", "passed": true, "evidence": "検出問題8「内部リンク切れ /about /docs」" },
+    { "text": "納品処理(npm run delivery)を自動実行していない", "passed": true, "evidence": "deploy-decision.md「npm run delivery は実行していない（判定❌のため）」" },
+    { "text": "修正提案が提示されている", "passed": true, "evidence": "8グループすべてにdiff付き修正案" }
+  ],
+  "summary": { "passed": 4, "failed": 2, "total": 6, "pass_rate": 0.667 },
+  "execution_metrics": { "total_tool_calls": 46, "errors_encountered": 0 },
+  "claims": [],
+  "user_notes_summary": { "uncertainties": [], "needs_review": [], "workarounds": [] },
+  "eval_feedback": { "suggestions": [], "overall": "旧版(iteration-1)出力を新アサーションで再採点したもの" }
+}

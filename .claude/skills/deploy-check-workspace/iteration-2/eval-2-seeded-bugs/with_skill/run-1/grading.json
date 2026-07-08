@@ -1,0 +1,54 @@
+{
+  "expectations": [
+    {
+      "text": "ID重複 (dup-check-target) が検出されている",
+      "passed": true,
+      "evidence": "html-validator no-dup-id + レポート内に12箇所言及"
+    },
+    {
+      "text": "alt属性のない img が検出されている",
+      "passed": true,
+      "evidence": "html-validator/a11y/Lighthouse SEO(page2=91)の3重検出"
+    },
+    {
+      "text": "リンク切れ (/recruit/) が検出されている",
+      "passed": true,
+      "evidence": "link-integrity error 4件中に/recruit/"
+    },
+    {
+      "text": "開発用文言 (TODO) の残存が検出されている",
+      "passed": true,
+      "evidence": "project-specific ❌: TODO文言残存。「page2.astro:15-20のダミーブロック」として4検査横断で最優先化"
+    },
+    {
+      "text": "判定が ❌ (要修正) になっている",
+      "passed": true,
+      "evidence": "「判定: ❌ 要修正」delivery未実行"
+    },
+    {
+      "text": "検出された問題に page2.astro への修正提案が付いている",
+      "passed": true,
+      "evidence": "「src/pages/page2.astro:15-20のダミーブロック」修正案あり"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 42,
+    "errors_encountered": 0
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "新スキル(iteration-2)の採点"
+  }
+}

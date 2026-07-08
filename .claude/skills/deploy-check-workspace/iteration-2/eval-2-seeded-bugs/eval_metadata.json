@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "seeded-bugs",
+  "prompt": "納品前に問題ないか確認してもらえますか",
+  "assertions": [
+    "ID重複 (dup-check-target) が検出されている",
+    "alt属性のない img が検出されている",
+    "リンク切れ (/recruit/) が検出されている",
+    "開発用文言 (TODO) の残存が検出されている",
+    "判定が ❌ (要修正) になっている",
+    "検出された問題に page2.astro への修正提案が付いている"
+  ]
+}

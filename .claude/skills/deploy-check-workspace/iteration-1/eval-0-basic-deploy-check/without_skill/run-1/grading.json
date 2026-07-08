@@ -1,0 +1,69 @@
+{
+  "expectations": [
+    {
+      "text": "npm run build (astro build) が実行されている",
+      "passed": true,
+      "evidence": "検査一覧「本番ビルド（astro build、3ページ生成） PASS」"
+    },
+    {
+      "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+      "passed": true,
+      "evidence": "「このままのデプロイ非推奨」判定 + 検査×判定のサマリー表あり"
+    },
+    {
+      "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェックの5観点すべての結果が報告されている",
+      "passed": false,
+      "evidence": "実施したのは ESLint/stylelint/tsc/Prettier/npm audit/スモークテスト等。HTML構文バリデーション・Lighthouse(パフォーマンス/SEO)・アクセシビリティ検査は未実施（outputs内に該当記述ゼロ、grep一致0件）"
+    },
+    {
+      "text": "既存のリンク切れ (/about と /docs) が検出されている",
+      "passed": true,
+      "evidence": "「preview スモークテスト FAIL: リンク切れ 2（/about, /docs → 404）」"
+    },
+    {
+      "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+      "passed": true,
+      "evidence": "summary.md に src/pages/index.astro:37,41 への修正提案"
+    },
+    {
+      "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+      "passed": false,
+      "evidence": "Lighthouseは実行されておらず、スコア報告なし"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.667
+  },
+  "execution_metrics": {
+    "total_tool_calls": 28,
+    "errors_encountered": 0
+  },
+  "claims": [
+    {
+      "claim": "npm audit high 3件 (vite/postcss)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "npm audit --omit=dev の実行結果として報告"
+    },
+    {
+      "claim": ".DS_Store が dist に混入",
+      "type": "factual",
+      "verified": true,
+      "evidence": "public/assets/.DS_Store がビルド時にコピーされる（スキル側にない良い着眼）"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [
+      "OGP用 projectUrl が example.com のまま"
+    ],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "ベースラインは静的解析系に寄り、生成物のHTML品質検査(構文/a11y/性能)を全く行わなかった — スキルの価値を示す差分"
+  }
+}

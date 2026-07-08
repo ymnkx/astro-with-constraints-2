@@ -1,0 +1,54 @@
+{
+  "expectations": [
+    {
+      "text": "チェック(ビルド+検査)が実行されている",
+      "passed": true,
+      "evidence": "ビルド成功+6検査を全3ページに実施"
+    },
+    {
+      "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+      "passed": true,
+      "evidence": "サマリー表6行(src-check含む)"
+    },
+    {
+      "text": "src静的検査(ESLint/stylelint等)の結果が件数ベースで報告されている",
+      "passed": true,
+      "evidence": "src-check ⚠️ 38 warning(stylelint 37は--fix可+prettier 1)と件数報告"
+    },
+    {
+      "text": "既存のリンク切れ (/about と /docs) が検出されている",
+      "passed": true,
+      "evidence": "「/about・/docsのリンク切れ」検出"
+    },
+    {
+      "text": "納品処理(npm run delivery)を自動実行していない",
+      "passed": true,
+      "evidence": "deploy-decision.md「結論: npm run delivery は実行していない」— デプロイ依頼でも❌のため停止(新仕様通り)"
+    },
+    {
+      "text": "修正提案が提示されている",
+      "passed": true,
+      "evidence": "全問題にdiff付き修正案(Navigation.scssのセレクタ同時変更まで指摘)"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 46,
+    "errors_encountered": 0
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "新スキル(iteration-2)の採点"
+  }
+}

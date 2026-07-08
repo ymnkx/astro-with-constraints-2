@@ -1,0 +1,370 @@
+{
+  "metadata": {
+    "skill_name": "deploy-check",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "claude-fable-5",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-07-08T05:02:43Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.833,
+        "passed": 5,
+        "failed": 1,
+        "total": 6,
+        "time_seconds": 412.4,
+        "tokens": 140416,
+        "tool_calls": 20,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "npm run build (astro build) が実行されている",
+          "passed": true,
+          "evidence": "iteration-1レポート「ビルド: ✅ 成功」"
+        },
+        {
+          "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+          "passed": true,
+          "evidence": "「判定: ❌ 要修正」+ サマリー表あり"
+        },
+        {
+          "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+          "passed": false,
+          "evidence": "旧版は5観点のみ。src静的検査(ESLint/stylelint/prettier)が存在しない"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "E3. [error ×2] 内部リンク切れ"
+        },
+        {
+          "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+          "passed": true,
+          "evidence": "E1〜E4にsrcパスとdiff付き修正案"
+        },
+        {
+          "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+          "passed": true,
+          "evidence": "Lighthouseスコア一覧表あり"
+        }
+      ],
+      "notes": [
+        "旧版: 検査subagentの通知がメインに流れ、手動中継が必要だった"
+      ],
+      "eval_name": "basic-deploy-check"
+    },
+    {
+      "eval_id": 1,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.667,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 481,
+        "tokens": 72772,
+        "tool_calls": 46,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "チェック(ビルド+検査)が実行されている",
+          "passed": true,
+          "evidence": "ビルド成功 + 5検査を全ページ実施"
+        },
+        {
+          "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+          "passed": false,
+          "evidence": "旧版は5観点のみ。src静的検査が存在しない"
+        },
+        {
+          "text": "src静的検査(ESLint/stylelint等)の結果が件数ベースで報告されている",
+          "passed": false,
+          "evidence": "src静的検査は旧版のスコープ外"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "検出問題8「内部リンク切れ /about /docs」"
+        },
+        {
+          "text": "納品処理(npm run delivery)を自動実行していない",
+          "passed": true,
+          "evidence": "deploy-decision.md「npm run delivery は実行していない（判定❌のため）」"
+        },
+        {
+          "text": "修正提案が提示されている",
+          "passed": true,
+          "evidence": "8グループすべてにdiff付き修正案"
+        }
+      ],
+      "notes": [],
+      "eval_name": "deploy-and-check"
+    },
+    {
+      "eval_id": 2,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 484.2,
+        "tokens": 171434,
+        "tool_calls": 40,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "ID重複 (dup-check-target) が検出されている",
+          "passed": true,
+          "evidence": "html-validator [no-dup-id] page2/index.html:114 Duplicate ID \"dup-check-target\"（a11y静的チェックとlink-integrityも補足検出）"
+        },
+        {
+          "text": "alt属性のない img が検出されている",
+          "passed": true,
+          "evidence": "html-validator [wcag/h37] + a11y [axe: image-alt] + Lighthouse SEO 91点の原因として3重検出（page2/index.html:112 の favicon.svg img）"
+        },
+        {
+          "text": "リンク切れ (/recruit/) が検出されている",
+          "passed": true,
+          "evidence": "link-integrity: page2/index.html 115行目 <a href=\"/recruit/\">採用情報</a> → dist内に存在しない"
+        },
+        {
+          "text": "開発用文言 (TODO) の残存が検出されている",
+          "passed": true,
+          "evidence": "project-specific チェック項目1 ❌: page2 line 111「TODO: 本番前にダミー画像を差し替える」（TODO+ダミーの2キーワード）"
+        },
+        {
+          "text": "判定が ❌ (要修正) になっている",
+          "passed": true,
+          "evidence": "「総合判定: ❌ 要修正（error 14件・重複統合後12件）」、delivery未実行"
+        },
+        {
+          "text": "検出された問題に page2.astro への修正提案が付いている",
+          "passed": true,
+          "evidence": "「page2に開発用文言残存+alt無しダミー画像+id重複（data/src/pages/page2.astro）」としてsrc特定・diff付き修正案あり"
+        }
+      ],
+      "notes": [
+        "検査結果はスクラッチパッドのファイル経由で集約（通知が親に届かない問題の回避策）"
+      ],
+      "eval_name": "seeded-bugs"
+    },
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 477.2,
+        "tokens": 75789,
+        "tool_calls": 49,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "npm run build (astro build) が実行されている",
+          "passed": true,
+          "evidence": "レポート「ビルド(npm run build + NGワードチェック)成功」"
+        },
+        {
+          "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+          "passed": true,
+          "evidence": "「判定: ❌ 要修正(error 25/warning 52/info 12)」+ 6行のサマリー表"
+        },
+        {
+          "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+          "passed": true,
+          "evidence": "サマリー表にhtml-validator/lighthouse/accessibility/link-integrity/project-specific/src-checkの6行"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "link-integrity error: /about /docs (index.astro:37,41)"
+        },
+        {
+          "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+          "passed": true,
+          "evidence": "「error 25件は実質7つの修正で解消」— 全てsrcパス+diff付き"
+        },
+        {
+          "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+          "passed": true,
+          "evidence": "全3ページ×カテゴリのスコア表(全100点)"
+        }
+      ],
+      "notes": [],
+      "eval_name": "basic-deploy-check"
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 720,
+        "tokens": 63610,
+        "tool_calls": 46,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "チェック(ビルド+検査)が実行されている",
+          "passed": true,
+          "evidence": "ビルド成功+6検査を全3ページに実施"
+        },
+        {
+          "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+          "passed": true,
+          "evidence": "サマリー表6行(src-check含む)"
+        },
+        {
+          "text": "src静的検査(ESLint/stylelint等)の結果が件数ベースで報告されている",
+          "passed": true,
+          "evidence": "src-check ⚠️ 38 warning(stylelint 37は--fix可+prettier 1)と件数報告"
+        },
+        {
+          "text": "既存のリンク切れ (/about と /docs) が検出されている",
+          "passed": true,
+          "evidence": "「/about・/docsのリンク切れ」検出"
+        },
+        {
+          "text": "納品処理(npm run delivery)を自動実行していない",
+          "passed": true,
+          "evidence": "deploy-decision.md「結論: npm run delivery は実行していない」— デプロイ依頼でも❌のため停止(新仕様通り)"
+        },
+        {
+          "text": "修正提案が提示されている",
+          "passed": true,
+          "evidence": "全問題にdiff付き修正案(Navigation.scssのセレクタ同時変更まで指摘)"
+        }
+      ],
+      "notes": [],
+      "eval_name": "deploy-and-check"
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 604.7,
+        "tokens": 89030,
+        "tool_calls": 42,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "ID重複 (dup-check-target) が検出されている",
+          "passed": true,
+          "evidence": "html-validator no-dup-id + レポート内に12箇所言及"
+        },
+        {
+          "text": "alt属性のない img が検出されている",
+          "passed": true,
+          "evidence": "html-validator/a11y/Lighthouse SEO(page2=91)の3重検出"
+        },
+        {
+          "text": "リンク切れ (/recruit/) が検出されている",
+          "passed": true,
+          "evidence": "link-integrity error 4件中に/recruit/"
+        },
+        {
+          "text": "開発用文言 (TODO) の残存が検出されている",
+          "passed": true,
+          "evidence": "project-specific ❌: TODO文言残存。「page2.astro:15-20のダミーブロック」として4検査横断で最優先化"
+        },
+        {
+          "text": "判定が ❌ (要修正) になっている",
+          "passed": true,
+          "evidence": "「判定: ❌ 要修正」delivery未実行"
+        },
+        {
+          "text": "検出された問題に page2.astro への修正提案が付いている",
+          "passed": true,
+          "evidence": "「src/pages/page2.astro:15-20のダミーブロック」修正案あり"
+        }
+      ],
+      "notes": [],
+      "eval_name": "seeded-bugs"
+    }
+  ],
+  "run_summary": {
+    "old_skill": {
+      "pass_rate": {
+        "mean": 0.8333,
+        "stddev": 0.1665,
+        "min": 0.667,
+        "max": 1
+      },
+      "time_seconds": {
+        "mean": 459.2,
+        "stddev": 40.5616,
+        "min": 412.4,
+        "max": 484.2
+      },
+      "tokens": {
+        "mean": 128207.3333,
+        "stddev": 50451.3252,
+        "min": 72772,
+        "max": 171434
+      }
+    },
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1,
+        "stddev": 0,
+        "min": 1,
+        "max": 1
+      },
+      "time_seconds": {
+        "mean": 600.6333,
+        "stddev": 121.4511,
+        "min": 477.2,
+        "max": 720
+      },
+      "tokens": {
+        "mean": 76143,
+        "stddev": 12713.6968,
+        "min": 63610,
+        "max": 89030
+      }
+    },
+    "delta": {
+      "pass_rate": "-0.17",
+      "time_seconds": "-141.4",
+      "tokens": "+52064"
+    }
+  },
+  "notes": [
+    "with_skill=新スキル(iteration-2)、old_skill=旧スキル(iteration-1)の出力を新アサーションで再採点したもの。Deltaの符号は設定順(アルファベット順)による見かけで、実際は新スキルが+16.7pt(100% vs 83.3%)",
+    "差分の源泉はsrc-check: 旧版はビルド前src検査(ESLint/stylelint/prettier)が無くeval-0/1で各1〜2アサーション失敗。新版は6観点すべて完走",
+    "新スキルの成果: (1)検査subagentのファイル経由受け渡しで手動介入ゼロの一発完走 (2)拡張check-links.mjsが.DS_Store混入/console.log×3/OGPプレースホルダー×9を検出(旧版はスコープ外) (3)「デプロイして」依頼でも❌判定でdelivery未実行(新仕様の安全装置が機能)",
+    "eval-2では仕込みバグ4/4検出に加え、page2.astroのダミーブロックを4検査横断の最優先問題としてグルーピング(修正コスト最小の並びで提案)",
+    "html-validate@11固定により検出の揺れが解消(3run全てhidden-focusable×15を安定検出)",
+    "コスト: 新スキルは1回あたり約7〜12分。検査観点が5→6に増えたがトークンは同水準(検査subagentの結果をファイル集約する方式が転記の重複を削減)"
+  ]
+}

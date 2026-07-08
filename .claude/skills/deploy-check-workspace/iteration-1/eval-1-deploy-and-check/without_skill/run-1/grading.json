@@ -1,0 +1,62 @@
+{
+  "expectations": [
+    {
+      "text": "チェック(ビルド+検査)が実行されている",
+      "passed": true,
+      "evidence": "ESLint/ビルド/NGワード/Stylelint/プレビュー表示確認/内部リンク検査/Prettier を実施"
+    },
+    {
+      "text": "レポートに判定とサマリーが含まれている",
+      "passed": true,
+      "evidence": "check-report.md に検査×判定の表 + 問題数合計40件の記載"
+    },
+    {
+      "text": "既存のリンク切れ (/about と /docs) が検出されている",
+      "passed": true,
+      "evidence": "「内部リンク検査 FAIL: 404×2（index.astro:37 の /about、:41 の /docs）」HTTPで実確認済み"
+    },
+    {
+      "text": "error検出時に納品処理(npm run delivery)を実行せずに止まっている",
+      "passed": true,
+      "evidence": "deploy-decision.md「判断: 実行しない（見送り）。主因: 納品物に含まれるリンク切れを検出」"
+    },
+    {
+      "text": "修正提案が提示されている",
+      "passed": true,
+      "evidence": "summary.md にリンク切れ・Stylelint 37件（--fix可）・Prettier CRLF の修正提案"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 22,
+    "errors_encountered": 0
+  },
+  "claims": [
+    {
+      "claim": "Stylelint 37 errors（36件は--fix可）",
+      "type": "factual",
+      "verified": true,
+      "evidence": "npx stylelint の実行結果として具体的なルール名・ファイルを列挙"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "@astrojs/check 未導入のため型チェックはスキップ"
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "ベースラインが全アサーション通過 = eval-1のアサーションはスキル有無を判別しない。HTML構文/a11y/Lighthouse実施の有無を問う項目が必要"
+      }
+    ],
+    "overall": "delivery見送り判断は両構成とも正解。差は検査の網羅性（こちらはHTML品質系ゼロ）だがアサーションが拾えていない"
+  }
+}
