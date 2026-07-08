@@ -1,10 +1,14 @@
 ---
 import Heading from '@/components/All/Heading/Heading.astro';
 import LayoutBase from '@/layouts/Base.astro';
+import JsonLdArticle from '@/components/JsonLD/JsonLdArticle.astro';
 const title = 'Page3';
 const description = '';
 ---
 
 <LayoutBase title={title} description={description}>
+  <Fragment slot="head">
+    <JsonLdArticle title={title} description={description} />
+  </Fragment>
   <Heading>Page3</Heading>
 </LayoutBase>

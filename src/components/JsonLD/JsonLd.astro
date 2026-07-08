@@ -1,0 +1,16 @@
+---
+// サイト共通のJSON-LD設定
+import { projectName, projectDescription, projectUrl, projectDirectory } from '@/data/project.ts';
+const jsonLd = `
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "${projectUrl}",
+  "name": "${projectName}",
+  "description": "${projectDescription}",
+  "inLanguage": "ja"
+}
+`;
+---
+
+<script type="application/ld+json" set:html={jsonLd} />

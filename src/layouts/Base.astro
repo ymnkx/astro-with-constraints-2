@@ -2,6 +2,7 @@
 import '@/styles/common.scss';
 import CommonLayout from '@/components/All/Common/CommonLayout.astro';
 import Head from '@/components/Head.astro';
+import JsonLd from '@/components/JsonLD/JsonLd.astro';
 const { title, description } = Astro.props;
 ---
 
@@ -9,6 +10,7 @@ const { title, description } = Astro.props;
 <html lang="ja">
   <Head title={title} description={description}>
     <script src="@/scripts/common.ts"></script>
+    <JsonLd />
     <slot name="head" />
   </Head>
   <body>

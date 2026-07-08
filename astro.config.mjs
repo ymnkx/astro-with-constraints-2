@@ -1,22 +1,29 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
-import { projectDirectory } from './src/data/project.ts';
+import { projectDirectory, projectUrl } from './src/data/project.ts';
+
 // @ts-ignore
 import assetsGlobbingPlugin from './scripts/assetsGlobbing.js';
 import { svgSprite } from './plugins/svg-sprite.ts';
+
+import sitemap from '@astrojs/sitemap';
 
 const assetsDir = 'assets';
 
 // https://astro.build/config
 export default defineConfig({
+  site: projectUrl,
   base: projectDirectory,
   outDir: `./dist/${projectDirectory}`,
   compressHTML: false,
+  integrations: [sitemap()],
+
   build: {
     inlineStylesheets: 'never',
     assets: `${assetsDir}/js/chunk`,
   },
+
   vite: {
     resolve: {
       alias: {
