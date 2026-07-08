@@ -10,8 +10,6 @@
 
   /* Prevent font size inflation */
   html {
-    -moz-text-size-adjust: none;
-    -webkit-text-size-adjust: none;
     text-size-adjust: none;
   }
 
@@ -63,14 +61,14 @@
   /* A elements that don't have a class get default styles */
   a:not([class]) {
     text-decoration-skip-ink: auto;
-    color: currentColor;
+    color: currentcolor;
   }
 
   /* Make images easier to work with */
   img,
   picture {
-    max-width: 100%;
     display: block;
+    max-width: 100%;
   }
 
   /* Inherit fonts for inputs and buttons */

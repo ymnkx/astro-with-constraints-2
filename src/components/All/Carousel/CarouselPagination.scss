@@ -9,20 +9,32 @@
 
 .embla__dot {
   --dot-size: #{rem(12)};
+  --dot-hit: #{rem(24)};
 
-  width: var(--dot-size);
-  height: var(--dot-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dot-hit);
+  height: var(--dot-hit);
   padding: 0;
   margin: 0;
   text-decoration: none;
   appearance: none;
   touch-action: manipulation;
   cursor: pointer;
-  background-color: gray;
+  background-color: transparent;
   border: 0;
-  border-radius: 50%;
 
-  &.-selected {
+  &::before {
+    display: block;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    content: "";
+    background-color: gray;
+    border-radius: 50%;
+  }
+
+  &.-selected::before {
     background-color: red;
   }
 }

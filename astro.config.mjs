@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { projectDirectory, projectUrl, buildFormat } from './src/data/project.ts';
 
 // @ts-ignore
+import { dropConsolePlugin } from './plugins/drop-console.ts';
 import assetsGlobbingPlugin from './scripts/assetsGlobbing.js';
 import { svgSprite } from './plugins/svg-sprite.ts';
 
@@ -32,6 +33,7 @@ export default defineConfig({
       },
     },
     plugins: [
+      dropConsolePlugin(),
       svgSprite({ srcDir: 'src/icons', destDir: 'public/assets/svg' }),
       // @ts-ignore
       assetsGlobbingPlugin({ logEnabled: true }),

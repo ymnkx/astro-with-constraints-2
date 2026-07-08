@@ -6,7 +6,7 @@ export const addDotBtnsAndClickHandlers = (emblaApi: EmblaCarouselType, dotsNode
   const addDotBtnsWithClickHandlers = (): void => {
     dotsNode.innerHTML = emblaApi
       .scrollSnapList()
-      .map(() => '<button class="embla__dot" type="button"></button>')
+      .map((_, index) => `<button class="embla__dot" type="button" aria-label="${index + 1}枚目のスライドへ"></button>`)
       .join('');
 
     const scrollTo = (index: number): void => {
