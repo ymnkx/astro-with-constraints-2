@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
-import { projectDirectory, projectUrl } from './src/data/project.ts';
+import { projectDirectory, projectUrl, buildFormat } from './src/data/project.ts';
 
 // @ts-ignore
 import assetsGlobbingPlugin from './scripts/assetsGlobbing.js';
@@ -22,6 +22,7 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'never',
     assets: `${assetsDir}/js/chunk`,
+    format: buildFormat,
   },
 
   vite: {
