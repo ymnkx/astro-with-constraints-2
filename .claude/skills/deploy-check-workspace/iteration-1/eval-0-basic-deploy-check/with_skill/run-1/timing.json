@@ -1,0 +1,14 @@
+{
+  "total_tokens": 140416,
+  "duration_ms": 412374,
+  "total_duration_seconds": 412.4,
+  "note": "total_tokens = 親(37409) + 検査subagent5本(103007)。duration_msは親エージェントの全体ウォールクロック",
+  "parts": [
+    { "name": "parent (orchestration + report)", "total_tokens": 37409, "duration_ms": 412374 },
+    { "name": "project-specific", "total_tokens": 13937, "duration_ms": 18036 },
+    { "name": "link-integrity", "total_tokens": 14649, "duration_ms": 41098 },
+    { "name": "html-validator", "total_tokens": 28747, "duration_ms": 91597 },
+    { "name": "lighthouse", "total_tokens": 18167, "duration_ms": 141103 },
+    { "name": "accessibility", "total_tokens": 27507, "duration_ms": 143192 }
+  ]
+}

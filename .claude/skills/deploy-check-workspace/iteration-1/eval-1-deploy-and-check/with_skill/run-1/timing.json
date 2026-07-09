@@ -1,0 +1,6 @@
+{
+  "total_tokens": 72772,
+  "duration_ms": 481004,
+  "total_duration_seconds": 481.0,
+  "note": "親エージェント計測値。検査subagent5本はファイルポーリング方式のため親のtool_uses/tokensに一部含まれない可能性あり"
+}

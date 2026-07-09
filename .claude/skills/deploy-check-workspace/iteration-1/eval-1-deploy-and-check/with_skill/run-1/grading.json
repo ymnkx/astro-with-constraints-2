@@ -1,0 +1,69 @@
+{
+  "expectations": [
+    {
+      "text": "チェック(ビルド+検査)が実行されている",
+      "passed": true,
+      "evidence": "ビルド成功 + 5検査（html-validator/lighthouse/accessibility/link-integrity/project-specific）を全ページ実施"
+    },
+    {
+      "text": "レポートに判定とサマリーが含まれている",
+      "passed": true,
+      "evidence": "「判定: ❌ 要修正（error 24件 / warning 3件）」+ 検査×error/warningサマリー表"
+    },
+    {
+      "text": "既存のリンク切れ (/about と /docs) が検出されている",
+      "passed": true,
+      "evidence": "検出問題8「内部リンク切れ /about /docs → デプロイ後404（index.astro L37/L41）」"
+    },
+    {
+      "text": "error検出時に納品処理(npm run delivery)を実行せずに止まっている",
+      "passed": true,
+      "evidence": "deploy-decision.md「結論: npm run delivery は実行していない。判定基準: errorが1件でもあれば❌ → deliveryは実行せず修正提案を提示して止まる」"
+    },
+    {
+      "text": "修正提案が提示されている",
+      "passed": true,
+      "evidence": "実質8グループすべてに src 側の diff 付き修正案（Navigation.astro の inert 化で15件解消、など）"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 46,
+    "errors_encountered": 0
+  },
+  "claims": [
+    {
+      "claim": "修正1箇所(inert化)でhidden-focusable 15件が解消する",
+      "type": "quality",
+      "verified": true,
+      "evidence": "15件はすべて共通コンポーネントNavigation.astro由来のため妥当"
+    },
+    {
+      "claim": "subagent結果をファイルポーリングで集約した",
+      "type": "process",
+      "verified": true,
+      "evidence": "最終報告に「スクラッチパッドのファイルポーリングで全5件の完了を検知・集約」"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": [
+      "ポート4321使用中のため4331でプレビュー"
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "チェック(ビルド+検査)が実行されている",
+        "reason": "このアサーション群はベースラインでも全部通り得る。「5観点(HTML構文/Lighthouse/a11y/リンク/案件固有)が揃っているか」を明示的に問うアサーションを追加すべき"
+      }
+    ],
+    "overall": "eval-1のアサーションは判別力が弱め。deliveryを止める判断は両構成とも正しくできた"
+  }
+}

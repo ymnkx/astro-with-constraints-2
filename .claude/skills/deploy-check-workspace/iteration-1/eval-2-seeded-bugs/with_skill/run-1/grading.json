@@ -1,0 +1,69 @@
+{
+  "expectations": [
+    {
+      "text": "ID重複 (dup-check-target) が検出されている",
+      "passed": true,
+      "evidence": "html-validator [no-dup-id] page2/index.html:114 Duplicate ID \"dup-check-target\"（a11y静的チェックとlink-integrityも補足検出）"
+    },
+    {
+      "text": "alt属性のない img が検出されている",
+      "passed": true,
+      "evidence": "html-validator [wcag/h37] + a11y [axe: image-alt] + Lighthouse SEO 91点の原因として3重検出（page2/index.html:112 の favicon.svg img）"
+    },
+    {
+      "text": "リンク切れ (/recruit/) が検出されている",
+      "passed": true,
+      "evidence": "link-integrity: page2/index.html 115行目 <a href=\"/recruit/\">採用情報</a> → dist内に存在しない"
+    },
+    {
+      "text": "開発用文言 (TODO) の残存が検出されている",
+      "passed": true,
+      "evidence": "project-specific チェック項目1 ❌: page2 line 111「TODO: 本番前にダミー画像を差し替える」（TODO+ダミーの2キーワード）"
+    },
+    {
+      "text": "判定が ❌ (要修正) になっている",
+      "passed": true,
+      "evidence": "「総合判定: ❌ 要修正（error 14件・重複統合後12件）」、delivery未実行"
+    },
+    {
+      "text": "検出された問題に page2.astro への修正提案が付いている",
+      "passed": true,
+      "evidence": "「page2に開発用文言残存+alt無しダミー画像+id重複（data/src/pages/page2.astro）」としてsrc特定・diff付き修正案あり"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 40,
+    "errors_encountered": 0
+  },
+  "claims": [
+    {
+      "claim": "仕込みバグ4種を全検出",
+      "type": "quality",
+      "verified": true,
+      "evidence": "ID重複/alt欠落/リンク切れ/TODO文言 すべて該当検査が捕捉。複数検査による重複検出をレポート側で統合(14→12)している"
+    },
+    {
+      "claim": "案件固有チェックリスト(2項目)を実項目として検証",
+      "type": "process",
+      "verified": true,
+      "evidence": "「テンプレのままではない→未設定報告には該当しない」と正しく判断し、grep検証を実施"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": [
+      "検査結果はスクラッチパッドのファイル経由で集約（通知が親に届かない問題の回避策）"
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "仕込みバグ検出のアサーションは判別力が高く機能した"
+  }
+}

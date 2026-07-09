@@ -45,6 +45,7 @@ export const NavigationMenu = () => {
     states.isMoving = false;
     elements.bg?.setAttribute('aria-hidden', 'true');
     elements.contents?.setAttribute('aria-hidden', 'true');
+    elements.contents?.setAttribute('inert', '');
     _scrollController.release();
     elements.openButton?.focus();
   };
@@ -81,6 +82,7 @@ export const NavigationMenu = () => {
     states.isOpen = true;
     _scrollController.lock();
     elements.contents?.setAttribute('aria-hidden', 'false');
+    elements.contents?.removeAttribute('inert');
     elements.contents?.animate([getState().start, getState().end], animationSettings);
     elements.bg?.setAttribute('aria-hidden', 'false');
     const bg = elements.bg?.animate([getState().start, getState().end], animationSettings);

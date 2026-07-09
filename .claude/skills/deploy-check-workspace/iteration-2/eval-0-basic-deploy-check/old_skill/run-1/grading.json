@@ -1,0 +1,15 @@
+{
+  "expectations": [
+    { "text": "npm run build (astro build) が実行されている", "passed": true, "evidence": "iteration-1レポート「ビルド: ✅ 成功」" },
+    { "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている", "passed": true, "evidence": "「判定: ❌ 要修正」+ サマリー表あり" },
+    { "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている", "passed": false, "evidence": "旧版は5観点のみ。src静的検査(ESLint/stylelint/prettier)が存在しない" },
+    { "text": "既存のリンク切れ (/about と /docs) が検出されている", "passed": true, "evidence": "E3. [error ×2] 内部リンク切れ" },
+    { "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある", "passed": true, "evidence": "E1〜E4にsrcパスとdiff付き修正案" },
+    { "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている", "passed": true, "evidence": "Lighthouseスコア一覧表あり" }
+  ],
+  "summary": { "passed": 5, "failed": 1, "total": 6, "pass_rate": 0.833 },
+  "execution_metrics": { "total_tool_calls": 20, "errors_encountered": 0 },
+  "claims": [],
+  "user_notes_summary": { "uncertainties": [], "needs_review": [], "workarounds": ["旧版: 検査subagentの通知がメインに流れ、手動中継が必要だった"] },
+  "eval_feedback": { "suggestions": [], "overall": "旧版(iteration-1)出力を新アサーションで再採点したもの" }
+}

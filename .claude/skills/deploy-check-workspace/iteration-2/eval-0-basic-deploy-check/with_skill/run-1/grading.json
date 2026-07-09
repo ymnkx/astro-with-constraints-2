@@ -1,0 +1,54 @@
+{
+  "expectations": [
+    {
+      "text": "npm run build (astro build) が実行されている",
+      "passed": true,
+      "evidence": "レポート「ビルド(npm run build + NGワードチェック)成功」"
+    },
+    {
+      "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+      "passed": true,
+      "evidence": "「判定: ❌ 要修正(error 25/warning 52/info 12)」+ 6行のサマリー表"
+    },
+    {
+      "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+      "passed": true,
+      "evidence": "サマリー表にhtml-validator/lighthouse/accessibility/link-integrity/project-specific/src-checkの6行"
+    },
+    {
+      "text": "既存のリンク切れ (/about と /docs) が検出されている",
+      "passed": true,
+      "evidence": "link-integrity error: /about /docs (index.astro:37,41)"
+    },
+    {
+      "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+      "passed": true,
+      "evidence": "「error 25件は実質7つの修正で解消」— 全てsrcパス+diff付き"
+    },
+    {
+      "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+      "passed": true,
+      "evidence": "全3ページ×カテゴリのスコア表(全100点)"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 49,
+    "errors_encountered": 0
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "新スキル(iteration-2)の採点"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "expectations": [
+    {
+      "text": "npm run build (astro build) が実行されている",
+      "passed": true,
+      "evidence": "レポート冒頭「ビルド: ✅ 成功（npm run build = astro build + check-ng-words、NGワード検出なし）」"
+    },
+    {
+      "text": "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+      "passed": true,
+      "evidence": "「## 判定: ❌ 要修正」+ 検査×error/warningのサマリー表あり（deploy-check-report.md line 13-27）"
+    },
+    {
+      "text": "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェックの5観点すべての結果が報告されている",
+      "passed": true,
+      "evidence": "サマリー表に html-validator / lighthouse / accessibility / link-integrity / project-specific の5行"
+    },
+    {
+      "text": "既存のリンク切れ (/about と /docs) が検出されている",
+      "passed": true,
+      "evidence": "E3. [error ×2] 内部リンク切れ: /about (line 168), /docs (line 175)"
+    },
+    {
+      "text": "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+      "passed": true,
+      "evidence": "E1〜E4すべてに src パス（Navigation.astro, Modal.astro, index.astro line 37/41 等）と diff 付き修正案"
+    },
+    {
+      "text": "Lighthouseのスコア(performance/seo)がページごとに報告されている",
+      "passed": true,
+      "evidence": "Lighthouseスコア一覧表: 3ページ × performance/seo/best-practices/accessibility"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 20,
+    "errors_encountered": 0
+  },
+  "claims": [
+    {
+      "claim": "error 23件を検出（実質4グループ）",
+      "type": "factual",
+      "verified": true,
+      "evidence": "16(html)+5(a11y)+2(link)=23。E1〜E4のグルーピングも妥当"
+    },
+    {
+      "claim": "プレビューサーバーを停止した",
+      "type": "process",
+      "verified": true,
+      "evidence": "実行後のポート確認で4322解放済み"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Node 20のためhtml-validate@8系で検査"
+    ],
+    "needs_review": [],
+    "workarounds": [
+      "検査subagentの完了通知が親に届かず、メインセッションが結果を中継した"
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "アサーションは出力ファイルで客観的に検証できた"
+  }
+}

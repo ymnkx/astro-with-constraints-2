@@ -1,0 +1,52 @@
+{
+  "skill_name": "deploy-check",
+  "evals": [
+    {
+      "id": 0,
+      "name": "basic-deploy-check",
+      "prompt": "デプロイ前チェックをして",
+      "expected_output": "build実行→6観点(HTML構文/パフォーマンス+SEO/アクセシビリティ/リンク整合性/案件固有/src静的検査)の検査→判定付きMarkdownレポート→src側への修正提案。既存のリンク切れ(/about, /docs)を検出すること。",
+      "files": [],
+      "assertions": [
+        "npm run build (astro build) が実行されている",
+        "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+        "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+        "既存のリンク切れ (/about と /docs) が検出されている",
+        "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+        "Lighthouseのスコア(performance/seo)がページごとに報告されている"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "deploy-and-check",
+      "prompt": "デプロイとチェックをして",
+      "expected_output": "チェック一式(6観点)を実行し、リンク切れ(error)があるため判定❌となり、納品処理(npm run delivery)を自動実行せずに修正提案を提示して止まる。",
+      "files": [],
+      "assertions": [
+        "チェック(ビルド+検査)が実行されている",
+        "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+        "src静的検査(ESLint/stylelint等)の結果が件数ベースで報告されている",
+        "既存のリンク切れ (/about と /docs) が検出されている",
+        "納品処理(npm run delivery)を自動実行していない",
+        "修正提案が提示されている"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "seeded-bugs",
+      "prompt": "納品前に問題ないか確認してもらえますか",
+      "expected_output": "page2.astroに仕込んだ4つのバグ(ID重複/alt欠落img/リンク切れ/開発用TODO文言)をすべて検出し、判定❌でsrc側修正提案を出す。",
+      "files": [
+        "data/src/pages/page2.astro (仕込みバグ入り)"
+      ],
+      "assertions": [
+        "ID重複 (dup-check-target) が検出されている",
+        "alt属性のない img が検出されている",
+        "リンク切れ (/recruit/) が検出されている",
+        "開発用文言 (TODO) の残存が検出されている",
+        "判定が ❌ (要修正) になっている",
+        "検出された問題に page2.astro への修正提案が付いている"
+      ]
+    }
+  ]
+}

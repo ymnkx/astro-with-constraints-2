@@ -1,0 +1,13 @@
+{
+  "eval_id": 0,
+  "eval_name": "basic-deploy-check",
+  "prompt": "デプロイ前チェックをして",
+  "assertions": [
+    "npm run build (astro build) が実行されている",
+    "レポートに ✅/⚠️/❌ の判定とサマリー表が含まれている",
+    "HTML構文・パフォーマンス/SEO・アクセシビリティ・リンク整合性・案件固有チェック・src静的検査の6観点すべての結果が報告されている",
+    "既存のリンク切れ (/about と /docs) が検出されている",
+    "検出された問題に対して dist ではなく src 側ファイル(index.astro等)への修正提案がある",
+    "Lighthouseのスコア(performance/seo)がページごとに報告されている"
+  ]
+}

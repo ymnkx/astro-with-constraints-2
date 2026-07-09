@@ -1,0 +1,73 @@
+{
+  "expectations": [
+    {
+      "text": "ID重複 (dup-check-target) が検出されている",
+      "passed": true,
+      "evidence": "ブロッカー③「id=\"dup-check-target\" 重複（page2.astro:15,19）」"
+    },
+    {
+      "text": "alt属性のない img が検出されている",
+      "passed": true,
+      "evidence": "ブロッカー②「img の alt 欠落（page2.astro:17）」"
+    },
+    {
+      "text": "リンク切れ (/recruit/) が検出されている",
+      "passed": true,
+      "evidence": "ブロッカー④「リンク切れ3URL（/about /docs /recruit/、404実測）」"
+    },
+    {
+      "text": "開発用文言 (TODO) の残存が検出されている",
+      "passed": true,
+      "evidence": "ブロッカー①「page2に『TODO: 本番前にダミー画像を差し替える』残存（page2.astro:16）」"
+    },
+    {
+      "text": "判定が ❌ (要修正) になっている",
+      "passed": true,
+      "evidence": "「結論: このままの納品はNG（ブロッカー7件＋要確認6件）」"
+    },
+    {
+      "text": "検出された問題に page2.astro への修正提案が付いている",
+      "passed": true,
+      "evidence": "ブロッカー①②③すべて data/src/pages/page2.astro の行番号付きで提案"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1
+  },
+  "execution_metrics": {
+    "total_tool_calls": 29,
+    "errors_encountered": 0
+  },
+  "claims": [
+    {
+      "claim": "console.log がビルドJSに残存 / .DS_Store混入 / og.png 404 を検出",
+      "type": "factual",
+      "verified": true,
+      "evidence": "スキル側が見ていない観点での追加発見（スキルに取り込む価値あり）"
+    },
+    {
+      "claim": "npm run delivery を「検査」として実行し完走させた",
+      "type": "process",
+      "verified": true,
+      "evidence": "ブロッカー検出下で納品パイプラインを実行 → build/htdocs に .DS_Store 混入を発見した一方、納品物生成という副作用が発生。スキルは❌判定時にdeliveryを実行しない設計で、ここが安全性の差"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [
+      "delivery実行により build/ が生成された（副作用）"
+    ],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "ベースラインも仕込みバグ4/4を検出し全アサーション通過。スキル有無の差は『検出力』より『Lighthouse/axeによる定量化・deliveryを止める安全装置・レポート形式の一貫性』に出ている。iteration-2では『delivery(納品処理)を実行していないこと』『Lighthouse/axeスコアの定量報告』をアサーションに追加すべき"
+      }
+    ],
+    "overall": "eval-2のアサーションは今回のベースラインには判別力不足（ベースラインの当たり外れが大きい: eval-0ではHTML品質検査ゼロ、eval-2では網羅的）"
+  }
+}
