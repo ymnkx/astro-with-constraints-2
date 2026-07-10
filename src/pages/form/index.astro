@@ -31,7 +31,7 @@ const fruitOptions = [
 <LayoutBase title={title} description={description}>
   <PageHead title={title} />
   <FormBody action="/form/confirm/">
-    <FormField label="名前" required htmlFor="name">
+    <FormField label="名前" required htmlFor="name" error="名前を入力してください">
       <TextInput id="name" name="name" placeholder="山田 太郎" required autocomplete="name" />
     </FormField>
 
@@ -39,15 +39,15 @@ const fruitOptions = [
       <RadioGroup name="gender" options={genderOptions} />
     </FormField>
 
-    <FormField label="ふりがな" required htmlFor="kana">
+    <FormField label="ふりがな" required htmlFor="kana" error="ふりがなを入力してください">
       <TextInput id="kana" name="kana" placeholder="やまだ たろう" required />
     </FormField>
 
-    <FormField label="電話番号" required htmlFor="tel">
+    <FormField label="電話番号" required htmlFor="tel" error="電話番号を入力してください">
       <TextInput type="tel" id="tel" name="tel" placeholder="09012345678" required autocomplete="tel" />
     </FormField>
 
-    <FormField label="メールアドレス" required htmlFor="email">
+    <FormField label="メールアドレス" required htmlFor="email" error="正しいメールアドレスを入力してください">
       <TextInput type="email" id="email" name="email" placeholder="example@example.com" required autocomplete="email" />
     </FormField>
 

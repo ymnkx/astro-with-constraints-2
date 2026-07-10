@@ -22,4 +22,9 @@
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
+
+  // 操作後に不正な値のとき枠を強調
+  &:user-invalid {
+    border-color: var(--color-error);
+  }
 }

@@ -5,9 +5,10 @@ interface Props {
   required?: boolean;
   htmlFor?: string;
   as?: 'div' | 'fieldset';
+  error?: string; // 入力エラー時に表示する文言
 }
 
-const { label, required = false, htmlFor, as = 'div' } = Astro.props as Props;
+const { label, required = false, htmlFor, as = 'div', error } = Astro.props as Props;
 const isFieldset = as === 'fieldset';
 ---
 
@@ -22,6 +23,7 @@ const isFieldset = as === 'fieldset';
       </legend>
       <div class="parts-formField_control">
         <slot />
+        {error && <p class="parts-formField_error">{error}</p>}
       </div>
     </fieldset>
   ) : (
@@ -32,6 +34,7 @@ const isFieldset = as === 'fieldset';
       </label>
       <div class="parts-formField_control">
         <slot />
+        {error && <p class="parts-formField_error">{error}</p>}
       </div>
     </div>
   )
