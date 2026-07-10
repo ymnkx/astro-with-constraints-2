@@ -1,0 +1,17 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-address {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16);
+}
+
+.parts-address_row {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12);
+}
+
+.parts-address_label {
+  font-size: var(--typography-font-size-50);
+}

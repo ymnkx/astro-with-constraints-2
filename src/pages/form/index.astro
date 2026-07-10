@@ -5,6 +5,7 @@ import TextInput from '@/components/Parts/TextInput/TextInput.astro';
 import Textarea from '@/components/Parts/Textarea/Textarea.astro';
 import RadioGroup from '@/components/Parts/RadioGroup/RadioGroup.astro';
 import CheckboxGroup from '@/components/Parts/CheckboxGroup/CheckboxGroup.astro';
+import AddressField from '@/components/Parts/AddressField/AddressField.astro';
 import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
 import LayoutBase from '@/layouts/Base.astro';
 const title = 'お問い合わせ';
@@ -51,8 +52,8 @@ const fruitOptions = [
       <TextInput type="email" id="email" name="email" placeholder="example@example.com" required autocomplete="email" />
     </FormField>
 
-    <FormField label="住所" htmlFor="address">
-      <TextInput id="address" name="address" placeholder="東京都〇〇区△△1-2-3" autocomplete="street-address" />
+    <FormField label="住所" as="fieldset">
+      <AddressField />
     </FormField>
 
     <FormField label="好きなもの" as="fieldset">

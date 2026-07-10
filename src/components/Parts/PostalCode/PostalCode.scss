@@ -1,0 +1,45 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-postalCode {
+  display: flex;
+  gap: rem(8);
+  align-items: center;
+}
+
+.parts-postalCode_input {
+  --this-radius: var(--rounded-sm);
+
+  min-height: rem(44);
+  padding-block: rem(10);
+  padding-inline: rem(12);
+  font-size: var(--typography-font-size-100);
+  color: var(--color-text);
+  appearance: none;
+  background-color: var(--color-background-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--this-radius);
+
+  // 3桁側
+  &:first-of-type {
+    inline-size: rem(80);
+  }
+
+  // 4桁側
+  &:last-of-type {
+    inline-size: rem(96);
+  }
+
+  &::placeholder {
+    color: var(--color-gray-500);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  // 操作後に不正な値のとき枠を強調
+  &:user-invalid {
+    border-color: var(--color-error);
+  }
+}
