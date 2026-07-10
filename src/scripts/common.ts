@@ -1,3 +1,3 @@
-import '@/components/All/+.ts';
+import '@/components/Parts/+';
 
 console.log('common.ts');

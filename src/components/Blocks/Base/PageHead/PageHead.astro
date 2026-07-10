@@ -1,0 +1,10 @@
+---
+import Heading from '@/components/Parts/Heading/Heading.astro';
+const { title } = Astro.props;
+---
+
+<div class="page-head">
+  <div class="page-head_inner">
+    <Heading as="h1">{title}</Heading>
+  </div>
+</div>

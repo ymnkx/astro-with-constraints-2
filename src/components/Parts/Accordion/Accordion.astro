@@ -1,0 +1,17 @@
+---
+import Icon from '../Icon/Icon.astro';
+
+const { name = '', open = false } = Astro.props;
+---
+
+<details class="parts-accordion js-accordion" data-name={name} open={open} data-status="">
+  <summary class="parts-accordion_summary" data-role="summary">
+    <span class="parts-accordion_label">
+      <slot name="label" />
+    </span>
+    <span class="parts-accordion_icon"> </span>
+  </summary>
+  <div class="parts-accordion_contents" data-role="contents">
+    <slot name="contents" />
+  </div>
+</details>

@@ -1,3 +1,3 @@
-import '@/components/Second/+.ts';
+import '@/components/Blocks/Unique/Second/+';
 
 console.log('second.ts');

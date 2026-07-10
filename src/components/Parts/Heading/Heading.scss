@@ -1,0 +1,25 @@
+@use "@/styles/_develop/+.scss" as *;
+
+h1.parts-heading {
+  @include heading-level-1;
+}
+
+h2.parts-heading {
+  @include heading-level-2;
+}
+
+h3.parts-heading {
+  @include heading-level-3;
+}
+
+h4.parts-heading {
+  @include heading-level-4;
+}
+
+h5.parts-heading {
+  @include heading-level-5;
+}
+
+h6.parts-heading {
+  @include heading-level-6;
+}
