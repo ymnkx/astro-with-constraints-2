@@ -1,6 +1,6 @@
 ---
-import Heading from '@/components/All/Heading/Heading.astro';
-import SecondBlock from '@/components/Second/SecondBlock/SecondBlock.astro';
+import SecondBlock from '@/components/Blocks/Unique/Second/SecondBlock/SecondBlock.astro';
+import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
 import LayoutBase from '@/layouts/Base.astro';
 const title = 'Page2';
 const description = '';
@@ -11,6 +11,6 @@ import '@/styles/second.scss'; // ページ固有スタイル
   <Fragment slot="head">
     <script src="@/scripts/second.ts"></script>
   </Fragment>
-  <Heading>Page2</Heading>
+  <PageHead title={title} />
   <SecondBlock />
 </LayoutBase>

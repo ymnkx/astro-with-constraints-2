@@ -1,0 +1,15 @@
+---
+import Heading from '@/components/Parts/Heading/Heading.astro';
+const { title } = Astro.props;
+---
+
+<div class="base-session">
+  <div class="base-session_inner">
+    <div class="base-session_head">
+      <Heading>{title}</Heading>
+    </div>
+    <div class="base-session_content">
+      <slot />
+    </div>
+  </div>
+</div>

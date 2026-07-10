@@ -1,0 +1,23 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.base-session {
+  width: 100%;
+  padding-block: rem(24);
+  padding-inline: rem(24);
+
+  @include min-screen(md) {
+    padding-inline: rem(48);
+  }
+
+  @include min-screen(lg) {
+    padding-inline: rem(80);
+  }
+}
+
+.base-session_inner {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12);
+  max-width: rem(1200);
+  margin-inline: auto;
+}

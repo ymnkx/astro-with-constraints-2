@@ -2,7 +2,9 @@
 @forward "/tokens/design-composite";
 @forward "./_base/reset";
 @forward "./_base/base";
-@use "@/components/All/+.scss" as *;
+@use "@/components/Parts/+.scss" as *;
+@use "@/components/Common/+.scss" as *;
+@use "@/components/Blocks/Base/+.scss" as *;
 @layer reset;
 @layer base;
 

@@ -1,5 +1,7 @@
 @use "@/styles/_develop/+.scss" as *;
 
 .second-block {
+  padding-block: rem(32);
+  text-align: center;
   background-color: var(--color-gray-500);
 }

@@ -1,69 +1,89 @@
 ---
-import Accordion from '@/components/All/Accordion/Accordion.astro';
-import Button from '@/components/All/Button/Button.astro';
-import CarouselType01 from '@/components/All/Carousel/CarouselType01.astro';
-import CarouselItem from '@/components/All/CarouselItem/CarouselItem.astro';
-import Heading from '@/components/All/Heading/Heading.astro';
-import Icon from '@/components/All/Icon/Icon.astro';
-import Modal from '@/components/All/Modal/Modal.astro';
-import TextLink from '@/components/All/TextLink/TextLink.astro';
+import Accordion from '@/components/Parts/Accordion/Accordion.astro';
+import Button from '@/components/Parts/Button/Button.astro';
+import CarouselType01 from '@/components/Parts/Carousel/CarouselType01.astro';
+import CarouselItem from '@/components/Parts/CarouselItem/CarouselItem.astro';
+import Heading from '@/components/Parts/Heading/Heading.astro';
+import Icon from '@/components/Parts/Icon/Icon.astro';
+import Modal from '@/components/Parts/Modal/Modal.astro';
+import TextLink from '@/components/Parts/TextLink/TextLink.astro';
 import LayoutBase from '@/layouts/Base.astro';
+import BaseSession from '@/components/Blocks/Base/Session/Session.astro';
+import Full from '@/components/Parts/Full/Full.astro';
+import TopKv from '@/components/Blocks/Unique/Top/TopKv/TopKV.astro';
 const title = '';
 const description = '';
+import '@/styles/top.scss'; // ページ固有スタイル
 ---
 
 <LayoutBase title={title} description={description}>
-  <Heading>Button</Heading>
-  <Button as="button" type="button">BUTTON</Button>
-  <Button as="a" href="/">A</Button>
-  <Button as="span">SPAN</Button>
-  <Heading>Heading</Heading>
-  <Heading as="h1">Heading 1</Heading>
-  <Heading as="h2">Heading 2</Heading>
-  <Heading as="h3">Heading 3</Heading>
-  <Heading as="h4">Heading 4</Heading>
-  <Heading as="h5">Heading 5</Heading>
-  <Heading as="h6">Heading 6</Heading>
-  <Heading>Icon</Heading>
-  <Icon name="code-bracket" />
-  <Icon name="check" />
-  <Icon name="chevron-right" />
-  <Icon name="x-mark" />
-  <Icon name="blank" />
-  <Icon name="cube" />
-  <Heading>TextLink</Heading>
-  <!-- 基本的な使用 -->
-  <p>
-    <TextLink href="/page2/" text="詳細はこちら" />
-  </p>
-  <p>
-    <!-- 左側にアイコン -->
-    <TextLink href="/page3/" text="ドキュメント" iconName="check" iconPosition="left" />
-  </p>
-  <p>
-    <!-- 外部リンク -->
-    <TextLink href="https://example.com" text="外部サイト" iconName="blank" iconPosition="right" />
-  </p>
-  <Heading>Accordion</Heading>
-  <Accordion name="top">
-    <Fragment slot="label">
-      <span>Accorion Label</span>
-    </Fragment>
-    <Fragment slot="contents">
-      <p>Accordion Contents</p>
-    </Fragment>
-  </Accordion>
-  <Heading>Modal</Heading>
-  <Button class="js-modal-button" data-modal-id="sample-modal">OPEN MODAL</Button>
-  <Modal id="sample-modal">
-    <p>This is Modal Contents.</p>
-  </Modal>
-  <Heading>Carousel</Heading>
-  <CarouselType01>
-    <CarouselItem>1</CarouselItem>
-    <CarouselItem>2</CarouselItem>
-    <CarouselItem>3</CarouselItem>
-    <CarouselItem>4</CarouselItem>
-    <CarouselItem>5</CarouselItem>
-  </CarouselType01>
+  <TopKv />
+  <BaseSession title="Button">
+    <Button as="button" type="button">BUTTON</Button>
+    <Button as="a" href="/">A</Button>
+    <Button as="span">SPAN</Button>
+  </BaseSession>
+
+  <BaseSession title="Heading">
+    <Heading as="h1">Heading 1</Heading>
+    <Heading as="h2">Heading 2</Heading>
+    <Heading as="h3">Heading 3</Heading>
+    <Heading as="h4">Heading 4</Heading>
+    <Heading as="h5">Heading 5</Heading>
+    <Heading as="h6">Heading 6</Heading>
+  </BaseSession>
+
+  <BaseSession title="Icon">
+    <Icon name="code-bracket" />
+    <Icon name="check" />
+    <Icon name="chevron-right" />
+    <Icon name="x-mark" />
+    <Icon name="blank" />
+    <Icon name="cube" />
+  </BaseSession>
+
+  <BaseSession title="TextLink">
+    <!-- 基本的な使用 -->
+    <p>
+      <TextLink href="/page2/" text="詳細はこちら" />
+    </p>
+    <p>
+      <!-- 左側にアイコン -->
+      <TextLink href="/page3/" text="ドキュメント" iconName="check" iconPosition="left" />
+    </p>
+    <p>
+      <!-- 外部リンク -->
+      <TextLink href="https://example.com" text="外部サイト" iconName="blank" iconPosition="right" />
+    </p>
+  </BaseSession>
+
+  <BaseSession title="Accordion">
+    <Accordion name="top">
+      <Fragment slot="label">
+        <span>Accorion Label</span>
+      </Fragment>
+      <Fragment slot="contents">
+        <p>Accordion Contents</p>
+      </Fragment>
+    </Accordion>
+  </BaseSession>
+
+  <BaseSession title="Modal">
+    <Button class="js-modal-button" data-modal-id="sample-modal">OPEN MODAL</Button>
+    <Modal id="sample-modal">
+      <p>This is Modal Contents.</p>
+    </Modal>
+  </BaseSession>
+
+  <BaseSession title="Carousel">
+    <Full>
+      <CarouselType01>
+        <CarouselItem>1</CarouselItem>
+        <CarouselItem>2</CarouselItem>
+        <CarouselItem>3</CarouselItem>
+        <CarouselItem>4</CarouselItem>
+        <CarouselItem>5</CarouselItem>
+      </CarouselType01>
+    </Full>
+  </BaseSession>
 </LayoutBase>

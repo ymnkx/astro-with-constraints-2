@@ -1,0 +1,8 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.top-kv {
+  width: 100%;
+  max-height: rem(500);
+  aspect-ratio: 16 / 9;
+  background-color: orangered;
+}
