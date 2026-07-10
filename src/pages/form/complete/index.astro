@@ -1,0 +1,13 @@
+---
+import FormComplete from '@/components/Blocks/Unique/Form/FormComplete/FormComplete.astro';
+import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
+import LayoutBase from '@/layouts/Base.astro';
+const title = '送信完了';
+const description = 'お問い合わせフォームの完了ページ';
+import '@/styles/form.scss'; // ページ固有スタイル
+---
+
+<LayoutBase title={title} description={description}>
+  <PageHead title={title} />
+  <FormComplete />
+</LayoutBase>

@@ -1,0 +1,18 @@
+---
+// お問い合わせフォームの完了ブロック
+import Button from '@/components/Parts/Button/Button.astro';
+import Heading from '@/components/Parts/Heading/Heading.astro';
+---
+
+<div class="form-complete">
+  <div class="form-complete_inner">
+    <Heading as="h2" class="form-complete_title">送信が完了しました</Heading>
+    <p class="form-complete_text">
+      お問い合わせいただきありがとうございます。<br />
+      担当者より折り返しご連絡いたしますので、今しばらくお待ちください。
+    </p>
+    <div class="form-complete_actions">
+      <Button as="a" href="/">トップに戻る</Button>
+    </div>
+  </div>
+</div>

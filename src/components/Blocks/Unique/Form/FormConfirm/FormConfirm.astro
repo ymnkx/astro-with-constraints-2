@@ -1,0 +1,37 @@
+---
+// お問い合わせフォームの確認ブロック（殻）。確認項目はページ側から slot で登録する
+import Button from '@/components/Parts/Button/Button.astro';
+
+interface Props {
+  action: string; // 完了ページの URL
+  backHref: string; // 入力ページの URL
+  method?: 'get' | 'post';
+  lead?: string;
+  backLabel?: string;
+  submitLabel?: string;
+}
+
+const {
+  action,
+  backHref,
+  method = 'get',
+  lead = '入力内容をご確認のうえ、送信してください。',
+  backLabel = '戻る',
+  submitLabel = '送信する',
+}: Props = Astro.props;
+---
+
+<div class="form-confirm">
+  <p class="form-confirm_lead">{lead}</p>
+
+  <dl class="form-confirm_list">
+    <slot />
+  </dl>
+
+  <form class="form-confirm_form" action={action} method={method}>
+    <div class="form-confirm_actions">
+      <Button as="a" href={backHref}>{backLabel}</Button>
+      <Button as="button" type="submit">{submitLabel}</Button>
+    </div>
+  </form>
+</div>

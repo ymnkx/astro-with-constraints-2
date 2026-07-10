@@ -1,0 +1,22 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12) rem(24);
+  padding-block-start: rem(10);
+}
+
+.parts-radioGroup_item {
+  display: inline-flex;
+  gap: rem(8);
+  align-items: center;
+  cursor: pointer;
+}
+
+.parts-radioGroup_input {
+  width: rem(20);
+  height: rem(20);
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}

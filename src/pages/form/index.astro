@@ -1,0 +1,66 @@
+---
+import FormBody from '@/components/Blocks/Unique/Form/FormBody/FormBody.astro';
+import FormField from '@/components/Parts/FormField/FormField.astro';
+import TextInput from '@/components/Parts/TextInput/TextInput.astro';
+import Textarea from '@/components/Parts/Textarea/Textarea.astro';
+import RadioGroup from '@/components/Parts/RadioGroup/RadioGroup.astro';
+import CheckboxGroup from '@/components/Parts/CheckboxGroup/CheckboxGroup.astro';
+import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
+import LayoutBase from '@/layouts/Base.astro';
+const title = 'お問い合わせ';
+const description = 'お問い合わせフォームの入力ページ';
+import '@/styles/form.scss'; // ページ固有スタイル
+
+// このページで扱うフォーム項目をここで定義する
+const genderOptions = [
+  { value: 'male', label: '男性' },
+  { value: 'female', label: '女性' },
+  { value: 'other', label: 'その他' },
+  { value: 'noAnswer', label: '回答しない' },
+];
+
+const fruitOptions = [
+  { value: 'apple', label: 'りんご' },
+  { value: 'banana', label: 'バナナ' },
+  { value: 'strawberry', label: 'いちご' },
+  { value: 'grape', label: 'ぶどう' },
+  { value: 'orange', label: 'みかん' },
+];
+---
+
+<LayoutBase title={title} description={description}>
+  <PageHead title={title} />
+  <FormBody action="/form/confirm/">
+    <FormField label="名前" required htmlFor="name">
+      <TextInput id="name" name="name" placeholder="山田 太郎" required autocomplete="name" />
+    </FormField>
+
+    <FormField label="性別" as="fieldset">
+      <RadioGroup name="gender" options={genderOptions} />
+    </FormField>
+
+    <FormField label="ふりがな" required htmlFor="kana">
+      <TextInput id="kana" name="kana" placeholder="やまだ たろう" required />
+    </FormField>
+
+    <FormField label="電話番号" required htmlFor="tel">
+      <TextInput type="tel" id="tel" name="tel" placeholder="09012345678" required autocomplete="tel" />
+    </FormField>
+
+    <FormField label="メールアドレス" required htmlFor="email">
+      <TextInput type="email" id="email" name="email" placeholder="example@example.com" required autocomplete="email" />
+    </FormField>
+
+    <FormField label="住所" htmlFor="address">
+      <TextInput id="address" name="address" placeholder="東京都〇〇区△△1-2-3" autocomplete="street-address" />
+    </FormField>
+
+    <FormField label="好きなもの" as="fieldset">
+      <CheckboxGroup name="fruits" options={fruitOptions} />
+    </FormField>
+
+    <FormField label="その他" htmlFor="note">
+      <Textarea id="note" name="note" rows={5} placeholder="ご自由にご記入ください" />
+    </FormField>
+  </FormBody>
+</LayoutBase>

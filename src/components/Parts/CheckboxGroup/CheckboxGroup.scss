@@ -1,0 +1,22 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12) rem(24);
+  padding-block-start: rem(10);
+}
+
+.parts-checkboxGroup_item {
+  display: inline-flex;
+  gap: rem(8);
+  align-items: center;
+  cursor: pointer;
+}
+
+.parts-checkboxGroup_input {
+  width: rem(20);
+  height: rem(20);
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}

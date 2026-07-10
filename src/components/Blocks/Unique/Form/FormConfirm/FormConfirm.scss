@@ -1,0 +1,35 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.form-confirm {
+  padding-block: rem(40);
+  padding-inline: rem(24);
+
+  @include min-screen(md) {
+    max-width: rem(880);
+    padding-inline: rem(48);
+    margin-inline: auto;
+  }
+}
+
+.form-confirm_lead {
+  margin-block-end: rem(32);
+  text-align: center;
+}
+
+.form-confirm_list {
+  border-top: 1px solid var(--color-border);
+}
+
+.form-confirm_actions {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16);
+  align-items: center;
+  justify-content: center;
+  margin-block-start: rem(40);
+
+  @include min-screen(md) {
+    flex-direction: row;
+    gap: rem(24);
+  }
+}

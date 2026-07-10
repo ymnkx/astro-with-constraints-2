@@ -1,0 +1,28 @@
+---
+import FormConfirm from '@/components/Blocks/Unique/Form/FormConfirm/FormConfirm.astro';
+import ConfirmItem from '@/components/Parts/ConfirmItem/ConfirmItem.astro';
+import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
+import LayoutBase from '@/layouts/Base.astro';
+const title = '入力内容の確認';
+const description = 'お問い合わせフォームの確認ページ';
+import '@/styles/form.scss'; // ページ固有スタイル
+
+// 確認画面に表示する項目をここで定義する（マークアップサンプルのため値は固定）
+const items = [
+  { label: '名前', value: '山田 太郎' },
+  { label: '性別', value: '男性' },
+  { label: 'ふりがな', value: 'やまだ たろう' },
+  { label: '電話番号', value: '09012345678' },
+  { label: 'メールアドレス', value: 'example@example.com' },
+  { label: '住所', value: '東京都〇〇区△△1-2-3' },
+  { label: '好きなもの', value: 'りんご、いちご、みかん' },
+  { label: 'その他', value: '特にありません。' },
+];
+---
+
+<LayoutBase title={title} description={description}>
+  <PageHead title={title} />
+  <FormConfirm action="/form/complete/" backHref="/form/">
+    {items.map((item) => <ConfirmItem label={item.label}>{item.value}</ConfirmItem>)}
+  </FormConfirm>
+</LayoutBase>
