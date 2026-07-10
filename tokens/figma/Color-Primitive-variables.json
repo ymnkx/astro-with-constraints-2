@@ -52,6 +52,15 @@
         ],
         "value": "#9acd32"
       }
+    },
+    "red": {
+      "100": {
+        "type": "color",
+        "scopes": [
+          "all_scopes"
+        ],
+        "value": "#d93025"
+      }
     }
   }
 }

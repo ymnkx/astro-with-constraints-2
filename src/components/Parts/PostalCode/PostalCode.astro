@@ -1,0 +1,34 @@
+---
+// 郵便番号の入力欄（3桁 - 4桁）。name は `${name}1` / `${name}2` で送信される
+interface Props {
+  id?: string;
+  name?: string;
+}
+
+const { id = 'postalCode1', name = 'postalCode' } = Astro.props as Props;
+---
+
+<div class="parts-postalCode">
+  <span class="parts-postalCode_mark" aria-hidden="true">〒</span>
+  <input
+    class="parts-postalCode_input"
+    type="text"
+    id={id}
+    name={`${name}1`}
+    inputmode="numeric"
+    pattern="\d{3}"
+    maxlength="3"
+    placeholder="123"
+    autocomplete="postal-code"
+  />
+  <span class="parts-postalCode_hyphen" aria-hidden="true">-</span>
+  <input
+    class="parts-postalCode_input"
+    type="text"
+    name={`${name}2`}
+    inputmode="numeric"
+    pattern="\d{4}"
+    maxlength="4"
+    placeholder="4567"
+  />
+</div>

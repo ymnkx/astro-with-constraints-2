@@ -34,6 +34,13 @@
         "all_scopes"
       ],
       "value": "{color.gray.500}"
+    },
+    "error": {
+      "type": "color",
+      "scopes": [
+        "all_scopes"
+      ],
+      "value": "{color.red.100}"
     }
   }
 }

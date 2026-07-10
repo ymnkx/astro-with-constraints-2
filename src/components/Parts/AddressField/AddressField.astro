@@ -1,0 +1,39 @@
+---
+// 住所の入力欄（郵便番号・都道府県・市区町村・町域・以降の住所）
+import TextInput from '@/components/Parts/TextInput/TextInput.astro';
+import PostalCode from '@/components/Parts/PostalCode/PostalCode.astro';
+import Select from '@/components/Parts/Select/Select.astro';
+import { prefectures } from '@/data/prefectures';
+
+const prefectureOptions = prefectures.map((prefecture) => ({
+  value: prefecture.name,
+  label: prefecture.name,
+}));
+---
+
+<div class="parts-address">
+  <div class="parts-address_row">
+    <label class="parts-address_label" for="postalCode1">郵便番号</label>
+    <PostalCode id="postalCode1" name="postalCode" />
+  </div>
+
+  <div class="parts-address_row">
+    <label class="parts-address_label" for="prefecture">都道府県</label>
+    <Select id="prefecture" name="prefecture" options={prefectureOptions} autocomplete="address-level1" />
+  </div>
+
+  <div class="parts-address_row">
+    <label class="parts-address_label" for="city">市区町村</label>
+    <TextInput id="city" name="city" placeholder="〇〇区" autocomplete="address-level2" />
+  </div>
+
+  <div class="parts-address_row">
+    <label class="parts-address_label" for="town">町域</label>
+    <TextInput id="town" name="town" placeholder="△△" autocomplete="address-line1" />
+  </div>
+
+  <div class="parts-address_row">
+    <label class="parts-address_label" for="addressRest">以降の住所</label>
+    <TextInput id="addressRest" name="addressRest" placeholder="1-2-3 〇〇マンション101" autocomplete="address-line2" />
+  </div>
+</div>

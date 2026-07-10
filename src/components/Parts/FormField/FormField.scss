@@ -54,6 +54,20 @@
 }
 
 .parts-formField_control {
+  display: flex;
   flex-grow: 1;
+  flex-direction: column;
+  gap: rem(8);
   min-width: 0;
+}
+
+// エラー文言。操作後に不正な入力があるときだけ表示する
+.parts-formField_error {
+  display: none;
+  font-size: var(--typography-font-size-50);
+  color: var(--color-error);
+
+  .parts-formField_control:has(:user-invalid) & {
+    display: block;
+  }
 }

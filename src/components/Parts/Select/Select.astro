@@ -1,0 +1,32 @@
+---
+// セレクトボックス
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  name: string;
+  options: Option[];
+  required?: boolean;
+  placeholder?: string; // 先頭の未選択項目の文言
+  autocomplete?: string;
+}
+
+const {
+  id,
+  name,
+  options,
+  required = false,
+  placeholder = '選択してください',
+  autocomplete,
+} = Astro.props as Props;
+---
+
+<div class="parts-select">
+  <select class="parts-select_control" id={id} name={name} required={required} autocomplete={autocomplete}>
+    <option value="" selected disabled={required} hidden={required}>{placeholder}</option>
+    {options.map((option) => <option value={option.value}>{option.label}</option>)}
+  </select>
+</div>

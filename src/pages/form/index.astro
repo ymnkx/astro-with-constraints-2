@@ -5,6 +5,7 @@ import TextInput from '@/components/Parts/TextInput/TextInput.astro';
 import Textarea from '@/components/Parts/Textarea/Textarea.astro';
 import RadioGroup from '@/components/Parts/RadioGroup/RadioGroup.astro';
 import CheckboxGroup from '@/components/Parts/CheckboxGroup/CheckboxGroup.astro';
+import AddressField from '@/components/Parts/AddressField/AddressField.astro';
 import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
 import LayoutBase from '@/layouts/Base.astro';
 const title = 'お問い合わせ';
@@ -29,9 +30,12 @@ const fruitOptions = [
 ---
 
 <LayoutBase title={title} description={description}>
+  <Fragment slot="head">
+    <script src="@/scripts/form.ts"></script>
+  </Fragment>
   <PageHead title={title} />
   <FormBody action="/form/confirm/">
-    <FormField label="名前" required htmlFor="name">
+    <FormField label="名前" required htmlFor="name" error="名前を入力してください">
       <TextInput id="name" name="name" placeholder="山田 太郎" required autocomplete="name" />
     </FormField>
 
@@ -39,20 +43,20 @@ const fruitOptions = [
       <RadioGroup name="gender" options={genderOptions} />
     </FormField>
 
-    <FormField label="ふりがな" required htmlFor="kana">
+    <FormField label="ふりがな" required htmlFor="kana" error="ふりがなを入力してください">
       <TextInput id="kana" name="kana" placeholder="やまだ たろう" required />
     </FormField>
 
-    <FormField label="電話番号" required htmlFor="tel">
+    <FormField label="電話番号" required htmlFor="tel" error="電話番号を入力してください">
       <TextInput type="tel" id="tel" name="tel" placeholder="09012345678" required autocomplete="tel" />
     </FormField>
 
-    <FormField label="メールアドレス" required htmlFor="email">
+    <FormField label="メールアドレス" required htmlFor="email" error="正しいメールアドレスを入力してください">
       <TextInput type="email" id="email" name="email" placeholder="example@example.com" required autocomplete="email" />
     </FormField>
 
-    <FormField label="住所" htmlFor="address">
-      <TextInput id="address" name="address" placeholder="東京都〇〇区△△1-2-3" autocomplete="street-address" />
+    <FormField label="住所" as="fieldset">
+      <AddressField />
     </FormField>
 
     <FormField label="好きなもの" as="fieldset">

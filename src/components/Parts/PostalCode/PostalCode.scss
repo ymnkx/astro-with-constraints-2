@@ -1,9 +1,14 @@
 @use "@/styles/_develop/+.scss" as *;
 
-.parts-textInput {
+.parts-postalCode {
+  display: flex;
+  gap: rem(8);
+  align-items: center;
+}
+
+.parts-postalCode_input {
   --this-radius: var(--rounded-sm);
 
-  width: 100%;
   min-height: rem(44);
   padding-block: rem(10);
   padding-inline: rem(12);
@@ -13,6 +18,16 @@
   background-color: var(--color-background-white);
   border: 1px solid var(--color-border);
   border-radius: var(--this-radius);
+
+  // 3桁側
+  &:first-of-type {
+    inline-size: rem(80);
+  }
+
+  // 4桁側
+  &:last-of-type {
+    inline-size: rem(96);
+  }
 
   &::placeholder {
     color: var(--color-gray-500);
