@@ -1,0 +1,38 @@
+---
+// フォーム項目のラベル・必須バッジ・入力欄をまとめる汎用ラッパー
+interface Props {
+  label: string;
+  required?: boolean;
+  htmlFor?: string;
+  as?: 'div' | 'fieldset';
+}
+
+const { label, required = false, htmlFor, as = 'div' } = Astro.props as Props;
+const isFieldset = as === 'fieldset';
+---
+
+{
+  isFieldset ? (
+    <fieldset class="parts-formField">
+      <legend class="parts-formField_legend">
+        <span class="parts-formField_label">
+          <span class="parts-formField_labelText">{label}</span>
+          {required && <span class="parts-formField_badge">必須</span>}
+        </span>
+      </legend>
+      <div class="parts-formField_control">
+        <slot />
+      </div>
+    </fieldset>
+  ) : (
+    <div class="parts-formField">
+      <label class="parts-formField_label" for={htmlFor}>
+        <span class="parts-formField_labelText">{label}</span>
+        {required && <span class="parts-formField_badge">必須</span>}
+      </label>
+      <div class="parts-formField_control">
+        <slot />
+      </div>
+    </div>
+  )
+}

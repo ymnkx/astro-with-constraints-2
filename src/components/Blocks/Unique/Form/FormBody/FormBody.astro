@@ -1,0 +1,24 @@
+---
+// お問い合わせフォームの入力ブロック（殻）。フィールドはページ側から slot で登録する
+import Button from '@/components/Parts/Button/Button.astro';
+
+interface Props {
+  action: string; // 確認ページの URL
+  method?: 'get' | 'post';
+  submitLabel?: string;
+}
+
+const { action, method = 'get', submitLabel = '確認する' }: Props = Astro.props;
+---
+
+<div class="form-body">
+  <form class="form-body_form" action={action} method={method}>
+    <div class="form-body_fields">
+      <slot />
+    </div>
+
+    <div class="form-body_actions">
+      <Button as="button" type="submit" isFull>{submitLabel}</Button>
+    </div>
+  </form>
+</div>

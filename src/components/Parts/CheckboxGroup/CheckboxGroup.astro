@@ -1,0 +1,25 @@
+---
+// チェックボックスのグループ（複数選択）
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  name: string;
+  options: Option[];
+}
+
+const { name, options } = Astro.props as Props;
+---
+
+<div class="parts-checkboxGroup">
+  {
+    options.map((option) => (
+      <label class="parts-checkboxGroup_item">
+        <input class="parts-checkboxGroup_input" type="checkbox" name={name} value={option.value} />
+        <span class="parts-checkboxGroup_label">{option.label}</span>
+      </label>
+    ))
+  }
+</div>

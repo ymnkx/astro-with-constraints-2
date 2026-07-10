@@ -1,0 +1,14 @@
+---
+// 複数行テキスト入力欄
+interface Props {
+  id: string;
+  name: string;
+  rows?: number;
+  placeholder?: string;
+  required?: boolean;
+}
+
+const { id, name, rows = 4, placeholder, required = false } = Astro.props as Props;
+---
+
+<textarea class="parts-textarea" id={id} name={name} rows={rows} placeholder={placeholder} required={required}></textarea>

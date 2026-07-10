@@ -1,0 +1,59 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-formField {
+  --this-gap: #{rem(8)};
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--this-gap);
+
+  // fieldset の UA デフォルトを打ち消し、div 版と挙動を揃える
+  min-inline-size: 0;
+  padding: 0;
+  margin-inline: 0;
+  border: none;
+
+  @include min-screen(md) {
+    flex-direction: row;
+    gap: rem(24);
+    align-items: flex-start;
+  }
+}
+
+// legend の特殊レンダリングを無効化し、中のラベルを通常のフレックスアイテムにする
+.parts-formField_legend {
+  display: contents;
+}
+
+.parts-formField_label {
+  display: flex;
+  gap: rem(8);
+  align-items: center;
+  padding: 0;
+
+  @include min-screen(md) {
+    flex-shrink: 0;
+    width: rem(220);
+    padding-block-start: rem(12);
+  }
+}
+
+.parts-formField_labelText {
+  font-weight: var(--typography-font-weight-bold);
+}
+
+.parts-formField_badge {
+  display: inline-flex;
+  align-items: center;
+  padding-block: rem(2);
+  padding-inline: rem(8);
+  font-size: var(--typography-font-size-30);
+  color: var(--color-background-white);
+  background-color: var(--color-primary);
+  border-radius: var(--rounded-sm);
+}
+
+.parts-formField_control {
+  flex-grow: 1;
+  min-width: 0;
+}

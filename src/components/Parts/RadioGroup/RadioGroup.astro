@@ -1,0 +1,26 @@
+---
+// ラジオボタンのグループ（単一選択）
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  name: string;
+  options: Option[];
+  required?: boolean;
+}
+
+const { name, options, required = false } = Astro.props as Props;
+---
+
+<div class="parts-radioGroup">
+  {
+    options.map((option) => (
+      <label class="parts-radioGroup_item">
+        <input class="parts-radioGroup_input" type="radio" name={name} value={option.value} required={required} />
+        <span class="parts-radioGroup_label">{option.label}</span>
+      </label>
+    ))
+  }
+</div>

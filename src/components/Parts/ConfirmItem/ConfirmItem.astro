@@ -1,0 +1,15 @@
+---
+// 確認画面などで使う「項目名 / 内容」の定義リスト 1 行
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props as Props;
+---
+
+<div class="parts-confirmItem">
+  <dt class="parts-confirmItem_term">{label}</dt>
+  <dd class="parts-confirmItem_desc">
+    <slot />
+  </dd>
+</div>

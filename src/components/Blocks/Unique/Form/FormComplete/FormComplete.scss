@@ -1,0 +1,24 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.form-complete {
+  padding-block: rem(80);
+  padding-inline: rem(24);
+}
+
+.form-complete_inner {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24);
+  align-items: center;
+  max-width: rem(600);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.form-complete_text {
+  line-height: var(--typography-line-height-300);
+}
+
+.form-complete_actions {
+  margin-block-start: rem(16);
+}

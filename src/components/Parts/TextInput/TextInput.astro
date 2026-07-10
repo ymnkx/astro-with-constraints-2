@@ -1,0 +1,25 @@
+---
+// テキスト系の入力欄（text / tel / email）
+interface Props {
+  type?: 'text' | 'tel' | 'email';
+  id: string;
+  name: string;
+  value?: string;
+  placeholder?: string;
+  required?: boolean;
+  autocomplete?: string;
+}
+
+const { type = 'text', id, name, value, placeholder, required = false, autocomplete } = Astro.props as Props;
+---
+
+<input
+  class="parts-textInput"
+  type={type}
+  id={id}
+  name={name}
+  value={value}
+  placeholder={placeholder}
+  required={required}
+  autocomplete={autocomplete}
+/>

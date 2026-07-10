@@ -1,0 +1,27 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.form-body {
+  padding-block: rem(40);
+  padding-inline: rem(24);
+
+  @include min-screen(md) {
+    max-width: rem(880);
+    padding-inline: rem(48);
+    margin-inline: auto;
+  }
+}
+
+.form-body_fields {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32);
+}
+
+.form-body_actions {
+  margin-block-start: rem(40);
+
+  @include min-screen(md) {
+    max-width: rem(320);
+    margin-inline: auto;
+  }
+}
