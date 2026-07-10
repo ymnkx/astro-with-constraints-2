@@ -30,6 +30,9 @@ const fruitOptions = [
 ---
 
 <LayoutBase title={title} description={description}>
+  <Fragment slot="head">
+    <script src="@/scripts/form.ts"></script>
+  </Fragment>
   <PageHead title={title} />
   <FormBody action="/form/confirm/">
     <FormField label="名前" required htmlFor="name" error="名前を入力してください">
