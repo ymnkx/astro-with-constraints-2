@@ -1,6 +1,6 @@
 @use "@/styles/_develop/+.scss" as *;
 
-.sample-modal {
+.parts-modal {
   --this-easing: cubic-bezier(0, 0, 0.2, 1);
   --this-duration: 0.3s;
 
@@ -13,7 +13,7 @@
   }
 }
 
-.sample-modal[open] {
+.parts-modal[open] {
   animation: move var(--this-duration) var(--this-easing);
   animation-fill-mode: forwards;
 }
@@ -30,7 +30,7 @@
   }
 }
 
-.sample-modal[open].-back {
+.parts-modal[open].-back {
   animation: move-back var(--this-duration) var(--this-easing);
   animation-fill-mode: forwards;
 }
@@ -47,7 +47,7 @@
   }
 }
 
-.sample-modal[open]::backdrop {
+.parts-modal[open]::backdrop {
   animation: fade calc(0.5 * var(--this-duration)) var(--this-easing);
   animation-fill-mode: forwards;
 }
@@ -62,7 +62,7 @@
   }
 }
 
-.sample-modal[open].-back::backdrop {
+.parts-modal[open].-back::backdrop {
   animation: fade-back calc(0.5 * var(--this-duration)) var(--this-easing);
   animation-fill-mode: forwards;
 }
@@ -77,11 +77,11 @@
   }
 }
 
-.sample-modal_inner {
+.parts-modal_inner {
   padding: 2rem;
   background-color: var(--color-background-white);
 }
 
-.sample-modal_control {
+.parts-modal_control {
   margin-block-start: 1rem;
 }

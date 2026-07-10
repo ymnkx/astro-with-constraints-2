@@ -1,12 +1,12 @@
 @use "@/styles/_develop/+.scss" as *;
 
-.sample-accordion {
+.parts-accordion {
   --this-size-icon: var(--accordion-icon-size, #{rem(10)});
 
   border: 1px solid var(--color-border);
 }
 
-.sample-accordion_summary {
+.parts-accordion_summary {
   position: relative;
   display: block;
   width: 100%;
@@ -20,11 +20,11 @@
   }
 }
 
-.sample-accordion_label {
+.parts-accordion_label {
   display: block;
 }
 
-.sample-accordion_icon {
+.parts-accordion_icon {
   position: absolute;
   top: 50%;
   right: 1em;
@@ -42,16 +42,16 @@
     border-width: 1px 1px 0 0;
   }
 
-  .sample-accordion[open] & {
+  .parts-accordion[open] & {
     transform: translateY(-25%) rotate(-45deg);
   }
 
-  .sample-accordion[data-status="closing"] & {
+  .parts-accordion[data-status="closing"] & {
     transform: translateY(-75%) rotate(135deg);
   }
 }
 
-.sample-accordion_contents {
+.parts-accordion_contents {
   overflow: hidden;
   border-top: 1px solid var(--color-border);
 }

@@ -15,10 +15,10 @@ const { size = 'medium', isFull = false, as: Tag = 'span', class: className, ...
 ---
 
 <Tag
-  class:list={[className, 'sample-button', { '-small': size === 'small', '-large': size === 'large', '-full': isFull }]}
+  class:list={[className, 'parts-button', { '-small': size === 'small', '-large': size === 'large', '-full': isFull }]}
   {...rest}
 >
-  <span class="sample-button_inner">
+  <span class="parts-button_inner">
     <slot />
   </span>
 </Tag>

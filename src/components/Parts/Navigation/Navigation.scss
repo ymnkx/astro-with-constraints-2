@@ -1,8 +1,8 @@
 @use "@/styles/_develop/+.scss" as *;
 
-.sample-navigation {
-  --this-color-cover: var(--sample-navigation-bg, lightgray);
-  --this-color-icon: var(--sample-navigation-icon, black);
+.parts-navigation {
+  --this-color-cover: var(--parts-navigation-bg, lightgray);
+  --this-color-icon: var(--parts-navigation-icon, black);
   --this-size-icon: #{rem(44)};
 
   position: relative;
@@ -13,7 +13,7 @@
   }
 }
 
-.sample-navigation_bg {
+.parts-navigation_bg {
   position: fixed;
   top: 0;
   left: 0;
@@ -28,7 +28,7 @@
   }
 }
 
-.sample-navigation_contents {
+.parts-navigation_contents {
   position: fixed;
   top: 0;
   left: 0;
@@ -44,7 +44,7 @@
   }
 }
 
-.sample-navigation_button {
+.parts-navigation_button {
   position: relative;
   display: block;
 
@@ -67,21 +67,21 @@
   }
 }
 
-.sample-navigation_icon {
+.parts-navigation_icon {
   display: inline-block;
   width: var(--this-size-icon);
   height: var(--this-size-icon);
   color: var(--this-color-icon);
 }
 
-.sample-navigation_inner {
+.parts-navigation_inner {
   width: 100%;
   max-height: 100%;
   overflow-y: auto;
   pointer-events: initial;
 }
 
-.sample-navigation_trap {
+.parts-navigation_trap {
   width: 0;
   height: 0;
   padding: 0;

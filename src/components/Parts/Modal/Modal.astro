@@ -2,12 +2,12 @@
 const { id } = Astro.props;
 ---
 
-<dialog class="sample-modal js-modal" id={id} aria-modal="true">
-  <div class="sample-modal_inner" data-role="inner">
-    <div class="sample-modal_contents">
+<dialog class="parts-modal js-modal" id={id} aria-modal="true">
+  <div class="parts-modal_inner" data-role="inner">
+    <div class="parts-modal_contents">
       <slot />
     </div>
-    <div class="sample-modal_control">
+    <div class="parts-modal_control">
       <button type="button" autofocus data-role="close">close</button>
     </div>
   </div>

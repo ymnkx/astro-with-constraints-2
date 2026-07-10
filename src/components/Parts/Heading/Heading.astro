@@ -7,6 +7,6 @@ type Props<Tag extends Extract<HTMLTag, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>
 const { as: Tag = 'h2', class: className, ...rest }: Props = Astro.props;
 ---
 
-<Tag class:list={[className, 'sample-heading']} {...rest}>
+<Tag class:list={[className, 'parts-heading']} {...rest}>
   <slot />
 </Tag>
