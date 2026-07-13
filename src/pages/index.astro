@@ -1,6 +1,8 @@
 ---
 import Accordion from '@/components/Parts/Accordion/Accordion.astro';
 import Button from '@/components/Parts/Button/Button.astro';
+import Card from '@/components/Parts/Card/Card.astro';
+import CardList from '@/components/Parts/CardList/CardList.astro';
 import CarouselType01 from '@/components/Parts/Carousel/CarouselType01.astro';
 import CarouselItem from '@/components/Parts/CarouselItem/CarouselItem.astro';
 import Heading from '@/components/Parts/Heading/Heading.astro';
@@ -73,6 +75,19 @@ import '@/styles/top.scss'; // ページ固有スタイル
     <Modal id="parts-modal">
       <p>This is Modal Contents.</p>
     </Modal>
+  </BaseSession>
+
+  <BaseSession title="CardList">
+    <CardList>
+      <Card href="/page2/" category="News" title="デフォルトのサンプルカードです" />
+      <Card href="/page3/" category="Blog" title="2枚目のカードサンプル" />
+      <Card
+        href="https://example.com"
+        category="Link"
+        title="外部リンクのカード（別タブで開く）"
+        target="_blank"
+      />
+    </CardList>
   </BaseSession>
 
   <BaseSession title="Carousel">

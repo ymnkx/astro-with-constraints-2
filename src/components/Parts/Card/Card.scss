@@ -1,0 +1,57 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-card {
+  --this-gap: #{rem(12)};
+  --this-radius: var(--rounded-md);
+  --this-transition: var(--animation-easing) var(--animation-duration);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--color-text);
+  text-decoration: none;
+  background-color: var(--color-background-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--this-radius);
+
+  @include hover {
+    .parts-card_thumbnail img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.parts-card_thumbnail {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+
+  img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform var(--this-transition);
+  }
+}
+
+.parts-card_body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--this-gap);
+  padding: var(--spacing-md);
+}
+
+.parts-card_category {
+  align-self: flex-start;
+  padding-block: var(--spacing-xs);
+  padding-inline: var(--spacing-sm);
+  color: var(--color-background-white);
+  background-color: var(--color-primary);
+  border-radius: var(--rounded-sm);
+
+  @include microcopy;
+}
+
+.parts-card_title {
+  @include heading-level-3;
+}

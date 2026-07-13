@@ -1,0 +1,19 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.card-list {
+  --this-columns: 3;
+  --this-gap: #{rem(24)};
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--this-gap);
+
+  // タブレット以上で横並び
+  @include min-screen(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include min-screen(lg) {
+    grid-template-columns: repeat(var(--this-columns), minmax(0, 1fr));
+  }
+}

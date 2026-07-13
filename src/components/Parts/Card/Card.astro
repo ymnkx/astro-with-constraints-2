@@ -1,0 +1,35 @@
+---
+// サムネイル・カテゴリー・タイトルを持つカードリンクコンポーネント
+interface Props {
+  href: string;
+  title: string;
+  category: string;
+  thumbnail?: string;
+  alt?: string;
+  target?: '_blank' | '_self';
+}
+
+const {
+  href,
+  title,
+  category,
+  thumbnail = '/assets/image/sample_card_thumbnail.png',
+  alt = '',
+  target = '_self',
+}: Props = Astro.props;
+
+// 外部リンクの判定
+const isExternalLink = target === '_blank' || href.startsWith('http');
+const linkTarget = isExternalLink ? '_blank' : target;
+const relAttribute = isExternalLink ? 'noopener noreferrer' : undefined;
+---
+
+<a href={href} target={linkTarget} rel={relAttribute} class="parts-card">
+  <div class="parts-card_thumbnail">
+    <img src={thumbnail} alt={alt} loading="lazy" decoding="async" />
+  </div>
+  <div class="parts-card_body">
+    <span class="parts-card_category">{category}</span>
+    <p class="parts-card_title">{title}</p>
+  </div>
+</a>
