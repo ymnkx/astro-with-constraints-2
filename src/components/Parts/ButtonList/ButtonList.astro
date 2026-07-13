@@ -1,0 +1,12 @@
+---
+// Button を横並びで並べ、それぞれ横幅いっぱいに広げるリストコンポーネント
+interface Props {
+  columns?: number;
+}
+
+const { columns = 3 }: Props = Astro.props;
+---
+
+<div class="button-list" style={`--this-columns:${columns};`}>
+  <slot />
+</div>

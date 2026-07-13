@@ -3,6 +3,7 @@ import Accordion from '@/components/Parts/Accordion/Accordion.astro';
 import Button from '@/components/Parts/Button/Button.astro';
 import Card from '@/components/Parts/Card/Card.astro';
 import CardList from '@/components/Parts/CardList/CardList.astro';
+import ButtonList from '@/components/Parts/ButtonList/ButtonList.astro';
 import CarouselType01 from '@/components/Parts/Carousel/CarouselType01.astro';
 import CarouselItem from '@/components/Parts/CarouselItem/CarouselItem.astro';
 import Heading from '@/components/Parts/Heading/Heading.astro';
@@ -24,6 +25,14 @@ import '@/styles/top.scss'; // ページ固有スタイル
     <Button as="button" type="button">BUTTON</Button>
     <Button as="a" href="/">A</Button>
     <Button as="span">SPAN</Button>
+  </BaseSession>
+
+  <BaseSession title="ButtonList">
+    <ButtonList>
+      <Button as="button" type="button">BUTTON</Button>
+      <Button as="a" href="/">A</Button>
+      <Button as="span">SPAN</Button>
+    </ButtonList>
   </BaseSession>
 
   <BaseSession title="Heading">
