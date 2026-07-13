@@ -1,0 +1,13 @@
+---
+// 中に入れた要素を flexbox で左上から並べる（折り返しあり）レイアウトコンポーネント
+// 子の見た目は各コンポーネント側で制御し、Cluster は並びだけを担当する
+interface Props {
+  gap?: number;
+}
+
+const { gap = 16 }: Props = Astro.props;
+---
+
+<div class="cluster" style={`--this-gap:${gap / 16}rem;`}>
+  <slot />
+</div>

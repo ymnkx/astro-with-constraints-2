@@ -1,0 +1,12 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-gridItem {
+  --this-span: 1;
+  --this-start: auto;
+
+  // 親 Grid が指定列数になる lg 以上でマス指定を有効化
+  // （それ未満は 1fr / 2 列固定なので span は効かせない）
+  @include min-screen(lg) {
+    grid-column: var(--this-start) / span var(--this-span);
+  }
+}

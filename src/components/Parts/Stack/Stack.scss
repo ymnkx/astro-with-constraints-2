@@ -1,0 +1,9 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.parts-stack {
+  --this-gap: var(--spacing-md);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--this-gap);
+}

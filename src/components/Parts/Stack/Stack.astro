@@ -1,0 +1,15 @@
+---
+// 子要素を上下（縦方向）に積み重ねるレイアウトコンポーネント
+// 要素間の余白は gap（spacing トークン）で制御する
+type Gap = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+interface Props {
+  gap?: Gap;
+}
+
+const { gap = 'md' }: Props = Astro.props;
+---
+
+<div class="parts-stack" style={`--this-gap:var(--spacing-${gap});`}>
+  <slot />
+</div>

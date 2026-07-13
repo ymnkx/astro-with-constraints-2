@@ -1,0 +1,17 @@
+---
+// Grid の中で使うアイテム。何マス分使うか（span）と開始位置（start）を指定できる
+// 例: 3 列を 2:1 に分けたい → 片方に span={2}、もう片方に span={1}
+interface Props {
+  span?: number;
+  start?: number;
+}
+
+const { span = 1, start }: Props = Astro.props;
+---
+
+<div
+  class="parts-gridItem"
+  style={`--this-span:${span};${start ? `--this-start:${start};` : ''}`}
+>
+  <slot />
+</div>

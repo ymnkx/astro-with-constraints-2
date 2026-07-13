@@ -2,8 +2,7 @@
 import Accordion from '@/components/Parts/Accordion/Accordion.astro';
 import Button from '@/components/Parts/Button/Button.astro';
 import Card from '@/components/Parts/Card/Card.astro';
-import CardList from '@/components/Parts/CardList/CardList.astro';
-import ButtonList from '@/components/Parts/ButtonList/ButtonList.astro';
+import Cluster from '@/components/Parts/Cluster/Cluster.astro';
 import CarouselType01 from '@/components/Parts/Carousel/CarouselType01.astro';
 import CarouselItem from '@/components/Parts/CarouselItem/CarouselItem.astro';
 import Heading from '@/components/Parts/Heading/Heading.astro';
@@ -13,7 +12,10 @@ import TextLink from '@/components/Parts/TextLink/TextLink.astro';
 import LayoutBase from '@/layouts/Base.astro';
 import BaseSession from '@/components/Blocks/Base/Session/Session.astro';
 import Full from '@/components/Parts/Full/Full.astro';
-import TopKv from '@/components/Blocks/Unique/Top/TopKv/TopKV.astro';
+import TopKv from '@/components/Blocks/Unique/Top/TopKv/TopKv.astro';
+import Grid from '@/components/Parts/Grid/Grid.astro';
+import GridItem from '@/components/Parts/GridItem/GridItem.astro';
+import Stack from '@/components/Parts/Stack/Stack.astro';
 const title = '';
 const description = '';
 import '@/styles/top.scss'; // ページ固有スタイル
@@ -22,41 +24,47 @@ import '@/styles/top.scss'; // ページ固有スタイル
 <LayoutBase title={title} description={description}>
   <TopKv />
   <BaseSession title="Button">
-    <Button as="button" type="button">BUTTON</Button>
-    <Button as="a" href="/">A</Button>
-    <Button as="span">SPAN</Button>
-  </BaseSession>
-
-  <BaseSession title="ButtonList">
-    <ButtonList>
-      <Button as="button" type="button" isFull>BUTTON</Button>
-      <Button as="a" href="/" isFull>A</Button>
-      <Button as="span" isFull>SPAN</Button>
-    </ButtonList>
+    <Cluster>
+      <Button as="button" type="button">BUTTON</Button>
+      <Button as="a" href="/">A</Button>
+      <Button as="span">SPAN</Button>
+    </Cluster>
   </BaseSession>
 
   <BaseSession title="Button (Icon)">
-    <!-- デフォルト: 右に arrow-right-circle -->
-    <Button as="button" type="button">DEFAULT</Button>
-    <!-- 左だけにアイコン -->
-    <Button as="a" href="/" iconLeft="chevron-right" iconRight={null}>LEFT</Button>
-    <!-- 左右両方にアイコン -->
-    <Button as="a" href="/" iconLeft="chevron-right">BOTH</Button>
-    <!-- アイコン無し -->
-    <Button as="span" iconRight={null}>NO ICON</Button>
-    <!-- 全幅: 左寄せ + 右アイコンは右端 -->
-    <Button as="button" type="button" isFull>FULL WIDTH</Button>
-    <!-- 全幅: 中央寄せ -->
-    <Button as="button" type="button" isFull isCenter>FULL CENTER</Button>
+    <Cluster>
+      <!-- デフォルト: 右に arrow-right-circle -->
+      <Button as="button" type="button">DEFAULT</Button>
+      <!-- 左だけにアイコン -->
+      <Button as="a" href="/" iconLeft="code-bracket" iconRight={null}>LEFT</Button>
+      <!-- 左右両方にアイコン -->
+      <Button as="a" href="/" iconLeft="code-bracket">BOTH</Button>
+      <!-- アイコン無し -->
+      <Button as="span" iconRight={null}>NO ICON</Button>
+      <!-- 全幅: 左寄せ + 右アイコンは右端 -->
+      <Button as="button" type="button" isFull>FULL WIDTH</Button>
+      <!-- 全幅: 中央寄せ -->
+      <Button as="button" type="button" isFull isCenter>FULL CENTER</Button>
+    </Cluster>
+  </BaseSession>
+
+  <BaseSession title="ButtonList">
+    <Grid>
+      <GridItem><Button as="button" type="button" isFull>BUTTON</Button></GridItem>
+      <GridItem><Button as="a" href="/" isFull>A</Button></GridItem>
+      <GridItem><Button as="span" isFull>SPAN</Button></GridItem>
+    </Grid>
   </BaseSession>
 
   <BaseSession title="Heading">
-    <Heading as="h1">Heading 1</Heading>
-    <Heading as="h2">Heading 2</Heading>
-    <Heading as="h3">Heading 3</Heading>
-    <Heading as="h4">Heading 4</Heading>
-    <Heading as="h5">Heading 5</Heading>
-    <Heading as="h6">Heading 6</Heading>
+    <Stack>
+      <Heading as="h1">Heading 1</Heading>
+      <Heading as="h2">Heading 2</Heading>
+      <Heading as="h3">Heading 3</Heading>
+      <Heading as="h4">Heading 4</Heading>
+      <Heading as="h5">Heading 5</Heading>
+      <Heading as="h6">Heading 6</Heading>
+    </Stack>
   </BaseSession>
 
   <BaseSession title="Icon">
@@ -66,12 +74,13 @@ import '@/styles/top.scss'; // ページ固有スタイル
     <Icon name="x-mark" />
     <Icon name="blank" />
     <Icon name="cube" />
+    <Icon name="arrow-right-circle" />
   </BaseSession>
 
   <BaseSession title="TextLink">
     <!-- 基本的な使用 -->
     <p>
-      <TextLink href="/page2/" text="詳細はこちら" />
+      <TextLink href="/page2/" text="詳細はこちら" iconName="arrow-right-circle" />
     </p>
     <p>
       <!-- 左側にアイコン -->
@@ -102,16 +111,18 @@ import '@/styles/top.scss'; // ページ固有スタイル
   </BaseSession>
 
   <BaseSession title="CardList">
-    <CardList>
-      <Card href="/page2/" category="News" title="デフォルトのサンプルカードです" />
-      <Card href="/page3/" category="Blog" title="2枚目のカードサンプル" />
-      <Card
-        href="https://example.com"
-        category="Link"
-        title="外部リンクのカード（別タブで開く）"
-        target="_blank"
-      />
-    </CardList>
+    <Grid>
+      <GridItem><Card href="/page2/" category="News" title="デフォルトのサンプルカードです" /></GridItem>
+      <GridItem><Card href="/page3/" category="Blog" title="2枚目のカードサンプル" /></GridItem>
+      <GridItem
+        ><Card
+          href="https://example.com"
+          category="Link"
+          title="外部リンクのカード（別タブで開く）"
+          target="_blank"
+        /></GridItem
+      >
+    </Grid>
   </BaseSession>
 
   <BaseSession title="Carousel">

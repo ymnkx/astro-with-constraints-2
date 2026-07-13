@@ -8,6 +8,6 @@ interface Props {
 const { columns = 3 }: Props = Astro.props;
 ---
 
-<div class="button-list" style={`--this-columns:${columns};`}>
+<div class="parts-grid" style={`--this-columns:${columns};`}>
   <slot />
 </div>

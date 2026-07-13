@@ -1,0 +1,11 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.cluster {
+  --this-gap: #{rem(16)};
+
+  // 子要素を左上から並べ、収まらなければ折り返す
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--this-gap);
+}

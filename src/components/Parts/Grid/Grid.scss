@@ -1,8 +1,8 @@
 @use "@/styles/_develop/+.scss" as *;
 
-.card-list {
+.parts-grid {
   --this-columns: 3;
-  --this-gap: #{rem(24)};
+  --this-gap: #{rem(16)};
 
   display: grid;
   grid-template-columns: 1fr;
