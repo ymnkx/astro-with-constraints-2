@@ -52,6 +52,7 @@ Cursor 側は従来どおり `.cursor/rules/` を使うため、両者は独立�
 - Astro ファイル内での `<style>` タグ使用
 - px 単位（border-width 以外）／ハードコーディング値／物理プロパティ（margin-left 等）
 - 4 ワード以上のクラス名／`!important`／id セレクタ
+- コンポーネントの境界を越えたスタイル指定（例: `.button-list .parts-button` のように別コンポーネントを子孫セレクタで上書きする。子の見た目は子側の Props/Modifier で制御し、親はレイアウトのみ担当）
 - `any` 型の使用
 
 ---

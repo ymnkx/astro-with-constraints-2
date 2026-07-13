@@ -253,6 +253,34 @@ transition: transform var(--this-transition);
 - 4 ワード以上のクラス名
 - `!important` の使用
 - id セレクタの使用
+- **コンポーネントの境界を越えたスタイル指定**（自分の Block/Element 以外を子孫セレクタで狙わない）
+
+### コンポーネント境界を越えたスタイル指定の禁止
+
+各コンポーネントの scss は、**自分のコンポーネントのクラス（自身の Block とその Element）だけ**をスタイルする。
+別コンポーネントのクラスを子孫セレクタで狙って上書きしてはいけない。
+
+```scss
+// ❌ 禁止：ButtonList の scss から別コンポーネント Button を狙う
+.button-list .parts-button {
+  width: 100%;
+}
+
+// ❌ 禁止：CardList の scss から Card の中身を狙う
+.card-list .parts-card_title {
+  color: red;
+}
+
+// ✅ 良い例：レイアウトは自分のクラスだけで完結させる
+.button-list {
+  display: grid;
+  gap: var(--this-gap);
+}
+```
+
+**理由**: 親側から子コンポーネントを上書きすると、子の見た目が呼び出し場所によって変わり、再利用性とカプセル化が壊れる。
+**回避策**: 子の見た目を変えたいときは、子コンポーネント側の Props / Modifier（例: Button の `isFull`）で制御する。
+親はレイアウト（grid/flex/gap 等）だけを担当する。
 
 ### 推奨しない
 

@@ -16,10 +16,4 @@
   @include min-screen(lg) {
     grid-template-columns: repeat(var(--this-columns), minmax(0, 1fr));
   }
-
-  // 内包する Button をセル内で横幅いっぱいに広げる
-  .parts-button {
-    width: 100%;
-    min-width: 0;
-  }
 }

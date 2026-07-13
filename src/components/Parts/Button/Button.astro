@@ -1,5 +1,6 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
+import Icon from '@/components/Parts/Icon/Icon.astro';
 
 type Props<Tag extends Extract<HTMLTag, 'a' | 'button' | 'span'> = 'span'> = Polymorphic<{
   as: Tag;
@@ -8,17 +9,56 @@ type Props<Tag extends Extract<HTMLTag, 'a' | 'button' | 'span'> = 'span'> = Pol
   (Tag extends 'button' ? { type: string | URL } : object) & {
     size?: 'small' | 'medium' | 'large';
     isFull?: boolean;
+    isCenter?: boolean;
+    iconLeft?: string | null;
+    iconRight?: string | null;
     as?: 'span' | 'button' | 'a' | undefined;
     class?: string;
   };
-const { size = 'medium', isFull = false, as: Tag = 'span', class: className, ...rest }: Props = Astro.props;
+const {
+  size = 'medium',
+  isFull = false,
+  isCenter = false,
+  iconLeft = null,
+  iconRight = 'arrow-right-circle',
+  as: Tag = 'span',
+  class: className,
+  ...rest
+}: Props = Astro.props;
 ---
 
 <Tag
-  class:list={[className, 'parts-button', { '-small': size === 'small', '-large': size === 'large', '-full': isFull }]}
+  class:list={[
+    className,
+    'parts-button',
+    {
+      '-small': size === 'small',
+      '-large': size === 'large',
+      '-full': isFull,
+      '-center': isCenter,
+      '-icon-left': iconLeft,
+      '-icon-right': iconRight,
+    },
+  ]}
   {...rest}
 >
   <span class="parts-button_inner">
-    <slot />
+    {
+      iconLeft && (
+        <span class="parts-button_icon -left">
+          <Icon name={iconLeft} />
+        </span>
+      )
+    }
+    <span class="parts-button_text">
+      <slot />
+    </span>
+    {
+      iconRight && (
+        <span class="parts-button_icon -right">
+          <Icon name={iconRight} />
+        </span>
+      )
+    }
   </span>
 </Tag>

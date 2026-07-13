@@ -29,10 +29,25 @@ import '@/styles/top.scss'; // ページ固有スタイル
 
   <BaseSession title="ButtonList">
     <ButtonList>
-      <Button as="button" type="button">BUTTON</Button>
-      <Button as="a" href="/">A</Button>
-      <Button as="span">SPAN</Button>
+      <Button as="button" type="button" isFull>BUTTON</Button>
+      <Button as="a" href="/" isFull>A</Button>
+      <Button as="span" isFull>SPAN</Button>
     </ButtonList>
+  </BaseSession>
+
+  <BaseSession title="Button (Icon)">
+    <!-- デフォルト: 右に arrow-right-circle -->
+    <Button as="button" type="button">DEFAULT</Button>
+    <!-- 左だけにアイコン -->
+    <Button as="a" href="/" iconLeft="chevron-right" iconRight={null}>LEFT</Button>
+    <!-- 左右両方にアイコン -->
+    <Button as="a" href="/" iconLeft="chevron-right">BOTH</Button>
+    <!-- アイコン無し -->
+    <Button as="span" iconRight={null}>NO ICON</Button>
+    <!-- 全幅: 左寄せ + 右アイコンは右端 -->
+    <Button as="button" type="button" isFull>FULL WIDTH</Button>
+    <!-- 全幅: 中央寄せ -->
+    <Button as="button" type="button" isFull isCenter>FULL CENTER</Button>
   </BaseSession>
 
   <BaseSession title="Heading">

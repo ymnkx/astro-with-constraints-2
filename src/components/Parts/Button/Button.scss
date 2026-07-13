@@ -5,10 +5,13 @@
   --this-color-bg: var(--color-primary);
   --this-color-bg-hover: var(--color-gray-700);
   --this-radius: var(--rounded-sm);
+  --this-gap: #{rem(8)};
+  --this-icon-size: #{rem(20)};
 
   display: inline-block;
   max-width: 100%;
   min-height: rem(44);
+  vertical-align: middle; // inline-block のベースラインが内容(アイコン有無)で変わるズレを防ぐ
   text-decoration: none;
 
   &.-large {
@@ -38,12 +41,14 @@ button.parts-button {
 
 .parts-button_inner {
   display: flex;
+  gap: var(--this-gap);
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; // ラベルはデフォルト左寄せ
   min-height: rem(44);
   padding: 0.25rlh 1rem;
+  line-height: 1; // 要素(button/a/span)ごとの line-height 差による高さブレを防ぐ
   color: var(--this-color-text);
-  text-align: center;
+  text-align: start;
   cursor: pointer;
   background-color: var(--this-color-bg);
   border: 1px solid currentcolor;
@@ -53,8 +58,57 @@ button.parts-button {
     min-height: auto;
   }
 
-  .parts-button.-full &,
   .parts-button.-large & {
-    padding: 1.25lh 1.5rem;
+    padding: 0.5rlh 1.5rem;
+  }
+
+  // 全幅は幅が伸びるので横 padding は広げず、縦だけ調整
+  .parts-button.-full & {
+    padding-block: 0.5rlh;
+  }
+
+  // ラベル中央寄せ（オプション）
+  .parts-button.-center & {
+    justify-content: center;
+    text-align: center;
+  }
+
+  // 全幅かつ右アイコンのとき、ラベルは中央・アイコンは右端に固定
+  .parts-button.-full.-icon-right & {
+    position: relative;
+  }
+}
+
+.parts-button_icon {
+  // Icon の内部サイズを上書き
+  --icon-size: var(--this-icon-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--easing-standard) 0.2s;
+
+  // 全幅のとき、右アイコンは右端に絶対配置（padding 分だけ内側）
+  &.-right {
+    .parts-button.-full & {
+      position: absolute;
+      inset-block: 0;
+      inset-inline-end: 1rem;
+    }
+  }
+
+  // アイコン方向へのホバー移動
+  @media (any-hover: hover) {
+    &.-right {
+      .parts-button:hover & {
+        transform: translateX(#{rem(2)});
+      }
+    }
+
+    &.-left {
+      .parts-button:hover & {
+        transform: translateX(#{rem(-2)});
+      }
+    }
   }
 }
