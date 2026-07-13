@@ -2,11 +2,20 @@
 import LayoutBase from '@/layouts/Base.astro';
 import JsonLdArticle from '@/components/Common/JsonLD/JsonLdArticle.astro';
 import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
+import { projectDirectory } from '@/data/project';
+import type { BreadcrumbItem } from '@/components/Common/CommonBreadcrumb.astro';
 const title = 'Page3';
 const description = '';
+
+// パンくずリスト（最後の項目が現在ページ）
+const breadcrumb: BreadcrumbItem[] = [
+  { label: 'ホーム', href: projectDirectory },
+  { label: 'Page2', href: `${projectDirectory}page2/` },
+  { label: title },
+];
 ---
 
-<LayoutBase title={title} description={description}>
+<LayoutBase title={title} description={description} breadcrumb={breadcrumb}>
   <Fragment slot="head">
     <JsonLdArticle title={title} description={description} />
   </Fragment>

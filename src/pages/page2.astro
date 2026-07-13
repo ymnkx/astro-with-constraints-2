@@ -2,12 +2,20 @@
 import SecondBlock from '@/components/Blocks/Unique/Second/SecondBlock/SecondBlock.astro';
 import PageHead from '@/components/Blocks/Base/PageHead/PageHead.astro';
 import LayoutBase from '@/layouts/Base.astro';
+import { projectDirectory } from '@/data/project';
+import type { BreadcrumbItem } from '@/components/Common/CommonBreadcrumb.astro';
 const title = 'Page2';
 const description = '';
 import '@/styles/second.scss'; // ページ固有スタイル
+
+// パンくずリスト（最後の項目が現在ページ）
+const breadcrumb: BreadcrumbItem[] = [
+  { label: 'ホーム', href: projectDirectory },
+  { label: title },
+];
 ---
 
-<LayoutBase title={title} description={description}>
+<LayoutBase title={title} description={description} breadcrumb={breadcrumb}>
   <Fragment slot="head">
     <script src="@/scripts/second.ts"></script>
   </Fragment>

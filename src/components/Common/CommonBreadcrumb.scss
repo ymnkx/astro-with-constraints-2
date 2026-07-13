@@ -1,0 +1,50 @@
+@use "@/styles/_develop/+.scss" as *;
+
+.common-breadcrumb {
+  --this-gap: #{rem(4)};
+  --this-icon-size: #{rem(16)};
+  --this-color-link: var(--color-text);
+  --this-color-current: var(--color-primary);
+
+  padding: #{rem(8)};
+}
+
+.common-breadcrumb_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--this-gap);
+  align-items: center;
+  padding: 0;
+  margin-block: 0;
+  font-size: var(--typography-font-size-30);
+  list-style: none;
+}
+
+.common-breadcrumb_item {
+  display: inline-flex;
+  gap: var(--this-gap);
+  align-items: center;
+}
+
+.common-breadcrumb_link {
+  color: var(--this-color-link);
+  text-decoration: underline;
+  transition: color var(--animation-easing) var(--animation-duration);
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: var(--this-color-current);
+    }
+  }
+}
+
+.common-breadcrumb_current {
+  color: var(--this-color-current);
+}
+
+.common-breadcrumb_separator {
+  --icon-size: var(--this-icon-size);
+
+  display: inline-flex;
+  color: var(--color-border);
+}

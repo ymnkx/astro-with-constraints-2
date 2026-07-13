@@ -1,6 +1,14 @@
 ---
 import CommonFooter from './CommonFooter.astro';
 import CommonHeader from './CommonHeader.astro';
+import CommonBreadcrumb from './CommonBreadcrumb.astro';
+import type { BreadcrumbItem } from './CommonBreadcrumb.astro';
+
+interface Props {
+  breadcrumb?: BreadcrumbItem[];
+}
+
+const { breadcrumb }: Props = Astro.props;
 ---
 
 <div class="common-layout">
@@ -8,6 +16,7 @@ import CommonHeader from './CommonHeader.astro';
     <CommonHeader />
   </div>
   <main class="common-layout_main">
+    {breadcrumb && breadcrumb.length > 0 && <CommonBreadcrumb items={breadcrumb} />}
     <slot />
   </main>
   <div class="common-layout_footer">

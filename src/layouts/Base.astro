@@ -3,7 +3,15 @@ import '@/styles/common.scss';
 import CommonLayout from '@/components/Common/CommonLayout.astro';
 import Head from '@/components/Common/CommonHead.astro';
 import JsonLd from '@/components/Common/JsonLD/JsonLd.astro';
-const { title, description } = Astro.props;
+import type { BreadcrumbItem } from '@/components/Common/CommonBreadcrumb.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  breadcrumb?: BreadcrumbItem[];
+}
+
+const { title, description, breadcrumb }: Props = Astro.props;
 ---
 
 <!doctype html>
@@ -14,7 +22,7 @@ const { title, description } = Astro.props;
     <slot name="head" />
   </Head>
   <body>
-    <CommonLayout>
+    <CommonLayout breadcrumb={breadcrumb}>
       <slot />
     </CommonLayout>
   </body>

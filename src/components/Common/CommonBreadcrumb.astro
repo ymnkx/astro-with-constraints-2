@@ -1,0 +1,44 @@
+---
+// パンくずリスト。各ページの front-matter から items を受け取って表示する
+import Icon from '@/components/Parts/Icon/Icon.astro';
+
+// パンくず 1 項目。href を持たない項目を現在ページとして扱う
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items }: Props = Astro.props;
+---
+
+<nav class="common-breadcrumb" aria-label="パンくずリスト">
+  <ol class="common-breadcrumb_list">
+    {
+      items.map((item, index) => {
+        const isCurrent = index === items.length - 1;
+        return (
+          <li class="common-breadcrumb_item">
+            {item.href && !isCurrent ? (
+              <a href={item.href} class="common-breadcrumb_link">
+                {item.label}
+              </a>
+            ) : (
+              <span class="common-breadcrumb_current" aria-current="page">
+                {item.label}
+              </span>
+            )}
+            {!isCurrent && (
+              <span class="common-breadcrumb_separator" aria-hidden="true">
+                <Icon name="chevron-right" />
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
