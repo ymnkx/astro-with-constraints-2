@@ -2,7 +2,7 @@
 
 .parts-button {
   --this-color-text: var(--color-text);
-  --this-color-bg: var(--color-primary);
+  --this-color-bg: var(--color-gray-900);
   --this-color-bg-hover: var(--color-gray-700);
   --this-radius: var(--rounded-sm);
   --this-gap: #{rem(8)};
@@ -45,8 +45,7 @@ button.parts-button {
   align-items: center;
   justify-content: flex-start; // ラベルはデフォルト左寄せ
   min-height: rem(44);
-  padding: 0.25rlh 1rem;
-  line-height: 1; // 要素(button/a/span)ごとの line-height 差による高さブレを防ぐ
+  padding: 0.25rlh rem(8);
   color: var(--this-color-text);
   text-align: start;
   cursor: pointer;
@@ -79,6 +78,11 @@ button.parts-button {
   }
 }
 
+.parts-button_label {
+  flex: 1;
+  line-height: 1; // 要素(button/a/span)ごとの line-height 差による高さブレを防ぐ
+}
+
 .parts-button_icon {
   // Icon の内部サイズを上書き
   --icon-size: var(--this-icon-size);
@@ -88,27 +92,18 @@ button.parts-button {
   justify-content: center;
   transition: transform var(--easing-standard) 0.2s;
 
-  // 全幅のとき、右アイコンは右端に絶対配置（padding 分だけ内側）
-  &.-right {
-    .parts-button.-full & {
-      position: absolute;
-      inset-block: 0;
-      inset-inline-end: 1rem;
-    }
-  }
-
   // アイコン方向へのホバー移動
-  @media (any-hover: hover) {
-    &.-right {
-      .parts-button:hover & {
-        transform: translateX(#{rem(2)});
-      }
-    }
+  // @media (any-hover: hover) {
+  //   &.-right {
+  //     .parts-button:hover & {
+  //       transform: translateX(#{rem(2)});
+  //     }
+  //   }
 
-    &.-left {
-      .parts-button:hover & {
-        transform: translateX(#{rem(-2)});
-      }
-    }
-  }
+  //   &.-left {
+  //     .parts-button:hover & {
+  //       transform: translateX(#{rem(-2)});
+  //     }
+  //   }
+  // }
 }
